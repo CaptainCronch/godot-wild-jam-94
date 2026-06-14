@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://swljqqnwfrxn"]
+
+[ext_resource type="PackedScene" uid="uid://b5xlsf5uxkrib" path="res://player/player.tscn" id="1_01qa0"]
+
+[node name="World" type="Node2D" unique_id=1108271376]
+y_sort_enabled = true
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=772841556]
+position = Vector2(127, 63)
+color = Color(0.3515629, 0.3515629, 0.35156286, 1)
+polygon = PackedVector2Array(-58, -5, 1737, 8, 1726, 957, -69, 949)
+
+[node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]
+position = Vector2(690, 633)
