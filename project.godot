@@ -89,10 +89,12 @@ debug_key={
 2d_physics/layer_3="Step 3"
 2d_physics/layer_4="Impassable"
 2d_physics/layer_5="Player"
+2d_physics/layer_6="Enemy"
 
 [physics]
 
 3d/physics_engine="Jolt Physics"
+common/physics_interpolation=true
 
 [rendering]
 

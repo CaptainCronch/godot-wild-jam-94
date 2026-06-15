@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bgraey60p2frl"]
+
+[ext_resource type="Script" uid="uid://b15lkfh64orq1" path="res://player/weapons/revolver_bullet.gd" id="1_kmeu4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o6snv"]
+radius = 25.0
+
+[node name="RevolverBullet" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "hitbox")]
+collision_layer = 16
+collision_mask = 15
+motion_mode = 1
+script = ExtResource("1_kmeu4")
+sprite = NodePath("Polygon2D")
+hitbox = NodePath("Hitbox")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
+rotation = 6.2831855
+color = Color(0.9098039, 0.8509804, 0, 1)
+polygon = PackedVector2Array(15, 0, 25, -20, -25, 0, 25, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
+shape = SubResource("CircleShape2D_orxtn")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=290306462]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=855766132]
+shape = SubResource("CircleShape2D_o6snv")
