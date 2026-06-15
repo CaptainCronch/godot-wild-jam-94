@@ -2,8 +2,8 @@ extends CharacterBody2D
 class_name Player
 
 const BASE_SPEED := 15000.0
-const BASE_ACCELERATION := 15.0
-const BASE_FRICTION := 13.0  
+const BASE_ACCELERATION := 18.0
+const BASE_FRICTION := 10.0  
 const BASE_AIR_ACCELERATION := 8.0
 const BASE_AIR_FRICTION := 0.5
 const BASE_JUMP_FORCE := -12.0
@@ -74,6 +74,8 @@ func _process(delta: float) -> void:
 	#debug_text.text = str(weapon_holder.rotation)
 	
 	coyote_timer = minf(coyote_timer + delta, COYOTE_TIME)
+	
+	#shadow.position.y = -floor_height
 
 
 func _physics_process(delta: float) -> void:
@@ -127,7 +129,6 @@ func movement_z(delta: float) -> void:
 				floor_height = body.height * Global.TILE_HEIGHT
 				found = true
 	if not found: floor_height = 0.0
-	shadow.position.y = -floor_height
 	
 	#debug_text.text = str(roundf(position_z)) + " | " + str(floor_height)
 	

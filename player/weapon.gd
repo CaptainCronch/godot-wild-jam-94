@@ -11,10 +11,13 @@ const KNOCKBACK := 50.0
 
 
 func fire() -> void:
-	var bullet := REVOLVER_BULLET.instantiate()
+	var bullet: RevolverBullet = REVOLVER_BULLET.instantiate()
 	bullet.height = player.position_z
 	bullet.global_position = muzzle.global_position
 	bullet.angle = rotation
+	bullet.height = player.position_z
+	bullet.shadow.height = player.floor_height
+	bullet.shadow.blob.position.y = -player.floor_height
 	bullet.sprite.rotation = rotation
 	bullet.sprite.position.y = player.position_z + HEIGHT_OFFSET
 	get_tree().current_scene.add_child(bullet)

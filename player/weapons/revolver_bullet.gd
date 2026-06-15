@@ -5,6 +5,7 @@ const BASE_SPEED := 2000.0
 
 @export var sprite: Polygon2D
 @export var hitbox: Area2D
+@export var shadow: ShadowComponent
 
 var height := 0.0
 var angle := 0.0
