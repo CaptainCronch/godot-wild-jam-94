@@ -1,4 +1,5 @@
 extends Node2D
+class_name CameraHolder
 
 @export var camera: Camera2D
 

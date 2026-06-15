@@ -7,31 +7,80 @@
 [ext_resource type="Script" uid="uid://bklur5uy5lei4" path="res://player/weapon.gd" id="5_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://k6uix5btrhsr" path="res://icon.svg" id="6_boad6"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
+size = Vector2(152, 20)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgyib"]
-radius = 14.0
+radius = 13.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(24, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
-size = Vector2(152, 20)
-
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("weapon")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("sprite", "shadow", "weapon", "camera_holder", "world_area", "debug_text")]
+collision_layer = 16
+collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_oul6g")
-weapon = NodePath("Weapon")
+sprite = NodePath("Sprite")
+shadow = NodePath("Shadow")
+weapon = NodePath("Sprite/Weapon")
+camera_holder = NodePath("Sprite/CameraHolder")
+world_area = NodePath("WorldArea")
+debug_text = NodePath("DebugText")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=173726787]
+[node name="Shadow" type="Polygon2D" parent="." unique_id=1368480803]
+color = Color(0, 0, 0, 0.49411765)
+polygon = PackedVector2Array(-17, 1, -14, 5, -12, 8, -9, 11, -3, 13, 2, 13, 14, 13, 17, 9, 18, 2, 17, -4, 9, -7, -2, -10, -13, -9, -18, -6, -18, -2)
+
+[node name="Sprite" type="Polygon2D" parent="." unique_id=173726787]
 color = Color(0, 0.7081541, 0.69388574, 1)
 polygon = PackedVector2Array(-16, 0, -16, -50, 16, -50, 16, 0)
+
+[node name="CameraHolder" type="Node2D" parent="Sprite" unique_id=11818842 node_paths=PackedStringArray("camera")]
+script = ExtResource("4_yw30f")
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="Sprite/CameraHolder" unique_id=2024447866]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.05
+drag_top_margin = 0.05
+drag_right_margin = 0.05
+drag_bottom_margin = 0.05
+editor_draw_drag_margin = true
+
+[node name="Weapon" type="Node2D" parent="Sprite" unique_id=1873061966 node_paths=PackedStringArray("polygon")]
+position = Vector2(0, -19)
+script = ExtResource("5_g6k8r")
+polygon = NodePath("Polygon2D")
+
+[node name="Polygon2D" type="Polygon2D" parent="Sprite/Weapon" unique_id=1296291824]
+texture_repeat = 2
+position = Vector2(13, 0)
+texture = ExtResource("6_boad6")
+texture_offset = Vector2(-18.475, 19.85)
+texture_scale = Vector2(3.55, 3.55)
+polygon = PackedVector2Array(2, 0, -9, 17, 35, 0, -9, -20)
+
+[node name="Muzzle" type="Marker2D" parent="Sprite/Weapon" unique_id=1833827159]
+position = Vector2(51, 0)
+
+[node name="Hitbox" type="Area2D" parent="Sprite/Weapon" unique_id=2028094137]
+position = Vector2(85, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Weapon/Hitbox" unique_id=575035418]
+shape = SubResource("RectangleShape2D_8t03j")
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1915895890]
 shape = SubResource("CircleShape2D_hvfyp")
 
 [node name="WorldArea" type="Area2D" parent="." unique_id=482382496]
+collision_layer = 0
+collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=178992613]
 shape = SubResource("CircleShape2D_rgyib")
@@ -41,10 +90,9 @@ shape = SubResource("CircleShape2D_rgyib")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=714032367]
 shape = SubResource("RectangleShape2D_hg6s5")
 
-[node name="StateMachine" type="Node" parent="." unique_id=1468833635 node_paths=PackedStringArray("initial_state", "debug_text")]
+[node name="StateMachine" type="Node" parent="." unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
 initial_state = NodePath("State")
-debug_text = NodePath("../DebugText")
 
 [node name="State" type="Node" parent="StateMachine" unique_id=1668296279]
 script = ExtResource("3_g1dw6")
@@ -53,39 +101,3 @@ script = ExtResource("3_g1dw6")
 offset_right = 40.0
 offset_bottom = 23.0
 text = "hey"
-
-[node name="CameraHolder" type="Node2D" parent="." unique_id=11818842 node_paths=PackedStringArray("camera")]
-script = ExtResource("4_yw30f")
-camera = NodePath("Camera2D")
-
-[node name="Camera2D" type="Camera2D" parent="CameraHolder" unique_id=2024447866]
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
-editor_draw_drag_margin = true
-
-[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("polygon")]
-position = Vector2(0, -19)
-script = ExtResource("5_g6k8r")
-polygon = NodePath("Polygon2D")
-
-[node name="Polygon2D" type="Polygon2D" parent="Weapon" unique_id=1296291824]
-texture_repeat = 2
-position = Vector2(13, 0)
-texture = ExtResource("6_boad6")
-texture_offset = Vector2(-18.475, 19.85)
-texture_scale = Vector2(3.55, 3.55)
-polygon = PackedVector2Array(2, 0, -9, 17, 35, 0, -9, -20)
-
-[node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
-position = Vector2(51, 0)
-
-[node name="Hitbox" type="Area2D" parent="Weapon" unique_id=2028094137]
-position = Vector2(85, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Hitbox" unique_id=575035418]
-shape = SubResource("RectangleShape2D_8t03j")
