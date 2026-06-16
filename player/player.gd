@@ -6,11 +6,13 @@ const BASE_DIVE_BOOST := 500.0
 const BASE_DIVE_JUMP_BOOST := -5.0
 const JUMP_BUFFER := 30.0
 const COYOTE_TIME := 0.1
+const KICK_SELF_KNOCKBACK := 500.0
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
 @export var hurtbox: HurtBoxComponent
 @export var sprite: Polygon2D
+@export var leg: Polygon2D
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
 @export var camera_holder: CameraHolder
@@ -129,7 +131,12 @@ func jump() -> void:
 
 func kick() -> void:
 	hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon_holder.rotation)
-	hurtbox.check_collision()
+	if hurtbox.check_collision():
+		velocity += Vector2.RIGHT.rotated(weapon_holder.rotation) * KICK_SELF_KNOCKBACK * -1
+	
+	leg.modulate = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	leg.modulate = Color.TRANSPARENT
 	#hurtbox.collider.disabled = false
 	#await get_tree().create_timer(0.1).timeout
 	#hurtbox.collider.disabled = true

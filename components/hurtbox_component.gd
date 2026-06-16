@@ -5,6 +5,7 @@ signal hit(hitbox: HitboxComponent)
 
 @export var attack: Attack
 @export var updates := true
+@export var multihit := false
 #@export var detection_groups: PackedStringArray
 #@export var flash_speed := 0.1
 
@@ -28,7 +29,8 @@ func _physics_process(_delta) -> void:
 	check_collision()
 
 
-func check_collision() -> void:
+func check_collision() -> bool:
+	var hit_anything := false
 	for area in get_overlapping_areas():
 		if area is HitboxComponent:
 			#for group in detection_groups:
@@ -47,4 +49,7 @@ func check_collision() -> void:
 							else:
 								hit.emit(area)
 								area.damage(attack)
-							break
+							
+							hit_anything = true
+							if not multihit: break
+	return hit_anything

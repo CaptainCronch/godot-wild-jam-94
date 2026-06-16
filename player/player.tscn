@@ -32,7 +32,7 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgyib"]
 radius = 13.0
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "weapon", "weapon_holder", "camera_holder", "debug_text")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "leg", "weapon", "weapon_holder", "camera_holder", "debug_text")]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
@@ -40,6 +40,7 @@ plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 hurtbox = NodePath("HurtboxComponent")
 sprite = NodePath("Puppet/Sprite")
+leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
 camera_holder = NodePath("Puppet/CameraHolder")
@@ -71,6 +72,7 @@ collision_layer = 16
 collision_mask = 32
 attack = SubResource("Resource_kb6p2")
 updates = false
+multihit = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1696951197]
 position = Vector2(56, 0)
@@ -87,6 +89,10 @@ polygon = PackedVector2Array(-16, 25, -16, -25, 16, -25, 16, 25)
 
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -20.43)
+
+[node name="Leg" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1481174697]
+position = Vector2(0, 20.43)
+polygon = PackedVector2Array(-7, -12, 89, -11, 91, -31, 95, -36, 105, -37, 108, -36, 113, -33, 116, -24, 116, -15, 116, -7, 116, 3, 117, 8, 117, 11, 114, 14, 108, 14, -8, 8)
 
 [node name="Polygon2D" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1296291824]
 texture_repeat = 2

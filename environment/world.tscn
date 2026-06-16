@@ -66,3 +66,36 @@ position = Vector2(690, 633)
 
 [node name="Shambler" parent="." unique_id=1956631853 instance=ExtResource("4_sf4n2")]
 position = Vector2(1153, 1053)
+
+[node name="Shambler2" parent="." unique_id=94378796 instance=ExtResource("4_sf4n2")]
+position = Vector2(966, 1266)
+
+[node name="Shambler3" parent="." unique_id=534551835 instance=ExtResource("4_sf4n2")]
+position = Vector2(595, 1388)
+
+[node name="Shambler4" parent="." unique_id=1107464768 instance=ExtResource("4_sf4n2")]
+position = Vector2(328, 1287)
+
+[node name="Shambler5" parent="." unique_id=27641501 instance=ExtResource("4_sf4n2")]
+position = Vector2(-103, 1069)
+
+[node name="Shambler6" parent="." unique_id=2027205808 instance=ExtResource("4_sf4n2")]
+position = Vector2(42, 535)
+
+[node name="Shambler7" parent="." unique_id=326340017 instance=ExtResource("4_sf4n2")]
+position = Vector2(211, 338)
+
+[node name="Shambler8" parent="." unique_id=1776915573 instance=ExtResource("4_sf4n2")]
+position = Vector2(476, 40)
+
+[node name="Shambler9" parent="." unique_id=1617672738 instance=ExtResource("4_sf4n2")]
+position = Vector2(1480, 27)
+
+[node name="Shambler10" parent="." unique_id=585583901 instance=ExtResource("4_sf4n2")]
+position = Vector2(1916, 403)
+
+[node name="Shambler11" parent="." unique_id=1281345849 instance=ExtResource("4_sf4n2")]
+position = Vector2(1815, 1134)
+
+[node name="Shambler12" parent="." unique_id=232617839 instance=ExtResource("4_sf4n2")]
+position = Vector2(1527, 1386)

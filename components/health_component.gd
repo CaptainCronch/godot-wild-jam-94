@@ -31,12 +31,12 @@ func _ready():
 
 func damage(attack: Attack):
 	if dead: return
+	if not invincibility_timer.is_stopped(): return
 	if attack.stun_time > 0.0: stun(attack)
 	if target is CharacterBody2D:
 		#target.velocity += global_position.direction_to(attack.attack_position) * attack.knockback_force
 		target.velocity += attack.attack_direction * attack.knockback_force
 	if attack.attack_damage <= 0: return
-	if not invincibility_timer.is_stopped(): return
 	var total_attack := attack.attack_damage
 	if total_attack <= 0:
 		#spawn_number_popup("BLOCKED!!", blocked_color)
