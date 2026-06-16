@@ -10,6 +10,7 @@ class_name PlatformerComponent
 @export var base_jump_force := -12.0
 @export var base_gravity := 25.0
 @export var base_fall_boost := 1.8
+@export var override_functions := false
 
 @export_category("Nodes")
 @export var target: CharacterBody2D
@@ -26,6 +27,7 @@ var gravity := base_gravity
 var airborne := false
 var enabled := true
 var desired_velocity := Vector2()
+var decay := Vector2()
 var velocity_z := 0.0
 var position_z := 0.0
 var floor_height := 0.0
@@ -41,11 +43,11 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if override_functions: return
 	movement_z(delta)
 	
 	desired_velocity = (dir * (1.0 if enabled else 0.0)) * speed * delta
 	
-	var decay := Vector2()
 	if not airborne:
 		decay = Vector2(acceleration if absf(dir.x) > 0 else friction,
 				acceleration if absf(dir.y) > 0 else friction)
@@ -59,6 +61,7 @@ func _physics_process(delta: float) -> void:
 
 
 func movement_z(delta: float) -> void:
+	if override_functions: return
 	gravity = base_gravity * (1.0 if velocity_z < 0.0 else base_fall_boost) 
 	velocity_z += gravity * delta
 	position_z = minf(position_z + velocity_z, -floor_height)
@@ -85,5 +88,6 @@ func movement_z(delta: float) -> void:
 
 
 func jump() -> void:
+	if override_functions: return
 	if airborne and enabled:
 		velocity_z = jump_force

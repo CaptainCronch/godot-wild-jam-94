@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_boad6"]
 [ext_resource type="Script" uid="uid://oth2uftowffh" path="res://classes/state_machine.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://c8oxgl0bntko0" path="res://classes/state.gd" id="3_g1dw6"]
+[ext_resource type="PackedScene" uid="uid://dg03camctcanq" path="res://components/platformer_component.tscn" id="3_rgyib"]
 [ext_resource type="Script" uid="uid://bofygnvgafsum" path="res://player/camera.gd" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://bklur5uy5lei4" path="res://player/weapon.gd" id="5_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://k6uix5btrhsr" path="res://icon.svg" id="6_boad6"]
@@ -20,19 +21,24 @@ radius = 13.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(24, 8)
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("puppet", "sprite", "weapon", "weapon_holder", "camera_holder", "world_area", "debug_text")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "sprite", "weapon", "weapon_holder", "camera_holder", "debug_text")]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
-puppet = NodePath("Puppet")
+plat_comp = NodePath("PlatformerComponent")
 sprite = NodePath("Puppet/Sprite")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
 camera_holder = NodePath("Puppet/CameraHolder")
-world_area = NodePath("WorldArea")
 debug_text = NodePath("DebugText")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_boad6")]
+
+[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet") instance=ExtResource("3_rgyib")]
+override_functions = true
+target = NodePath("..")
+world_area = NodePath("../WorldArea")
+puppet = NodePath("../Puppet")
 
 [node name="Puppet" type="Node2D" parent="." unique_id=506441243]
 

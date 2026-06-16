@@ -10,13 +10,13 @@ radius = 13.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 14.0
 
-[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("platformer_comp")]
+[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp")]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
 floor_block_on_wall = false
 script = ExtResource("1_0q4ty")
-platformer_comp = NodePath("PlatformerComponent")
+plat_comp = NodePath("PlatformerComponent")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet") instance=ExtResource("2_2n88m")]
 target = NodePath("..")
