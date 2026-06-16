@@ -4,7 +4,7 @@ class_name PlatformerComponent
 @export_category("Values")
 @export var base_speed := 15000.0
 @export var base_acceleration := 18.0
-@export var base_friction := 10.0  
+@export var base_friction := 10.0
 @export var base_air_acceleration := 8.0
 @export var base_air_friction := 0.5
 @export var base_jump_force := -12.0
@@ -16,6 +16,8 @@ class_name PlatformerComponent
 @export var target: CharacterBody2D
 @export var world_area: Area2D
 @export var puppet: Node2D
+@export var health_comp: HealthComponent
+@export var hurtbox: HurtBoxComponent
 
 var speed := base_speed
 var acceleration := base_acceleration
@@ -39,14 +41,15 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	pass
+	if is_instance_valid(hurtbox): hurtbox.attack.height = position_z
+	if is_instance_valid(health_comp): health_comp.height = position_z
 
 
 func _physics_process(delta: float) -> void:
 	if override_functions: return
 	movement_z(delta)
 	
-	desired_velocity = (dir * (1.0 if enabled else 0.0)) * speed * delta
+	desired_velocity = (dir * (1.0 if enabled and not health_comp.is_stunned else 0.0)) * speed * delta
 	
 	if not airborne:
 		decay = Vector2(acceleration if absf(dir.x) > 0 else friction,
@@ -89,5 +92,8 @@ func movement_z(delta: float) -> void:
 
 func jump() -> void:
 	if override_functions: return
-	if airborne and enabled:
+	if airborne and enabled and not health_comp.is_stunned:
 		velocity_z = jump_force
+
+
+func is_colliding() -> bool: return target.is_on_ceiling() or target.is_on_floor() or target.is_on_wall()

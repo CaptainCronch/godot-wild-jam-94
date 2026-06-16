@@ -16,9 +16,9 @@ var overlapping_bodies: Array[TileMapLayer] = []
 
 func _ready() -> void:
 	#shadow.position.y = -height
-	#check_height()
 	#for body in area_2d.get_overlapping_bodies():
-		#if body is TileMapLayer: overlapping_bodies.append(body)d
+		#if body is TileMapLayer: overlapping_bodies.append(body)
+	#check_height()
 	#print(height)
 	blob.position.y = -height
 	reload()
@@ -26,6 +26,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	blob.position.y = -height
+
+
+#func _physics_process(_delta: float) -> void:
+	#if overlapping_bodies.size() == 0: height = 0.0
+	#overlapping_bodies = []
+	#for body in area_2d.get_overlapping_bodies():
+		#if body is TileMapLayer: overlapping_bodies.append(body)
+	#check_height()
 
 
 func generate_circle_polygon() -> PackedVector2Array:
@@ -52,6 +60,7 @@ func check_height() -> void:
 	for body in overlapping_bodies:
 		if body.height * Global.TILE_HEIGHT >= height:
 			height = body.height * Global.TILE_HEIGHT
+
 
 func _on_area_body_entered(body: Node2D) -> void:
 	if body is TileMapLayer:

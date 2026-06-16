@@ -8,6 +8,8 @@ const JUMP_BUFFER := 30.0
 const COYOTE_TIME := 0.1
 
 @export var plat_comp: PlatformerComponent
+@export var health_comp: HealthComponent
+@export var hurtbox: HurtBoxComponent
 @export var sprite: Polygon2D
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
@@ -43,6 +45,7 @@ func _process(delta: float) -> void:
 		weapon.fire()
 	
 	weapon_holder.rotation = weapon_holder.global_position.direction_to(get_global_mouse_position()).angle()
+	hurtbox.rotation = weapon_holder.rotation
 	if absf(weapon_holder.rotation) > PI/2.0:
 		weapon_holder.scale.y = -1.0
 	else:
@@ -69,6 +72,11 @@ func _physics_process(delta: float) -> void:
 	velocity.x = Global.decay_towards(velocity.x, plat_comp.desired_velocity.x, plat_comp.decay.x, delta)
 	debug_text.text = str(Vector2i(velocity))
 	velocity.y = Global.decay_towards(velocity.y, plat_comp.desired_velocity.y, plat_comp.decay.y, delta)
+	
+	# dive bounce off wall
+	#if diving and plat_comp.is_colliding():
+		#velocity *= -1.0
+	
 	move_and_slide()
 
 
@@ -120,7 +128,8 @@ func jump() -> void:
 
 
 func kick() -> void:
-	pass
-
-
-func is_colliding() -> bool: return is_on_ceiling() or is_on_floor() or is_on_wall()
+	hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon_holder.rotation)
+	hurtbox.check_collision()
+	#hurtbox.collider.disabled = false
+	#await get_tree().create_timer(0.1).timeout
+	#hurtbox.collider.disabled = true

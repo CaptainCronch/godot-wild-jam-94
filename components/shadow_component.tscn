@@ -16,6 +16,7 @@ collision_layer = 0
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1985293345]
+visible = false
 shape = SubResource("CircleShape2D_t6cfp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_body_entered"]

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dxlsjjfqpvly3"]
+
+[ext_resource type="Script" uid="uid://c268ppqos8rno" path="res://components/health_component.gd" id="1_t2tvt"]
+
+[node name="HealthComponent" type="Node2D" unique_id=1738076217]
+script = ExtResource("1_t2tvt")
+
+[node name="Invincibility" type="Timer" parent="." unique_id=407398441]
+one_shot = true
+
+[node name="Stun" type="Timer" parent="." unique_id=313021466]
+one_shot = true
+
+[connection signal="timeout" from="Stun" to="." method="_on_stun_timeout"]
