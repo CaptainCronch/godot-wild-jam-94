@@ -134,9 +134,9 @@ func kick() -> void:
 	if hurtbox.check_collision():
 		velocity += Vector2.RIGHT.rotated(weapon_holder.rotation) * KICK_SELF_KNOCKBACK * -1
 	
-	leg.modulate = Color.WHITE
+	leg.show()
 	await get_tree().create_timer(0.1).timeout
-	leg.modulate = Color.TRANSPARENT
+	leg.hide()
 	#hurtbox.collider.disabled = false
 	#await get_tree().create_timer(0.1).timeout
 	#hurtbox.collider.disabled = true

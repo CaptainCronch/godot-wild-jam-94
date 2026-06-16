@@ -37,6 +37,7 @@ script = ExtResource("1_0q4ty")
 plat_comp = NodePath("PlatformerComponent")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") instance=ExtResource("2_2n88m")]
+base_speed = 10000.0
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")

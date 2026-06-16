@@ -19,13 +19,6 @@ class_name PlatformerComponent
 @export var health_comp: HealthComponent
 @export var hurtbox: HurtBoxComponent
 
-var speed := base_speed
-var acceleration := base_acceleration
-var friction := base_friction
-var air_acceleration := base_air_acceleration
-var air_friction := base_air_friction
-var jump_force := base_jump_force
-var gravity := base_gravity
 var airborne := false
 var enabled := true
 var desired_velocity := Vector2()
@@ -34,6 +27,14 @@ var velocity_z := 0.0
 var position_z := 0.0
 var floor_height := 0.0
 var dir := Vector2()
+
+@onready var speed := base_speed
+@onready var acceleration := base_acceleration
+@onready var friction := base_friction
+@onready var air_acceleration := base_air_acceleration
+@onready var air_friction := base_air_friction
+@onready var jump_force := base_jump_force
+@onready var gravity := base_gravity
 
 
 func _ready() -> void:
