@@ -18,7 +18,7 @@ size = Vector2(24, 8)
 
 [sub_resource type="Resource" id="Resource_kb6p2"]
 script = ExtResource("6_yllr7")
-knockback_force = 2000.0
+knockback_force = 1000.0
 knockup_force = -5.0
 stun_time = 0.4
 size = 254.0

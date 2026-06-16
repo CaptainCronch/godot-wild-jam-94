@@ -25,32 +25,36 @@ size = Vector2(30, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_s3b2c"]
 radius = 13.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6423d"]
+radius = 24.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 14.0
 
-[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp")]
+[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "enemy_check", "wall_check") groups=["Enemy"]]
 collision_layer = 32
-collision_mask = 47
+collision_mask = 15
 floor_constant_speed = true
 floor_block_on_wall = false
 script = ExtResource("1_0q4ty")
 plat_comp = NodePath("PlatformerComponent")
+enemy_check = NodePath("EnemyCheck")
+wall_check = NodePath("WallCheck")
 
-[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") instance=ExtResource("2_2n88m")]
+[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") groups=["Enemy"] instance=ExtResource("2_2n88m")]
 base_speed = 30000.0
-base_acceleration = 20.0
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")
 health_comp = NodePath("../HealthComponent")
 hurtbox = NodePath("../HurtboxComponent")
 
-[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") instance=ExtResource("3_s3b2c")]
+[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") groups=["Enemy"] instance=ExtResource("3_s3b2c")]
 max_health = 10
 target = NodePath("..")
 plat_comp = NodePath("../PlatformerComponent")
 
-[node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") instance=ExtResource("4_pfo6o")]
+[node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") groups=["Enemy"] instance=ExtResource("4_pfo6o")]
 collision_layer = 32
 collision_mask = 16
 health_comp = NodePath("../HealthComponent")
@@ -58,7 +62,7 @@ health_comp = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1732633954]
 shape = SubResource("CircleShape2D_3hxai")
 
-[node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("5_3hxai")]
+[node name="HurtboxComponent" parent="." unique_id=1464447820 groups=["Enemy"] instance=ExtResource("5_3hxai")]
 collision_layer = 32
 collision_mask = 16
 attack = SubResource("Resource_ysxep")
@@ -66,21 +70,34 @@ attack = SubResource("Resource_ysxep")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=541787536]
 shape = SubResource("RectangleShape2D_6p5g5")
 
-[node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("3_a8mgi")]
+[node name="ShadowComponent" parent="." unique_id=390992070 groups=["Enemy"] instance=ExtResource("3_a8mgi")]
 
-[node name="Puppet" type="Node2D" parent="." unique_id=6801831]
+[node name="Puppet" type="Node2D" parent="." unique_id=6801831 groups=["Enemy"]]
 
 [node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=336839294]
 position = Vector2(0, -25)
 color = Color(1, 0.39891216, 0.2415607, 1)
 polygon = PackedVector2Array(-16, 25, 0, -25, 16, 25)
 
-[node name="WorldArea" type="Area2D" parent="." unique_id=1716572767]
+[node name="WorldArea" type="Area2D" parent="." unique_id=1716572767 groups=["Enemy"]]
 collision_layer = 0
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=921311612]
 shape = SubResource("CircleShape2D_s3b2c")
 
+[node name="EnemyCheck" type="Area2D" parent="." unique_id=1299676850 groups=["Enemy"]]
+collision_layer = 32
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCheck" unique_id=701889652]
+shape = SubResource("CircleShape2D_6423d")
+
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1301316648]
 shape = SubResource("CircleShape2D_pfo6o")
+
+[node name="WallCheck" type="RayCast2D" parent="." unique_id=698982734]
+target_position = Vector2(20, 0)
+collision_mask = 15
+hit_from_inside = true

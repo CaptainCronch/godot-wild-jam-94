@@ -22,6 +22,7 @@ func _ready() -> void:
 	#check_height()
 	#print(height)
 	shadow = Polygon2D.new()
+	shadow.position = blob.global_position
 	blob.position.y = -height
 	reload()
 	Global.shadow_group.add_child(shadow)
