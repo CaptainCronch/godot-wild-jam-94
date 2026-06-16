@@ -5,10 +5,11 @@ class_name ShadowComponent
 @export var shadow_scale := Vector2(1.0, 0.5)
 @export var resolution := 24
 @export var color := Color(0.0, 0.0, 0.0, 0.5)
-@export var blob: Polygon2D
+@export var blob: RemoteTransform2D
 
 var height := 0.0
 var overlapping_bodies: Array[TileMapLayer] = []
+var shadow: Polygon2D
 
 @onready var area_2d: Area2D = $Area2D
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
@@ -20,12 +21,20 @@ func _ready() -> void:
 		#if body is TileMapLayer: overlapping_bodies.append(body)
 	#check_height()
 	#print(height)
+	shadow = Polygon2D.new()
 	blob.position.y = -height
 	reload()
+	Global.shadow_group.add_child(shadow)
+	blob.remote_path = blob.get_path_to(shadow)
 
 
 func _process(_delta: float) -> void:
 	blob.position.y = -height
+
+
+func _notification(which):
+	if which == NOTIFICATION_PREDELETE:
+		shadow.queue_free()
 
 
 #func _physics_process(_delta: float) -> void:
@@ -49,10 +58,10 @@ func generate_circle_polygon() -> PackedVector2Array:
 
 
 func reload() -> void:
-	blob.polygon = generate_circle_polygon()
+	shadow.polygon = generate_circle_polygon()
 	blob.scale = shadow_scale
 	(collision_shape_2d.shape as CircleShape2D).radius = radius * 0.2
-	blob.modulate = color
+	shadow.modulate = color
 
 
 func check_height() -> void:

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://swljqqnwfrxn"]
 
 [ext_resource type="PackedScene" uid="uid://b5xlsf5uxkrib" path="res://player/player.tscn" id="1_01qa0"]
+[ext_resource type="Script" uid="uid://de2mjund0shjy" path="res://environment/shadow_group.gd" id="1_na063"]
 [ext_resource type="TileSet" uid="uid://dhw8cefhvd5hg" path="res://environment/tiles/test_tiles.tres" id="1_wpdqg"]
 [ext_resource type="Script" uid="uid://dhy4iqkwgl0af" path="res://environment/tiles/tile_layer.gd" id="2_sf4n2"]
 [ext_resource type="Script" uid="uid://l3gkn072nhu5" path="res://ui/ui.gd" id="3_wpdqf"]
@@ -11,6 +12,10 @@ font_size = 128
 
 [node name="World" type="Node2D" unique_id=1108271376]
 y_sort_enabled = true
+
+[node name="ShadowGroup" type="CanvasGroup" parent="." unique_id=1013506578]
+self_modulate = Color(1, 1, 1, 0.5)
+script = ExtResource("1_na063")
 
 [node name="Floor1" type="TileMapLayer" parent="." unique_id=525896572]
 z_index = -1

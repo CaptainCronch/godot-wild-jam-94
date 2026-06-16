@@ -30,23 +30,25 @@ radius = 14.0
 
 [node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp")]
 collision_layer = 32
-collision_mask = 15
+collision_mask = 47
 floor_constant_speed = true
 floor_block_on_wall = false
 script = ExtResource("1_0q4ty")
 plat_comp = NodePath("PlatformerComponent")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") instance=ExtResource("2_2n88m")]
-base_speed = 10000.0
+base_speed = 30000.0
+base_acceleration = 20.0
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")
 health_comp = NodePath("../HealthComponent")
 hurtbox = NodePath("../HurtboxComponent")
 
-[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target") instance=ExtResource("3_s3b2c")]
+[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") instance=ExtResource("3_s3b2c")]
 max_health = 10
 target = NodePath("..")
+plat_comp = NodePath("../PlatformerComponent")
 
 [node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") instance=ExtResource("4_pfo6o")]
 collision_layer = 32

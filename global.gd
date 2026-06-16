@@ -4,6 +4,7 @@ const TILE_HEIGHT := 128.0
 
 var tilemaps: Array[TileMapLayer]
 var player: Player
+var shadow_group: CanvasGroup
 
 
 func _process(_delta: float) -> void:

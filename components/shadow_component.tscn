@@ -7,9 +7,10 @@ radius = 18.0
 
 [node name="ShadowComponent" type="Node2D" unique_id=390992070 node_paths=PackedStringArray("blob")]
 script = ExtResource("1_t6cfp")
+color = Color(0, 0, 0, 1)
 blob = NodePath("Blob")
 
-[node name="Blob" type="Polygon2D" parent="." unique_id=882066402]
+[node name="Blob" type="RemoteTransform2D" parent="." unique_id=197998821]
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1987522447]
 collision_layer = 0

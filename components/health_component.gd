@@ -15,6 +15,7 @@ signal death(attack: Attack)
 @export var invincibility_time := 0.0
 @export var height := 0.0
 @export var target: Node2D
+@export var plat_comp: PlatformerComponent
 #@export var entity := true
 
 var health := 0
@@ -36,6 +37,8 @@ func damage(attack: Attack):
 	if target is CharacterBody2D:
 		#target.velocity += global_position.direction_to(attack.attack_position) * attack.knockback_force
 		target.velocity += attack.attack_direction * attack.knockback_force
+		if is_instance_valid(plat_comp):
+			plat_comp.velocity_z += attack.knockup_force
 	if attack.attack_damage <= 0: return
 	var total_attack := attack.attack_damage
 	if total_attack <= 0:

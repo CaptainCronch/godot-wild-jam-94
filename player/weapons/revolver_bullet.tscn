@@ -15,6 +15,7 @@ radius = 8.0
 script = ExtResource("2_q0wpf")
 attack_damage = 5
 knockback_force = 700.0
+knockup_force = -3.0
 stun_time = 0.1
 size = 128.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
