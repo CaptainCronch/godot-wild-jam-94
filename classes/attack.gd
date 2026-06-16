@@ -3,6 +3,7 @@ class_name Attack
 
 @export var attack_damage := 0
 @export var knockback_force := 0.0
+@export var knockup_force := 0.0
 @export var stun_time := 0.0
 @export var height := 0.0
 @export var offset := 0.0
@@ -21,6 +22,7 @@ var attack_direction := Vector2.ZERO
 func _init(
 		_dam := attack_damage,
 		_knock := knockback_force,
+		_up := knockup_force,
 		_dir := attack_direction,
 		_stun := stun_time,
 		_height := height,
@@ -29,6 +31,7 @@ func _init(
 		):
 	attack_damage = _dam
 	knockback_force = _knock
+	knockup_force = _up
 	attack_direction = _dir
 	stun_time = _stun
 	height = _height
