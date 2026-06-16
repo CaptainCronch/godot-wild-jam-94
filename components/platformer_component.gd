@@ -1,0 +1,89 @@
+extends Node2D
+class_name PlatformerComponent
+
+@export_category("Values")
+@export var base_speed := 15000.0
+@export var base_acceleration := 18.0
+@export var base_friction := 10.0  
+@export var base_air_acceleration := 8.0
+@export var base_air_friction := 0.5
+@export var base_jump_force := -12.0
+@export var base_gravity := 25.0
+@export var base_fall_boost := 1.8
+
+@export_category("Nodes")
+@export var target: CharacterBody2D
+@export var world_area: Area2D
+@export var puppet: Node2D
+
+var speed := base_speed
+var acceleration := base_acceleration
+var friction := base_friction
+var air_acceleration := base_air_acceleration
+var air_friction := base_air_friction
+var jump_force := base_jump_force
+var gravity := base_gravity
+var airborne := false
+var enabled := true
+var desired_velocity := Vector2()
+var velocity_z := 0.0
+var position_z := 0.0
+var floor_height := 0.0
+var dir := Vector2()
+
+
+func _ready() -> void:
+	pass
+
+
+func _process(_delta: float) -> void:
+	pass
+
+
+func _physics_process(delta: float) -> void:
+	movement_z(delta)
+	
+	desired_velocity = (dir * (1.0 if enabled else 0.0)) * speed * delta
+	
+	var decay := Vector2()
+	if not airborne:
+		decay = Vector2(acceleration if absf(dir.x) > 0 else friction,
+				acceleration if absf(dir.y) > 0 else friction)
+	else:
+		decay = Vector2(air_acceleration if absf(dir.x) > 0 else air_friction,
+				air_acceleration if absf(dir.y) > 0 else air_friction)
+	
+	target.velocity.x = Global.decay_towards(target.velocity.x, desired_velocity.x, decay.x, delta)
+	target.velocity.y = Global.decay_towards(target.velocity.y, desired_velocity.y, decay.y, delta)
+	target.move_and_slide()
+
+
+func movement_z(delta: float) -> void:
+	gravity = base_gravity * (1.0 if velocity_z < 0.0 else base_fall_boost) 
+	velocity_z += gravity * delta
+	position_z = minf(position_z + velocity_z, -floor_height)
+	if is_equal_approx(position_z, -floor_height):
+		airborne = false
+		velocity_z = 0.0
+	else:
+		airborne = true
+	
+	# Base tilemap always on, contains the impassable walls
+	target.set_collision_mask_value(1, position_z > -Global.TILE_HEIGHT)
+	target.set_collision_mask_value(2, position_z > -Global.TILE_HEIGHT * 2)
+	target.set_collision_mask_value(3, position_z > -Global.TILE_HEIGHT * 3)
+	
+	var found := false
+	for body in world_area.get_overlapping_bodies():
+		if body is WorldLayer:
+			if body.height * Global.TILE_HEIGHT >= floor_height:
+				floor_height = body.height * Global.TILE_HEIGHT
+				found = true
+	if not found: floor_height = 0.0
+	
+	puppet.position.y = position_z
+
+
+func jump() -> void:
+	if airborne and enabled:
+		velocity_z = jump_force

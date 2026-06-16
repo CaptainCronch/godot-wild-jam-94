@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dg03camctcanq"]
+
+[ext_resource type="Script" uid="uid://b8nkebalskho6" path="res://components/platformer_component.gd" id="1_w8yj4"]
+
+[node name="PlatformerComponent" type="Node2D" unique_id=1750379246]
+script = ExtResource("1_w8yj4")

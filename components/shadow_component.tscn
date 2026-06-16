@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://bn3d61ma72o75"]
 
-[ext_resource type="Script" uid="uid://cldvki2gl2ec4" path="res://shadow_component.gd" id="1_t6cfp"]
+[ext_resource type="Script" uid="uid://cldvki2gl2ec4" path="res://components/shadow_component.gd" id="1_t6cfp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t6cfp"]
 radius = 18.0
 
 [node name="ShadowComponent" type="Node2D" unique_id=390992070 node_paths=PackedStringArray("blob")]
 script = ExtResource("1_t6cfp")
-blob = NodePath("Polygon2D")
+blob = NodePath("Blob")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=882066402]
+[node name="Blob" type="Polygon2D" parent="." unique_id=882066402]
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1987522447]
 collision_layer = 0

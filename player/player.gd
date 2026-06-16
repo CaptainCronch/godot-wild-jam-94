@@ -18,7 +18,6 @@ const COYOTE_TIME := 0.1
 
 @export var puppet: Node2D
 @export var sprite: Polygon2D
-@export var shadow: Polygon2D
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
 @export var camera_holder: CameraHolder
@@ -32,7 +31,6 @@ var air_acceleration := BASE_AIR_ACCELERATION
 var air_friction := BASE_AIR_FRICTION
 var jump_force := BASE_JUMP_FORCE
 var gravity := BASE_GRAVITY
-var jump_boost := 1.0
 var airborne := false
 var in_jump_buffer := true
 var jump_cut := false
@@ -48,7 +46,7 @@ var dir := Vector2()
 
 
 func _ready() -> void:
-	pass
+	Global.player = self
 	#print(Global.tilemaps)
 
 
@@ -81,7 +79,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	movement_z(delta)
 	
-	desired_velocity = dir * speed * delta * jump_boost
+	desired_velocity = dir * speed * delta
 	
 	#jump_boost = Global.decay_towards(jump_boost, 1.0, BASE_JUMP_BOOST_DECAY, delta)
 	
@@ -96,6 +94,7 @@ func _physics_process(delta: float) -> void:
 				air_acceleration if absf(dir.y) > 0 else air_friction)
 	
 	velocity.x = Global.decay_towards(velocity.x, desired_velocity.x, decay.x, delta)
+	debug_text.text = str(Vector2i(velocity))
 	velocity.y = Global.decay_towards(velocity.y, desired_velocity.y, decay.y, delta)
 	move_and_slide()
 
@@ -151,3 +150,6 @@ func jump() -> void:
 
 func kick() -> void:
 	pass
+
+
+func is_colliding() -> bool: return is_on_ceiling() or is_on_floor() or is_on_wall()

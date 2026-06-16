@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ou0p1t3vjrgi"]
+
+[ext_resource type="Script" uid="uid://dh6q0fe5xg6x1" path="res://enemies/shambler.gd" id="1_0q4ty"]
+[ext_resource type="PackedScene" uid="uid://dg03camctcanq" path="res://components/platformer_component.tscn" id="2_2n88m"]
+[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="3_a8mgi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s3b2c"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
+radius = 14.0
+
+[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("platformer_comp")]
+collision_layer = 32
+collision_mask = 15
+floor_constant_speed = true
+floor_block_on_wall = false
+script = ExtResource("1_0q4ty")
+platformer_comp = NodePath("PlatformerComponent")
+
+[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet") instance=ExtResource("2_2n88m")]
+target = NodePath("..")
+world_area = NodePath("../WorldArea")
+puppet = NodePath("../Puppet")
+
+[node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("3_a8mgi")]
+
+[node name="Puppet" type="Node2D" parent="." unique_id=6801831]
+
+[node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=336839294]
+position = Vector2(0, -25)
+color = Color(1, 0.39891216, 0.2415607, 1)
+polygon = PackedVector2Array(-16, 25, 0, -25, 16, 25)
+
+[node name="WorldArea" type="Area2D" parent="." unique_id=1716572767]
+collision_layer = 0
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=921311612]
+shape = SubResource("CircleShape2D_s3b2c")
+
+[node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1301316648]
+shape = SubResource("CircleShape2D_pfo6o")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bgraey60p2frl"]
 
 [ext_resource type="Script" uid="uid://b15lkfh64orq1" path="res://player/weapons/revolver_bullet.gd" id="1_kmeu4"]
-[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://shadow_component.tscn" id="2_orxtn"]
+[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_orxtn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
 radius = 8.0
