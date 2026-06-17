@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bklur5uy5lei4" path="res://player/weapon.gd" id="5_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://k6uix5btrhsr" path="res://icon.svg" id="6_boad6"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_yllr7"]
+[ext_resource type="Texture2D" uid="uid://q5ma63uxsvqs" path="res://player/player-idle-sheet.png" id="8_yllr7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(24, 8)
@@ -27,24 +28,30 @@ metadata/_custom_type_script = "uid://crg4f1ccw336i"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
 size = Vector2(128, 84)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yllr7"]
+noise_type = 0
+frequency = 0.05
+fractal_octaves = 2
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgyib"]
 radius = 13.0
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "leg", "weapon", "weapon_holder", "camera_holder", "debug_text")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text")]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 hurtbox = NodePath("HurtboxComponent")
-sprite = NodePath("Puppet/Sprite")
+sprite = NodePath("Puppet/Polygon2D")
 leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
-camera_holder = NodePath("Puppet/CameraHolder")
+weapon_sprite = NodePath("Puppet/WeaponSprite")
+camera_holder = NodePath("CameraHolder")
 debug_text = NodePath("DebugText")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") instance=ExtResource("3_rgyib")]
@@ -82,12 +89,43 @@ shape = SubResource("RectangleShape2D_8t03j")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_boad6")]
 
+[node name="CameraHolder" type="Node2D" parent="." unique_id=11818842 node_paths=PackedStringArray("player", "camera")]
+script = ExtResource("4_yw30f")
+player = NodePath("..")
+camera = NodePath("Camera2D")
+noise = SubResource("FastNoiseLite_yllr7")
+
+[node name="Camera2D" type="Camera2D" parent="CameraHolder" unique_id=2024447866]
+position_smoothing_enabled = true
+drag_left_margin = 0.05
+drag_top_margin = 0.05
+drag_right_margin = 0.05
+drag_bottom_margin = 0.05
+editor_draw_drag_margin = true
+
 [node name="Puppet" type="Node2D" parent="." unique_id=506441243]
 
-[node name="Sprite" type="Polygon2D" parent="Puppet" unique_id=173726787]
+[node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=1813973568]
 position = Vector2(0, -25)
 color = Color(0, 0.7081541, 0.69388574, 1)
 polygon = PackedVector2Array(-16, 25, -16, -25, 16, -25, 16, 25)
+
+[node name="Sprite2D" type="Sprite2D" parent="Puppet" unique_id=1634011134]
+visible = false
+texture_filter = 1
+position = Vector2(0.5, -26.71)
+scale = Vector2(2.135, 2.135)
+texture = ExtResource("8_yllr7")
+region_enabled = true
+region_rect = Rect2(0, 0, 25, 25)
+
+[node name="WeaponSprite" type="Polygon2D" parent="Puppet" unique_id=1296291824]
+texture_repeat = 2
+position = Vector2(11.965, -20.43)
+texture = ExtResource("6_boad6")
+texture_offset = Vector2(-18.475, 19.85)
+texture_scale = Vector2(3.55, 3.55)
+polygon = PackedVector2Array(2, 0, -9, 17, 35, 0, -9, -20)
 
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -20.43)
@@ -97,37 +135,15 @@ visible = false
 position = Vector2(0, 20.43)
 polygon = PackedVector2Array(-7, -12, 89, -11, 91, -31, 95, -36, 105, -37, 108, -36, 113, -33, 116, -24, 116, -15, 116, -7, 116, 3, 117, 8, 117, 11, 114, 14, 108, 14, -8, 8)
 
-[node name="Polygon2D" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1296291824]
-texture_repeat = 2
-position = Vector2(11.965, 0)
-texture = ExtResource("6_boad6")
-texture_offset = Vector2(-18.475, 19.85)
-texture_scale = Vector2(3.55, 3.55)
-polygon = PackedVector2Array(2, 0, -9, 17, 35, 0, -9, -20)
-
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Puppet/WeaponHolder" unique_id=1000360415]
 remote_path = NodePath("../../../Weapon")
 update_position = false
 update_scale = false
 
-[node name="CameraHolder" type="Node2D" parent="Puppet" unique_id=11818842 node_paths=PackedStringArray("camera")]
-script = ExtResource("4_yw30f")
-camera = NodePath("Camera2D")
-
-[node name="Camera2D" type="Camera2D" parent="Puppet/CameraHolder" unique_id=2024447866]
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.05
-drag_top_margin = 0.05
-drag_right_margin = 0.05
-drag_bottom_margin = 0.05
-editor_draw_drag_margin = true
-
 [node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("player", "polygon", "muzzle")]
 script = ExtResource("5_g6k8r")
 player = NodePath("..")
-polygon = NodePath("../Puppet/WeaponHolder/Polygon2D")
+polygon = NodePath("../Puppet/WeaponSprite")
 muzzle = NodePath("Muzzle")
 
 [node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
@@ -156,3 +172,7 @@ script = ExtResource("3_g1dw6")
 offset_right = 40.0
 offset_bottom = 23.0
 text = "hey"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1012533958]
+
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

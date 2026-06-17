@@ -15,12 +15,14 @@ const KICK_SELF_KNOCKBACK := 500.0
 @export var leg: Polygon2D
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
+@export var weapon_sprite: Polygon2D
 @export var camera_holder: CameraHolder
 @export var debug_text: Label
 
 var in_jump_buffer := true
 var jump_cut := false
 var diving := false
+var reloading := false
 var coyote_timer := 0.0
 
 @onready var camera := camera_holder.camera
@@ -47,11 +49,16 @@ func _process(delta: float) -> void:
 		weapon.fire()
 	
 	weapon_holder.rotation = weapon_holder.global_position.direction_to(get_global_mouse_position()).angle()
-	hurtbox.rotation = weapon_holder.rotation
-	if absf(weapon_holder.rotation) > PI/2.0:
-		weapon_holder.scale.y = -1.0
+	if not reloading:
+		weapon_sprite.rotation = weapon_holder.rotation
 	else:
-		weapon_holder.scale.y = 1.0
+		weapon_sprite.rotation = (absf(weapon_holder.rotation) / 2) + (PI/4)
+	
+	hurtbox.rotation = weapon_holder.rotation
+	if absf(weapon_sprite.rotation) > PI/2.0:
+		weapon_sprite.scale.y = -1.0
+	else:
+		weapon_sprite.scale.y = 1.0
 	#debug_text.text = str(weapon_holder.rotation)
 	
 	coyote_timer = minf(coyote_timer + delta, COYOTE_TIME)
@@ -97,7 +104,7 @@ func movement_z(delta: float) -> void:
 	else:
 		plat_comp.airborne = true
 	
-	in_jump_buffer = plat_comp.position_z - -plat_comp.floor_height > -JUMP_BUFFER
+	in_jump_buffer = plat_comp.position_z - -plat_comp.floor_height > -JUMP_BUFFER / (2.0 if diving else 1.0) # makes it harder to hit crazy bhops
 	
 	# Base tilemap always on, contains the impassable walls
 	set_collision_mask_value(1, plat_comp.position_z > -Global.TILE_HEIGHT)
@@ -140,3 +147,7 @@ func kick() -> void:
 	#hurtbox.collider.disabled = false
 	#await get_tree().create_timer(0.1).timeout
 	#hurtbox.collider.disabled = true
+
+
+func _on_damage_taken(_attack: Attack) -> void:
+	camera_holder.shake(0.5)

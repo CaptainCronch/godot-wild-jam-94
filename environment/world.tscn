@@ -59,11 +59,12 @@ z_index = -1
 z_as_relative = false
 script = ExtResource("1_na063")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("health_label")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("health_label", "ammo_label")]
 script = ExtResource("3_wpdqf")
-health_label = NodePath("Label")
+health_label = NodePath("HealthLabel")
+ammo_label = NodePath("AmmoLabel")
 
-[node name="Label" type="Label" parent="UI" unique_id=156325063]
+[node name="HealthLabel" type="Label" parent="UI" unique_id=156325063]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -72,6 +73,21 @@ offset_right = 40.0
 grow_vertical = 0
 text = "20.0"
 label_settings = SubResource("LabelSettings_na063")
+
+[node name="AmmoLabel" type="Label" parent="UI" unique_id=1240045592]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -255.0
+offset_top = -175.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(1, 0)
+text = "20.0"
+label_settings = SubResource("LabelSettings_na063")
+horizontal_alignment = 2
 
 [node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]
 position = Vector2(690, 633)
