@@ -14,9 +14,9 @@ var angle := 0.0
 func _ready() -> void:
 	velocity = Vector2.RIGHT.rotated(angle) * BASE_SPEED
 	
-	set_collision_mask_value(1, height > -Global.TILE_HEIGHT)
-	set_collision_mask_value(2, height > -Global.TILE_HEIGHT * 2)
-	set_collision_mask_value(3, height > -Global.TILE_HEIGHT * 3)
+	set_collision_mask_value(1, height > Global.TILE_HEIGHT)
+	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
+	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
 
 
 func _physics_process(delta: float) -> void:

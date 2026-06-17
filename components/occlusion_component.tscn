@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://nxtwfdcjjwfu"]
+
+[ext_resource type="Script" uid="uid://2dqn2cd6qje" path="res://components/occlusion_component.gd" id="1_ti51g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8id3"]
+radius = 5.0
+
+[node name="OcclusionComponent" type="Area2D" unique_id=646099552]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("1_ti51g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1005919188]
+shape = SubResource("CircleShape2D_l8id3")

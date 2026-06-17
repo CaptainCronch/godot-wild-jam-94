@@ -12,7 +12,9 @@
 [ext_resource type="Script" uid="uid://bklur5uy5lei4" path="res://player/weapon.gd" id="5_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://k6uix5btrhsr" path="res://icon.svg" id="6_boad6"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_yllr7"]
+[ext_resource type="PackedScene" uid="uid://nxtwfdcjjwfu" path="res://components/occlusion_component.tscn" id="8_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://q5ma63uxsvqs" path="res://player/player-idle-sheet.png" id="8_yllr7"]
+[ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="9_kb6p2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(24, 8)
@@ -33,19 +35,33 @@ noise_type = 0
 frequency = 0.05
 fractal_octaves = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wodsf"]
+shader = ExtResource("9_kb6p2")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/active = false
+
+[sub_resource type="Gradient" id="Gradient_32hag"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.70980394, 0.69411767, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tqiix"]
+gradient = SubResource("Gradient_32hag")
+width = 1
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgyib"]
 radius = 13.0
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "occlusion_component", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text")]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 hurtbox = NodePath("HurtboxComponent")
+occlusion_component = NodePath("OcclusionComponent")
 sprite = NodePath("Puppet/Polygon2D")
 leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
@@ -89,6 +105,9 @@ shape = SubResource("RectangleShape2D_8t03j")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_boad6")]
 
+[node name="OcclusionComponent" parent="." unique_id=646099552 node_paths=PackedStringArray("target") instance=ExtResource("8_kb6p2")]
+target = NodePath("..")
+
 [node name="CameraHolder" type="Node2D" parent="." unique_id=11818842 node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("4_yw30f")
 player = NodePath("..")
@@ -106,8 +125,9 @@ editor_draw_drag_margin = true
 [node name="Puppet" type="Node2D" parent="." unique_id=506441243]
 
 [node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=1813973568]
+material = SubResource("ShaderMaterial_wodsf")
 position = Vector2(0, -25)
-color = Color(0, 0.7081541, 0.69388574, 1)
+texture = SubResource("GradientTexture1D_tqiix")
 polygon = PackedVector2Array(-16, 25, -16, -25, 16, -25, 16, 25)
 
 [node name="Sprite2D" type="Sprite2D" parent="Puppet" unique_id=1634011134]
@@ -127,6 +147,11 @@ texture_offset = Vector2(-18.475, 19.85)
 texture_scale = Vector2(3.55, 3.55)
 polygon = PackedVector2Array(2, 0, -9, 17, 35, 0, -9, -20)
 
+[node name="MuzzleFlash" type="Polygon2D" parent="Puppet/WeaponSprite" unique_id=1332102063]
+visible = false
+position = Vector2(35.035, -0.5699997)
+polygon = PackedVector2Array(0, -20, 20, 0, 0, 20, -20, 0)
+
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -20.43)
 
@@ -140,14 +165,22 @@ remote_path = NodePath("../../../Weapon")
 update_position = false
 update_scale = false
 
-[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("player", "polygon", "muzzle")]
+[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("player", "polygon", "muzzle", "muzzle_flash")]
 script = ExtResource("5_g6k8r")
 player = NodePath("..")
 polygon = NodePath("../Puppet/WeaponSprite")
 muzzle = NodePath("Muzzle")
+muzzle_flash = NodePath("../Puppet/WeaponSprite/MuzzleFlash")
 
 [node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
 position = Vector2(40, 0)
+
+[node name="StateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_rkbax")
+initial_state = NodePath("State")
+
+[node name="State" type="Node" parent="Weapon/StateMachine" unique_id=1668296279]
+script = ExtResource("3_g1dw6")
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1915895890]
 shape = SubResource("CircleShape2D_hvfyp")
@@ -160,13 +193,6 @@ collision_mask = 15
 shape = SubResource("CircleShape2D_rgyib")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=2096405912]
-
-[node name="StateMachine" type="Node" parent="." unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
-script = ExtResource("2_rkbax")
-initial_state = NodePath("State")
-
-[node name="State" type="Node" parent="StateMachine" unique_id=1668296279]
-script = ExtResource("3_g1dw6")
 
 [node name="DebugText" type="Label" parent="." unique_id=1073283056]
 offset_right = 40.0

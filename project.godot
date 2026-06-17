@@ -91,11 +91,16 @@ debug_key={
 [layer_names]
 
 2d_physics/layer_1="Step 1"
+2d_navigation/layer_1="Base"
 2d_physics/layer_2="Step 2"
+2d_navigation/layer_2="Height1"
 2d_physics/layer_3="Step 3"
+2d_navigation/layer_3="Height2"
 2d_physics/layer_4="Impassable"
+2d_navigation/layer_4="Height3"
 2d_physics/layer_5="Player"
 2d_physics/layer_6="Enemy"
+2d_physics/layer_9="Facade"
 
 [physics]
 

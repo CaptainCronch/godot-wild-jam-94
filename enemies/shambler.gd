@@ -12,6 +12,7 @@ const CLIMB_BOOST := 1000.0
 @export var plat_comp: PlatformerComponent
 @export var enemy_check: Area2D
 @export var wall_check: RayCast2D
+@export var sprite: Polygon2D
 
 var step_tween: Tween
 var current_speed := SEPARATION_SPEED
@@ -47,9 +48,9 @@ func _physics_process(delta: float) -> void:
 	desired = (desired + separate()).normalized()
 	plat_comp.dir = desired
 	
-	wall_check.set_collision_mask_value(1, plat_comp.position_z > -Global.TILE_HEIGHT)
-	wall_check.set_collision_mask_value(2, plat_comp.position_z > -Global.TILE_HEIGHT * 2)
-	wall_check.set_collision_mask_value(3, plat_comp.position_z > -Global.TILE_HEIGHT * 3)
+	wall_check.set_collision_mask_value(1, plat_comp.position_z > Global.TILE_HEIGHT)
+	wall_check.set_collision_mask_value(2, plat_comp.position_z > Global.TILE_HEIGHT * 2)
+	wall_check.set_collision_mask_value(3, plat_comp.position_z > Global.TILE_HEIGHT * 3)
 	
 	wall_check.rotation = player_dir.angle()
 	
@@ -72,3 +73,10 @@ func separate() -> Vector2:
 			if i > MAX_SEPARATION: break
 			output += enemy.global_position.direction_to(global_position) / global_position.distance_to(enemy.global_position) * SEPARATION_FACTOR
 	return output
+
+
+func _on_damage_taken(_attack: Attack) -> void:
+	Global.player.camera_holder.shake(0.1)
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
+	await get_tree().create_timer(0.1).timeout
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)

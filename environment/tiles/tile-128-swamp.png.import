@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3p7q63gorkbk"
-path="res://.godot/imported/tile-128-atlas.png-3ba2fb85b68e85df0052c5de07a130b4.ctex"
+uid="uid://b4db2bdysifqs"
+path="res://.godot/imported/tile-128-swamp.png-fb3a7793ea044cbbc8859fab3a56715a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://environment/tiles/tile-128-atlas.png"
-dest_files=["res://.godot/imported/tile-128-atlas.png-3ba2fb85b68e85df0052c5de07a130b4.ctex"]
+source_file="res://environment/tiles/tile-128-swamp.png"
+dest_files=["res://.godot/imported/tile-128-swamp.png-fb3a7793ea044cbbc8859fab3a56715a.ctex"]
 
 [params]
 

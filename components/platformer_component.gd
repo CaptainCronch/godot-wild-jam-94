@@ -20,6 +20,7 @@ class_name PlatformerComponent
 @export var hurtbox: HurtBoxComponent
 
 var airborne := false
+var jumping := false
 var enabled := true
 var desired_velocity := Vector2()
 var decay := Vector2()
@@ -66,24 +67,25 @@ func _physics_process(delta: float) -> void:
 
 func movement_z(delta: float) -> void:
 	if override_functions: return
-	gravity = base_gravity * (1.0 if velocity_z < 0.0 else base_fall_boost) 
+	gravity = base_gravity * (1.0 if velocity_z < 0.0 or not jumping else base_fall_boost) 
 	velocity_z += gravity * delta
-	position_z = minf(position_z + velocity_z, -floor_height)
-	if is_equal_approx(position_z, -floor_height):
+	position_z = minf(position_z + velocity_z, floor_height)
+	if is_equal_approx(position_z, floor_height):
 		airborne = false
+		jumping = false
 		velocity_z = 0.0
 	else:
 		airborne = true
 	
 	# Base tilemap always on, contains the impassable walls
-	target.set_collision_mask_value(1, position_z > -Global.TILE_HEIGHT)
-	target.set_collision_mask_value(2, position_z > -Global.TILE_HEIGHT * 2)
-	target.set_collision_mask_value(3, position_z > -Global.TILE_HEIGHT * 3)
+	target.set_collision_mask_value(1, position_z > Global.TILE_HEIGHT)
+	target.set_collision_mask_value(2, position_z > Global.TILE_HEIGHT * 2)
+	target.set_collision_mask_value(3, position_z > Global.TILE_HEIGHT * 3)
 	
 	var found := false
 	for body in world_area.get_overlapping_bodies():
 		if body is WorldLayer:
-			if body.height * Global.TILE_HEIGHT >= floor_height:
+			if body.height * Global.TILE_HEIGHT <= floor_height:
 				floor_height = body.height * Global.TILE_HEIGHT
 				found = true
 	if not found: floor_height = 0.0
@@ -95,6 +97,7 @@ func jump() -> void:
 	if override_functions: return
 	if airborne and enabled and not health_comp.is_stunned:
 		velocity_z = jump_force
+		jumping = true
 
 
 func is_colliding() -> bool: return target.is_on_ceiling() or target.is_on_floor() or target.is_on_wall()

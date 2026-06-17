@@ -23,14 +23,14 @@ func _ready() -> void:
 	#print(height)
 	shadow = Polygon2D.new()
 	shadow.position = blob.global_position
-	blob.position.y = -height
+	blob.position.y = height
 	reload()
 	Global.shadow_group.add_child(shadow)
 	blob.remote_path = blob.get_path_to(shadow)
 
 
 func _process(_delta: float) -> void:
-	blob.position.y = -height
+	blob.position.y = height
 
 
 func _notification(which):
@@ -68,7 +68,7 @@ func reload() -> void:
 func check_height() -> void:
 	height = 0.0
 	for body in overlapping_bodies:
-		if body.height * Global.TILE_HEIGHT >= height:
+		if body.height * Global.TILE_HEIGHT <= height:
 			height = body.height * Global.TILE_HEIGHT
 
 

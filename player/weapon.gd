@@ -13,6 +13,7 @@ var revolver_ammo := REVOLVER_MAX_AMMO
 @export var player: Player
 @export var polygon: Polygon2D
 @export var muzzle: Marker2D
+@export var muzzle_flash: Polygon2D
 
 
 func fire() -> void:
@@ -24,7 +25,7 @@ func fire() -> void:
 	bullet.angle = rotation
 	
 	bullet.shadow.height = player.plat_comp.floor_height
-	bullet.shadow.blob.position.y = -player.plat_comp.floor_height
+	bullet.shadow.blob.position.y = player.plat_comp.floor_height
 	#for body in player.plat_comp.world_area.get_overlapping_bodies():
 		#if body is TileMapLayer:
 			#bullet.shadow.overlapping_bodies.append(body)
@@ -40,6 +41,10 @@ func fire() -> void:
 	
 	#player.camera_holder.shake(0.2)
 	player.camera_holder.kick(Vector2.from_angle(rotation) * -100.0)
+	
+	muzzle_flash.show()
+	await get_tree().create_timer(0.05).timeout
+	muzzle_flash.hide()
 	
 	if revolver_ammo <= 0:
 		player.reloading = true

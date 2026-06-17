@@ -11,9 +11,9 @@ func _ready() -> void:
 	
 	#z_index = height - 1
 	
-	var brightness := brightness_base + ((height - 1) * brightness_step)
-	brightness = clampf(brightness, 0.0, 2.0)
-	modulate = Color(brightness, brightness, brightness)
+	#var brightness := brightness_base + ((height - 1) * brightness_step)
+	#brightness = clampf(brightness, 0.0, 2.0)
+	#modulate = Color(brightness, brightness, brightness)
 
 
 #func _use_tile_data_runtime_update(layer: int, coords: Vector2i) -> bool:

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_orxtn"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="2_q0wpf"]
 [ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_am8n8"]
+[ext_resource type="PackedScene" uid="uid://nxtwfdcjjwfu" path="res://components/occlusion_component.tscn" id="5_14enh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
 radius = 8.0
@@ -56,5 +57,8 @@ attack = SubResource("Resource_14enh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1092665477]
 shape = SubResource("CircleShape2D_am8n8")
+
+[node name="OcclusionComponent" parent="." unique_id=646099552 node_paths=PackedStringArray("target") instance=ExtResource("5_14enh")]
+target = NodePath("..")
 
 [connection signal="hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_hit"]

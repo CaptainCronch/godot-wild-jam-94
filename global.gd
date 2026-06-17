@@ -1,6 +1,6 @@
 extends Node
 
-const TILE_HEIGHT := 128.0
+const TILE_HEIGHT := -128.0
 
 var tilemaps: Array[TileMapLayer]
 var player: Player
