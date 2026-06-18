@@ -7,15 +7,14 @@ const BASE_DIVE_JUMP_BOOST := -5.0
 const JUMP_BUFFER := 30.0
 const COYOTE_TIME := 0.1
 const KICK_SELF_KNOCKBACK := -500.0
-const KICK_AIR_JUMP_BOOST := -7.0
+const KICK_AIR_JUMP_BOOST := -3.0
 const KICK_BOOST := 200.0
 const BASE_KICK_TIME := 0.3
-const BASE_AIR_KICK_TIME_FACTOR := 0.4
+const BASE_AIR_KICK_TIME_FACTOR := 0.5
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
 @export var hurtbox: HurtBoxComponent
-@export var occlusion_component: OcclusionComponent
 @export var sprite: Polygon2D
 @export var leg: Polygon2D
 @export var weapon: Weapon
@@ -36,7 +35,7 @@ var kick_timer := BASE_KICK_TIME
 
 func _ready() -> void:
 	Global.player = self
-	modulate = Color(1.0, 1.0, 1.0, 0.5)
+	#modulate = Color(1.0, 1.0, 1.0, 0.5)
 	#print(Global.tilemaps)
 
 
@@ -54,6 +53,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("mouse1"):
 		weapon.fire()
+	if Input.is_action_pressed("mouse1"):
+		weapon.fire_hold()
+	if Input.is_action_just_released("mouse1"):
+		weapon.fire_release()
 	
 	weapon_holder.rotation = weapon_holder.global_position.direction_to(get_global_mouse_position()).angle()
 	if not reloading:
@@ -66,6 +69,8 @@ func _process(delta: float) -> void:
 		weapon_sprite.scale.y = -1.0
 	else:
 		weapon_sprite.scale.y = 1.0
+	
+	weapon_sprite.show_behind_parent = weapon_sprite.rotation < 0.0
 	#debug_text.text = str(weapon_holder.rotation)
 	
 	coyote_timer = minf(coyote_timer + delta, COYOTE_TIME)
@@ -135,7 +140,8 @@ func movement_z(delta: float) -> void:
 	
 	plat_comp.puppet.position.y = plat_comp.position_z
 	
-	occlusion_component.monitoring = is_zero_approx(plat_comp.floor_height) #and plat_comp.position_z > -200.0)
+	#occlusion.height = plat_comp.position_z
+	#occlusion_component.monitoring = is_zero_approx(plat_comp.floor_height) #and plat_comp.position_z > -200.0)
 
 
 func jump() -> void:
@@ -161,9 +167,10 @@ func kick() -> void:
 	if hurtbox.check_collision():
 		velocity += Vector2.from_angle(weapon_holder.rotation) * KICK_SELF_KNOCKBACK
 	elif not (diving and not plat_comp.airborne): # prevent people from sliding and kicking to build insane speed
-		velocity += Vector2.from_angle(weapon_holder.rotation) * KICK_BOOST
+		# if airborne kick boost towards where you're moving. on the ground kick boost wherever you're kicking towards
+		velocity += (Vector2.from_angle(weapon_holder.rotation) if not plat_comp.airborne else velocity.normalized()) * KICK_BOOST
 	
-	if plat_comp.airborne: #sand plat_comp.velocity_z > 0.0:
+	if plat_comp.airborne: # and plat_comp.velocity_z > 0.0:
 		plat_comp.velocity_z = KICK_AIR_JUMP_BOOST
 
 	leg.show()
@@ -177,5 +184,13 @@ func kick() -> void:
 func _on_damage_taken(_attack: Attack) -> void:
 	camera_holder.shake(0.5)
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.05).timeout
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+	await get_tree().create_timer(0.05).timeout
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
+	await get_tree().create_timer(0.05).timeout
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+	await get_tree().create_timer(0.05).timeout
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
+	await get_tree().create_timer(0.05).timeout
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)

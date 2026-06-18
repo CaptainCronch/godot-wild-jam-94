@@ -100,6 +100,8 @@ debug_key={
 2d_navigation/layer_4="Height3"
 2d_physics/layer_5="Player"
 2d_physics/layer_6="Enemy"
+2d_physics/layer_7="Player Projectile"
+2d_physics/layer_8="Enemy Projectile"
 2d_physics/layer_9="Facade"
 
 [physics]

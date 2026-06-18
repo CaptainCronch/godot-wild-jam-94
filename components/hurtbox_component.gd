@@ -5,11 +5,12 @@ signal hit(hitbox: HitboxComponent)
 
 @export var attack: Attack
 @export var updates := true
+@export var update_time := 0.0
 @export var multihit := false
 #@export var detection_groups: PackedStringArray
 #@export var flash_speed := 0.1
 
-#var flash_timer := 0.0
+var update_timer := 0.0
 
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
@@ -19,14 +20,20 @@ signal hit(hitbox: HitboxComponent)
 		#push_error("HitboxComponent of ", str(self), " has no detection groups!")
 
 
-func _physics_process(_delta) -> void:
+func _physics_process(delta) -> void:
 	#if flash_speed > 0.0: # if has flash speed and time out then check collisions and restart timer
 		#flash_timer += delta
 		#if flash_timer >= flash_speed:
 			#flash_timer = 0.0
 		#else: return
 	if not monitoring or not updates: return
-	check_collision()
+	if update_time <= 0.0:
+		check_collision()
+	else:
+		update_timer += delta
+		if update_timer >= update_time:
+			check_collision()
+			update_timer = 0.0
 
 
 func check_collision() -> bool:

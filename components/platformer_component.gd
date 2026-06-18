@@ -91,6 +91,7 @@ func movement_z(delta: float) -> void:
 	if not found: floor_height = 0.0
 	
 	puppet.position.y = position_z
+	#occlusion.height = position_z
 
 
 func jump() -> void:

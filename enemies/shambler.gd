@@ -5,9 +5,10 @@ const PLAYER_FOLLOW_FACTOR := 1.0
 const SEPARATION_FACTOR := 1.0
 const SEPARATION_SPEED := 5000.0
 const CLIMB_ACCELERATION := 15.0
-const MAX_SEPARATION := 5
-const CLIMB_SPEED := -2.0
+const MAX_SEPARATION := 3
+const CLIMB_SPEED := -4.0
 const CLIMB_BOOST := 1000.0
+const AI_UPDATE := 0.2
 
 @export var plat_comp: PlatformerComponent
 @export var enemy_check: Area2D
@@ -21,6 +22,7 @@ var desired := Vector2()
 var step_duration := 0.3
 var pass_duration := 0.7
 var stepping := false
+var ai_timer := 0.0
 
 
 func _ready() -> void:
@@ -29,23 +31,27 @@ func _ready() -> void:
 	await get_tree().current_scene.step_tick.timeout
 	if is_instance_valid(step_tween): step_tween.kill()
 	step_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_loops(0)
-	step_tween.tween_callback(func ():
+	step_tween.tween_callback(func():
 		current_speed = plat_comp.base_speed
 		stepping = true
 	)
 	step_tween.tween_interval(step_duration)
-	step_tween.tween_callback(func ():
+	step_tween.tween_callback(func():
 		current_speed = SEPARATION_SPEED
 		stepping = false
 	)
 	step_tween.tween_interval(pass_duration)
 
 
+func _process(delta: float) -> void:
+	ai_timer += delta
+
+
 func _physics_process(delta: float) -> void:
 	player_dir = global_position.direction_to(Global.player.global_position)
 	desired = player_dir * PLAYER_FOLLOW_FACTOR * (1.0 if stepping else 0.0)
 	
-	desired = (desired + separate()).normalized()
+	if ai_timer < AI_UPDATE: desired = (desired + separate()).normalized()
 	plat_comp.dir = desired
 	
 	wall_check.set_collision_mask_value(1, plat_comp.position_z > Global.TILE_HEIGHT)
@@ -65,6 +71,7 @@ func _physics_process(delta: float) -> void:
 
 
 func separate() -> Vector2:
+	ai_timer = 0.0
 	var output := Vector2()
 	var i := 0
 	for enemy in enemy_check.get_overlapping_areas():
@@ -76,7 +83,7 @@ func separate() -> Vector2:
 
 
 func _on_damage_taken(_attack: Attack) -> void:
-	Global.player.camera_holder.shake(0.1)
+	Global.player.camera_holder.shake(0.02)
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
 	await get_tree().create_timer(0.1).timeout
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)

@@ -12,3 +12,10 @@ script = ExtResource("1_ti51g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1005919188]
 shape = SubResource("CircleShape2D_l8id3")
+
+[node name="HeightCheck" type="Area2D" parent="." unique_id=1346335791]
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeightCheck" unique_id=764747928]
+shape = SubResource("CircleShape2D_l8id3")

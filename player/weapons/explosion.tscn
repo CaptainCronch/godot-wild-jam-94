@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://cono4p61cs4he"]
+
+[ext_resource type="Script" uid="uid://1j2t6a8oh78v" path="res://player/weapons/explosion.gd" id="1_417hj"]
+[ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="2_uyaau"]
+[ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="3_72sd2"]
+
+[sub_resource type="Resource" id="Resource_dnnoc"]
+script = ExtResource("3_72sd2")
+attack_damage = 5
+knockback_force = 1200.0
+knockup_force = -7.0
+stun_time = 0.5
+size = 512.0
+metadata/_custom_type_script = "uid://crg4f1ccw336i"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uyaau"]
+radius = 100.0
+
+[node name="Explosion" type="Node2D" unique_id=1552889702 node_paths=PackedStringArray("hurtbox", "sprite")]
+script = ExtResource("1_417hj")
+hurtbox = NodePath("HurtboxComponent")
+sprite = NodePath("Polygon2D")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=630679701]
+
+[node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("2_uyaau")]
+collision_layer = 64
+collision_mask = 48
+attack = SubResource("Resource_dnnoc")
+updates = false
+multihit = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=271866216]
+shape = SubResource("CircleShape2D_uyaau")

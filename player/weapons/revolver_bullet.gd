@@ -17,6 +17,8 @@ func _ready() -> void:
 	set_collision_mask_value(1, height > Global.TILE_HEIGHT)
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
+	
+	#occlusion.height = height
 
 
 func _physics_process(delta: float) -> void:

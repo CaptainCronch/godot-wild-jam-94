@@ -60,3 +60,15 @@ func decay_angle_towards(value : float, target : float,
 		return target
 	else:
 		return new_value
+
+
+func generate_circle_polygon(radius: float, resolution: int) -> PackedVector2Array:
+	var angle_delta: float = (PI * 2) / resolution
+	var vector: Vector2 = Vector2(radius, 0)
+	var points: PackedVector2Array
+
+	for _i in resolution:
+		vector = vector.rotated(angle_delta)
+		points.append(vector)
+
+	return points

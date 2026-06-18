@@ -1,23 +1,23 @@
-[gd_scene format=3 uid="uid://ou0p1t3vjrgi"]
+[gd_scene format=3 uid="uid://t4ks8c3wxa6u"]
 
-[ext_resource type="Script" uid="uid://dh6q0fe5xg6x1" path="res://enemies/shambler.gd" id="1_0q4ty"]
-[ext_resource type="PackedScene" uid="uid://dg03camctcanq" path="res://components/platformer_component.tscn" id="2_2n88m"]
-[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="3_a8mgi"]
-[ext_resource type="PackedScene" uid="uid://dxlsjjfqpvly3" path="res://components/health_component.tscn" id="3_s3b2c"]
-[ext_resource type="PackedScene" uid="uid://b4smnywsn66gx" path="res://components/hitbox_component.tscn" id="4_pfo6o"]
-[ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="5_3hxai"]
-[ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_6423d"]
-[ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_6423d"]
+[ext_resource type="Script" uid="uid://ccd6j1lpxf0o4" path="res://enemies/hopper.gd" id="1_pual5"]
+[ext_resource type="PackedScene" uid="uid://dg03camctcanq" path="res://components/platformer_component.tscn" id="2_04cx2"]
+[ext_resource type="PackedScene" uid="uid://dxlsjjfqpvly3" path="res://components/health_component.tscn" id="3_rvyhg"]
+[ext_resource type="PackedScene" uid="uid://b4smnywsn66gx" path="res://components/hitbox_component.tscn" id="4_lhxvf"]
+[ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="5_r284h"]
+[ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_14dig"]
+[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="7_skrw8"]
+[ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_m82pc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hxai"]
 radius = 16.0
 
 [sub_resource type="Resource" id="Resource_ysxep"]
-script = ExtResource("6_6423d")
+script = ExtResource("6_14dig")
 attack_damage = 1
 knockback_force = 1000.0
 stun_time = 0.1
-size = 32.0
+size = 128.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6p5g5"]
@@ -25,13 +25,13 @@ size = Vector2(30, 10)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ysxep"]
 resource_local_to_scene = true
-shader = ExtResource("8_6423d")
+shader = ExtResource("8_m82pc")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false
 
 [sub_resource type="Gradient" id="Gradient_6423d"]
 offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 0.4, 0.24313726, 1)
+colors = PackedColorArray(1, 0.24000001, 0.24000001, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ysxep"]
 gradient = SubResource("Gradient_6423d")
@@ -46,32 +46,31 @@ radius = 24.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 14.0
 
-[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "enemy_check", "wall_check", "sprite") groups=["Enemy"]]
+[node name="Hopper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "enemy_check", "sprite") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
 floor_block_on_wall = false
-script = ExtResource("1_0q4ty")
+script = ExtResource("1_pual5")
 plat_comp = NodePath("PlatformerComponent")
 enemy_check = NodePath("EnemyCheck")
-wall_check = NodePath("WallCheck")
 sprite = NodePath("Puppet/Polygon2D")
 
-[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") groups=["Enemy"] instance=ExtResource("2_2n88m")]
-base_speed = 30000.0
-base_air_acceleration = 0.5
+[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") groups=["Enemy"] instance=ExtResource("2_04cx2")]
+base_jump_force = -18.0
+base_gravity = 50.0
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")
 health_comp = NodePath("../HealthComponent")
 hurtbox = NodePath("../HurtboxComponent")
 
-[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") groups=["Enemy"] instance=ExtResource("3_s3b2c")]
+[node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") groups=["Enemy"] instance=ExtResource("3_rvyhg")]
 max_health = 10
 target = NodePath("..")
 plat_comp = NodePath("../PlatformerComponent")
 
-[node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") groups=["Enemy"] instance=ExtResource("4_pfo6o")]
+[node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") groups=["Enemy"] instance=ExtResource("4_lhxvf")]
 collision_layer = 32
 collision_mask = 80
 health_comp = NodePath("../HealthComponent")
@@ -79,7 +78,7 @@ health_comp = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1732633954]
 shape = SubResource("CircleShape2D_3hxai")
 
-[node name="HurtboxComponent" parent="." unique_id=1464447820 groups=["Enemy"] instance=ExtResource("5_3hxai")]
+[node name="HurtboxComponent" parent="." unique_id=1464447820 groups=["Enemy"] instance=ExtResource("5_r284h")]
 collision_layer = 128
 collision_mask = 16
 attack = SubResource("Resource_ysxep")
@@ -87,7 +86,7 @@ attack = SubResource("Resource_ysxep")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=541787536]
 shape = SubResource("RectangleShape2D_6p5g5")
 
-[node name="ShadowComponent" parent="." unique_id=390992070 groups=["Enemy"] instance=ExtResource("3_a8mgi")]
+[node name="ShadowComponent" parent="." unique_id=390992070 groups=["Enemy"] instance=ExtResource("7_skrw8")]
 
 [node name="Puppet" type="Node2D" parent="." unique_id=6801831 groups=["Enemy"]]
 
@@ -95,7 +94,7 @@ shape = SubResource("RectangleShape2D_6p5g5")
 material = SubResource("ShaderMaterial_ysxep")
 position = Vector2(0, -25)
 texture = SubResource("GradientTexture1D_ysxep")
-polygon = PackedVector2Array(-16, 25, 0, -25, 16, 25)
+polygon = PackedVector2Array(-16, 25, -7.545868, -1.77141, -14, -13, -4, -13, 0, -25, 3.834671, -13.016657, 14, -13, 7.53804, -1.4436283, 16, 25)
 
 [node name="WorldArea" type="Area2D" parent="." unique_id=1716572767 groups=["Enemy"]]
 collision_layer = 0
@@ -114,10 +113,5 @@ shape = SubResource("CircleShape2D_6423d")
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1301316648]
 shape = SubResource("CircleShape2D_pfo6o")
-
-[node name="WallCheck" type="RayCast2D" parent="." unique_id=698982734]
-target_position = Vector2(24, 0)
-collision_mask = 15
-hit_from_inside = true
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

@@ -46,20 +46,8 @@ func _notification(which):
 	#check_height()
 
 
-func generate_circle_polygon() -> PackedVector2Array:
-	var angle_delta: float = (PI * 2) / resolution
-	var vector: Vector2 = Vector2(radius, 0)
-	var points: PackedVector2Array
-
-	for _i in resolution:
-		vector = vector.rotated(angle_delta)# * shadow_scale
-		points.append(vector)
-
-	return points
-
-
 func reload() -> void:
-	shadow.polygon = generate_circle_polygon()
+	shadow.polygon = Global.generate_circle_polygon(radius, resolution)
 	blob.scale = shadow_scale
 	(collision_shape_2d.shape as CircleShape2D).radius = radius * 0.2
 	shadow.modulate = color

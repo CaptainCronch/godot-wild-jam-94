@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_orxtn"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="2_q0wpf"]
 [ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_am8n8"]
-[ext_resource type="PackedScene" uid="uid://nxtwfdcjjwfu" path="res://components/occlusion_component.tscn" id="5_14enh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
 radius = 8.0
@@ -14,7 +13,7 @@ radius = 8.0
 
 [sub_resource type="Resource" id="Resource_14enh"]
 script = ExtResource("2_q0wpf")
-attack_damage = 5
+attack_damage = 10
 knockback_force = 700.0
 knockup_force = -3.0
 stun_time = 0.1
@@ -25,7 +24,7 @@ metadata/_custom_type_script = "uid://crg4f1ccw336i"
 radius = 28.0
 
 [node name="RevolverBullet" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "shadow", "hurtbox")]
-collision_layer = 16
+collision_layer = 64
 collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_kmeu4")
@@ -44,21 +43,18 @@ polygon = PackedVector2Array(15, 0, 25, -20, -25, 0, 25, 20)
 shape = SubResource("CircleShape2D_orxtn")
 
 [node name="WorldArea" type="Area2D" parent="." unique_id=1588874399]
-collision_layer = 16
+collision_layer = 64
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=1487419424]
 shape = SubResource("CircleShape2D_kmeu4")
 
 [node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("3_am8n8")]
-collision_layer = 16
+collision_layer = 64
 collision_mask = 32
 attack = SubResource("Resource_14enh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1092665477]
 shape = SubResource("CircleShape2D_am8n8")
-
-[node name="OcclusionComponent" parent="." unique_id=646099552 node_paths=PackedStringArray("target") instance=ExtResource("5_14enh")]
-target = NodePath("..")
 
 [connection signal="hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_hit"]

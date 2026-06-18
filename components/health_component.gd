@@ -14,6 +14,7 @@ signal death(attack: Attack)
 @export var max_health: int
 @export var invincibility_time := 0.0
 @export var height := 0.0
+@export var max_damage := 9999
 @export var target: Node2D
 @export var plat_comp: PlatformerComponent
 #@export var entity := true
@@ -40,7 +41,7 @@ func damage(attack: Attack):
 		if is_instance_valid(plat_comp):
 			plat_comp.velocity_z += attack.knockup_force
 	if attack.attack_damage <= 0: return
-	var total_attack := attack.attack_damage
+	var total_attack := mini(attack.attack_damage, max_damage)
 	if total_attack <= 0:
 		#spawn_number_popup("BLOCKED!!", blocked_color)
 		return

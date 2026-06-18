@@ -1,0 +1,56 @@
+extends State
+
+const DISC := preload("uid://csu51ow423c4m")
+const HEIGHT_OFFSET := -20.0
+const SELF_KNOCKBACK := -300.0
+#const MAX_AMMO := 6
+const RELOAD_TIME := 2.0
+
+#var ammo := MAX_AMMO
+var ui_info := reload_timer
+var reload_timer := 0.0
+
+@export var player: Player
+@export var weapon: Weapon
+@export var muzzle: Marker2D
+#@export var muzzle_flash: Polygon2D
+
+
+func update(delta: float) -> void:
+	if reload_timer > 0.0:
+		reload_timer -= delta
+	else:
+		player.reloading = false
+	
+	ui_info = reload_timer
+
+
+func fire() -> void:
+	if reload_timer > 0.0: return
+	var disc: Disc = DISC.instantiate()
+	disc.height = player.plat_comp.position_z
+	disc.global_position = muzzle.global_position
+	disc.angle = weapon.rotation
+	
+	disc.shadow.height = player.plat_comp.floor_height
+	disc.shadow.blob.position.y = player.plat_comp.floor_height
+	
+	disc.sprite.rotation = weapon.rotation
+	disc.sprite.position.y = player.plat_comp.position_z + HEIGHT_OFFSET
+	
+	disc.hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon.rotation)
+	disc.hurtbox.attack.height = player.plat_comp.position_z
+	get_tree().current_scene.add_child(disc)
+	
+	player.velocity += Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK
+	#player.camera_holder.shake(0.2)
+	player.camera_holder.kick(Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK)
+	
+	reload_timer = RELOAD_TIME
+	player.reloading = true
+
+
+func fire_hold() -> void: pass
+
+
+func fire_release() -> void: pass
