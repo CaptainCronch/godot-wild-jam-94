@@ -6,6 +6,7 @@ var tilemaps: Array[TileMapLayer]
 var navigation_layers: Array[TileMapLayer]
 var player: Player
 var shadow_group: CanvasGroup
+var corpse_group: CanvasGroup
 
 
 func _process(_delta: float) -> void:
@@ -73,3 +74,7 @@ func generate_circle_polygon(radius: float, resolution: int) -> PackedVector2Arr
 		points.append(vector)
 
 	return points
+
+
+func ranges_overlap(x1: float, x2: float, y1: float, y2: float) -> bool:
+	return maxf(x1, x2) >= minf(y1, y2) and minf(x1, x2) <= maxf(y1, y2)

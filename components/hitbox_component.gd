@@ -1,6 +1,8 @@
 extends Area2D
 class_name HitboxComponent
 
+@export var height := 0.0
+@export var size := 0.0
 @export var health_comp : HealthComponent
 
 

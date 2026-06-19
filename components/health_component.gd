@@ -13,7 +13,6 @@ signal death(attack: Attack)
 @export var default_color := Color.RED
 @export var max_health: int
 @export var invincibility_time := 0.0
-@export var height := 0.0
 @export var max_damage := 9999
 @export var target: Node2D
 @export var plat_comp: PlatformerComponent
@@ -68,7 +67,7 @@ func die(attack):
 	if dead: return
 	death.emit(attack)
 	dead = true
-	target.queue_free()
+	#target.queue_free()
 
 
 func heal(amount: int) -> void:

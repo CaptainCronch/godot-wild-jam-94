@@ -30,7 +30,7 @@ shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false
 
 [sub_resource type="Gradient" id="Gradient_6423d"]
-offsets = PackedFloat32Array(0)
+offsets = PackedFloat32Array(0.025316456)
 colors = PackedColorArray(1, 0.4, 0.24313726, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ysxep"]
@@ -46,24 +46,27 @@ radius = 24.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 14.0
 
-[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "enemy_check", "wall_check", "sprite") groups=["Enemy"]]
+[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("wall_check", "plat_comp", "health_comp", "enemy_check", "sprite") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
 floor_block_on_wall = false
 script = ExtResource("1_0q4ty")
-plat_comp = NodePath("PlatformerComponent")
-enemy_check = NodePath("EnemyCheck")
 wall_check = NodePath("WallCheck")
+color = Color(1, 0.4, 0.24313726, 1)
+plat_comp = NodePath("PlatformerComponent")
+health_comp = NodePath("HealthComponent")
+enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Polygon2D")
 
-[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") groups=["Enemy"] instance=ExtResource("2_2n88m")]
+[node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox", "hurtbox") groups=["Enemy"] instance=ExtResource("2_2n88m")]
 base_speed = 30000.0
 base_air_acceleration = 0.5
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")
 health_comp = NodePath("../HealthComponent")
+hitbox = NodePath("../HitboxComponent")
 hurtbox = NodePath("../HurtboxComponent")
 
 [node name="HealthComponent" parent="." unique_id=1738076217 node_paths=PackedStringArray("target", "plat_comp") groups=["Enemy"] instance=ExtResource("3_s3b2c")]
@@ -74,6 +77,7 @@ plat_comp = NodePath("../PlatformerComponent")
 [node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") groups=["Enemy"] instance=ExtResource("4_pfo6o")]
 collision_layer = 32
 collision_mask = 80
+size = 32.0
 health_comp = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1732633954]

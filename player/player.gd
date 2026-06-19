@@ -35,6 +35,7 @@ var kick_timer := BASE_KICK_TIME
 
 func _ready() -> void:
 	Global.player = self
+	health_comp.death.connect(_on_death)
 	#modulate = Color(1.0, 1.0, 1.0, 0.5)
 	#print(Global.tilemaps)
 
@@ -194,3 +195,7 @@ func _on_damage_taken(_attack: Attack) -> void:
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
 	await get_tree().create_timer(0.05).timeout
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+
+
+func _on_death(_attack: Attack) -> void:
+	queue_free()

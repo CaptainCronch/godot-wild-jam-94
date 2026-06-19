@@ -17,7 +17,7 @@ attack_damage = 10
 knockback_force = 700.0
 knockup_force = -3.0
 stun_time = 0.1
-size = 128.0
+size = 64.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_am8n8"]

@@ -45,18 +45,24 @@ func check_collision() -> bool:
 					#attack.attack_position = global_position
 					
 					# if area is within vertical bullet range
-					if area.health_comp.height >= (attack.height + attack.offset) - (attack.size/2):
-						if area.health_comp.height <= (attack.height + attack.offset) + (attack.size/2):
+					#print(area.height, " = ", attack.height)
+					if Global.ranges_overlap(
+							area.height,
+							area.height - area.size,
+							attack.height - (attack.size / 2.0),
+							attack.height + (attack.size / 2.0)):
+					#if area.health_comp.height >= (attack.height + attack.offset) - (attack.size/2):
+						#if area.health_comp.height <= (attack.height + attack.offset) + (attack.size/2):
 							#print(attack.height + attack.offset, " | ", area.health_comp.height)
-							if attack.attack_direction == Vector2.ZERO:
-								attack.attack_direction = global_position.direction_to(area.global_position)
-								hit.emit(area)
-								area.damage(attack)
-								attack.attack_direction = Vector2.ZERO
-							else:
-								hit.emit(area)
-								area.damage(attack)
-							
-							hit_anything = true
-							if not multihit: break
+						if attack.attack_direction == Vector2.ZERO:
+							attack.attack_direction = global_position.direction_to(area.global_position)
+							hit.emit(area)
+							area.damage(attack)
+							attack.attack_direction = Vector2.ZERO
+						else:
+							hit.emit(area)
+							area.damage(attack)
+						
+						hit_anything = true
+						if not multihit: break
 	return hit_anything

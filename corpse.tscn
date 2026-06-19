@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://d0qauj3amib7m"]
+
+[node name="Corpse" type="Polygon2D" unique_id=376777266]
+color = Color(0.24, 0.24, 0.24, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, -10, 0, 0, -10)

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dn5dtcu0dbhp6"]
+
+[ext_resource type="Script" uid="uid://cwvhq7g7mqkq2" path="res://self_destruct_particles.gd" id="1_44s4y"]
+
+[sub_resource type="Gradient" id="Gradient_l1sk6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wagxh"]
+gradient = SubResource("Gradient_l1sk6")
+width = 8
+height = 8
+
+[node name="Blood" type="CPUParticles2D" unique_id=406917420]
+emitting = false
+texture = SubResource("GradientTexture2D_wagxh")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.9
+lifetime_randomness = 1.0
+spread = 30.0
+gravity = Vector2(0, 490)
+initial_velocity_min = 242.73
+initial_velocity_max = 456.31
+scale_amount_max = 2.0
+script = ExtResource("1_44s4y")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -17,6 +17,7 @@ class_name PlatformerComponent
 @export var world_area: Area2D
 @export var puppet: Node2D
 @export var health_comp: HealthComponent
+@export var hitbox: HitboxComponent
 @export var hurtbox: HurtBoxComponent
 
 var airborne := false
@@ -44,7 +45,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_instance_valid(hurtbox): hurtbox.attack.height = position_z
-	if is_instance_valid(health_comp): health_comp.height = position_z
+	if is_instance_valid(hitbox): hitbox.height = position_z
 
 
 func _physics_process(delta: float) -> void:
