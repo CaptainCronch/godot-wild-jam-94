@@ -36,7 +36,7 @@ radius = 40.0
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
 rotation = 6.2831855
-color = Color(0.91, 0, 0.89483315, 1)
+color = Color(1, 0.2509804, 0.3764706, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
 shape = SubResource("CircleShape2D_orxtn")

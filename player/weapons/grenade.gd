@@ -3,11 +3,12 @@ class_name Grenade
 
 const EXPLOSION := preload("uid://cono4p61cs4he")
 
-const BASE_SPEED := 2000.0
+const BASE_SPEED := 3000.0
 const SLOW_RATE := 5.0
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
+@export var hurtbox: HurtBoxComponent
 
 var height := 0.0
 var angle := 0.0

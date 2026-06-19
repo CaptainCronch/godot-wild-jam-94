@@ -14,7 +14,7 @@ size = 512.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uyaau"]
-radius = 100.0
+radius = 128.0
 
 [node name="Explosion" type="Node2D" unique_id=1552889702 node_paths=PackedStringArray("hurtbox", "sprite")]
 script = ExtResource("1_417hj")

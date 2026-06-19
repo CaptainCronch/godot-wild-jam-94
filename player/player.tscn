@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://00a0mouqq4cw" path="res://player/weapons/revolver_state.gd" id="15_wodsf"]
 [ext_resource type="Script" uid="uid://dg16vbyhrqgn3" path="res://player/weapons/launcher_state.gd" id="16_32hag"]
 [ext_resource type="Script" uid="uid://k3okxricppl0" path="res://player/weapons/disc_state.gd" id="16_tqiix"]
+[ext_resource type="Script" uid="uid://6pc2e3gtnm2b" path="res://player/weapons/whip_state.gd" id="17_tqiix"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(24, 8)
@@ -48,6 +49,21 @@ colors = PackedColorArray(0, 0.70980394, 0.69411767, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_tqiix"]
 gradient = SubResource("Gradient_32hag")
 width = 1
+
+[sub_resource type="Resource" id="Resource_tqiix"]
+script = ExtResource("6_yllr7")
+attack_damage = 5
+knockback_force = 700.0
+knockup_force = -3.0
+stun_time = 0.2
+size = 192.0
+metadata/_custom_type_script = "uid://crg4f1ccw336i"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wagxh"]
+size = Vector2(464, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32hag"]
+size = Vector2(48, 48)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 14.0
@@ -151,6 +167,10 @@ visible = false
 position = Vector2(35.035, -0.5699997)
 polygon = PackedVector2Array(0, -20, 20, 0, 0, 20, -20, 0)
 
+[node name="Whip" type="Polygon2D" parent="Puppet/WeaponSprite" unique_id=1017881524]
+visible = false
+polygon = PackedVector2Array(6, -5, -6, 0, 6, 9, 417, 14, 428, 33, 438, 13, 458, 0, 438, -9, 427, -29, 417, -10)
+
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -20.43)
 
@@ -173,7 +193,7 @@ position = Vector2(40, 0)
 
 [node name="WeaponStateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
-initial_state = NodePath("RevolverState")
+initial_state = NodePath("LauncherState")
 
 [node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash")]
 script = ExtResource("15_wodsf")
@@ -194,6 +214,36 @@ player = NodePath("../../..")
 weapon = NodePath("../..")
 muzzle = NodePath("../../Muzzle")
 
+[node name="WhipState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=921579290 node_paths=PackedStringArray("player", "weapon", "sourspot", "sweetspot", "whip")]
+script = ExtResource("17_tqiix")
+player = NodePath("../../..")
+weapon = NodePath("../..")
+sourspot = NodePath("../../Sourspot")
+sweetspot = NodePath("../../Sweetspot")
+whip = NodePath("../../../Puppet/WeaponSprite/Whip")
+
+[node name="Sourspot" parent="Weapon" unique_id=854077962 instance=ExtResource("5_ebec5")]
+collision_layer = 16
+collision_mask = 32
+attack = SubResource("Resource_tqiix")
+updates = false
+multihit = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Sourspot" unique_id=2063621258]
+position = Vector2(224, 0)
+shape = SubResource("RectangleShape2D_wagxh")
+
+[node name="Sweetspot" parent="Weapon" unique_id=249336522 instance=ExtResource("5_ebec5")]
+collision_layer = 16
+collision_mask = 32
+attack = SubResource("Resource_tqiix")
+updates = false
+multihit = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Sweetspot" unique_id=1531130396]
+position = Vector2(424, 0)
+shape = SubResource("RectangleShape2D_32hag")
+
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1915895890]
 shape = SubResource("CircleShape2D_hvfyp")
 
@@ -212,3 +262,5 @@ text = "hey"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1012533958]
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]
+[connection signal="hit" from="Weapon/Sourspot" to="Weapon/WeaponStateMachine/WhipState" method="_on_sourspot_hit"]
+[connection signal="hit" from="Weapon/Sweetspot" to="Weapon/WeaponStateMachine/WhipState" method="_on_sweetspot_hit"]

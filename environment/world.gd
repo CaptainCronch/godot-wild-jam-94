@@ -3,6 +3,7 @@ extends Node2D
 const SHAMBLER = preload("uid://ou0p1t3vjrgi")
 const HOPPER = preload("uid://t4ks8c3wxa6u")
 const TOSSER = preload("uid://dxof6t8a1d4bb")
+const FLAPPER = preload("uid://djl73oxr2mfig")
 
 @export var step_tick: Timer
 
@@ -17,5 +18,5 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug_key"):
 		for _i in 100:
-			var enemy := TOSSER.instantiate()
+			var enemy := FLAPPER.instantiate()
 			add_child(enemy)

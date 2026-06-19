@@ -45,7 +45,6 @@ func fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	
 	player.velocity += Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK
-	#player.camera_holder.shake(0.2)
 	player.camera_holder.kick(Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK)
 	
 	reload_timer = RELOAD_TIME

@@ -1,7 +1,7 @@
 extends Node2D
 class_name Explosion
 
-const RADIUS := 100.0
+const RADIUS := 128.0
 
 @export var hurtbox: HurtBoxComponent
 @export var sprite: Polygon2D

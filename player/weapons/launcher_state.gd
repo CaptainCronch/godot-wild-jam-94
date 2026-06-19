@@ -68,8 +68,8 @@ func shoot() -> void:
 	grenade.sprite.rotation = weapon.rotation
 	grenade.sprite.position.y = player.plat_comp.position_z + HEIGHT_OFFSET
 	
-	#grenade.hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon.rotation)
-	#grenade.hurtbox.attack.height = player.plat_comp.position_z
+	grenade.hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon.rotation)
+	grenade.hurtbox.attack.height = player.plat_comp.position_z
 	
 	get_tree().current_scene.add_child(grenade)
 	grenade.fuse = maxf(fuse_timer, 0.01)
