@@ -1,9 +1,9 @@
 extends CharacterBody2D
 class_name Disc
 
-const BASE_SPEED := 500.0
+const BASE_SPEED := 250.0
 const SPIN_SPEED := 2.0
-const LIFETIME := 20.0
+const LIFETIME := 30.0
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(result):
 		#velocity = Vector2.from_angle(result.get_angle()) * BASE_SPEEDs
 		velocity = velocity.reflect(Vector2.from_angle(result.get_angle()))
-		hurtbox.attack.attack_direction = velocity.normalized()
+		hurtbox.attack.attack_direction = hurtbox.attack.attack_direction.reflect(Vector2.from_angle(result.get_angle()))
 		#bounces += 1
 		#if bounces >= MAX_BOUNCES:
 			#queue_free()

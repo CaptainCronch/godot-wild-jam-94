@@ -1,7 +1,7 @@
 extends Node2D
 class_name Explosion
 
-const RADIUS := 128.0
+const RADIUS := 64.0
 
 @export var hurtbox: HurtBoxComponent
 @export var sprite: Polygon2D
@@ -12,7 +12,7 @@ var height := 0.0
 func _ready() -> void:
 	Global.player.camera_holder.shake(0.3)
 	$HurtboxComponent/CollisionShape2D.shape.radius = RADIUS
-	sprite.polygon = Global.generate_circle_polygon(RADIUS, 64)
+	sprite.polygon = Global.generate_circle_polygon(RADIUS, 32)
 	hurtbox.attack.height = height
 	#sprite.position.y = height
 	await get_tree().physics_frame

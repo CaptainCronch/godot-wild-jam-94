@@ -6,7 +6,7 @@ const CORPSE = preload("uid://d0qauj3amib7m")
 
 const SEPARATION_SPEED := 5000.0
 const MAX_SEPARATION := 2
-const AI_UPDATE := 0.3
+const AI_UPDATE := 1.0
 
 @export var color: Color
 

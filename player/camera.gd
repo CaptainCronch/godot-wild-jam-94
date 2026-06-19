@@ -3,11 +3,10 @@ class_name CameraHolder
 
 const BASE_PAN_FACTOR := 0.3
 const BASE_DECAY := 10.0
-const NOISE_SPEED := 1000.0
-const MAX_OFFSET := Vector2(250, 200)
+const MAX_OFFSET := Vector2(125, 100)
 const TRAUMA_POWER := 2.0
 const BASE_KICKBACK_DECAY := 50.0
-const MAX_KICKBACK := Vector2(1000, 1000)
+const MAX_KICKBACK := Vector2(500, 500)
 
 var trauma := 0.0
 var noise_position := 0.0

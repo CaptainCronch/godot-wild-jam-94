@@ -1,9 +1,9 @@
 extends Node2D
 class_name ShadowComponent
 
-@export var radius := 20.0
+@export var radius := 10.0
 @export var shadow_scale := Vector2(1.0, 0.5)
-@export var resolution := 24
+@export var resolution := 12
 @export var color := Color(0.0, 0.0, 0.0, 0.5)
 @export var blob: RemoteTransform2D
 

@@ -1,8 +1,8 @@
 extends Enemy
 class_name Hopper
 
-const HOP_SPEED := 50.0
-const HOP_BOOST := 250.0
+const HOP_SPEED := 25.0
+const HOP_BOOST := 125.0
 
 var hop_tween: Tween
 var wait_duration := 1.0

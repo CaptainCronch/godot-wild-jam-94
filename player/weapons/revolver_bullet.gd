@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name RevolverBullet
 
-const BASE_SPEED := 2000.0
+const BASE_SPEED := 1000.0
 const MAX_PIERCE := 2
 
 @export var sprite: Polygon2D

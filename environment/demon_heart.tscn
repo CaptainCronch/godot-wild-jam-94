@@ -8,7 +8,7 @@
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="6_ep08v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wagxh"]
-radius = 39.012817
+radius = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wa3uv"]
 shader = ExtResource("6_ep08v")
@@ -24,13 +24,13 @@ gradient = SubResource("Gradient_wa3uv")
 width = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_wagxh"]
-font_size = 8
+font_size = 4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qk3k"]
-radius = 28.0
+radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ncxm4"]
-radius = 25.0
+radius = 12.0
 
 [node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "health_label")]
 collision_layer = 512
@@ -41,9 +41,8 @@ health_comp = NodePath("HealthComponent")
 health_label = NodePath("Puppet/Polygon2D/Label")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") instance=ExtResource("2_u7tmi")]
-base_gravity = 30.0
+base_gravity = 15.0
 bouncy = true
-bounce_factor = 0.9
 target = NodePath("..")
 world_area = NodePath("../WorldArea")
 puppet = NodePath("../Puppet")
@@ -61,7 +60,7 @@ plat_comp = NodePath("../PlatformerComponent")
 [node name="HitboxComponent" parent="." unique_id=112265376 node_paths=PackedStringArray("health_comp") instance=ExtResource("3_ep08v")]
 collision_layer = 512
 collision_mask = 16
-size = 64.0
+size = 32.0
 health_comp = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1987475443]
@@ -73,10 +72,10 @@ shape = SubResource("CircleShape2D_wagxh")
 
 [node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=2087372681]
 material = SubResource("ShaderMaterial_wa3uv")
-position = Vector2(0, -27)
+position = Vector2(0, -13.5)
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture1D_u7tmi")
-polygon = PackedVector2Array(-3, -3, -5, -6, -4, -8, -3, -9, 0, -10, 3, -9, 4, -8, 5, -6, 3, -3, 6, -5, 8, -4, 9, -3, 10, 0, 9, 3, 8, 4, 6, 5, 3, 3, 5, 6, 4, 8, 3, 9, 0, 10, -3, 9, -4, 8, -5, 6, -3, 3, -6, 5, -8, 4, -9, 3, -10, 0, -9, -3, -8, -4, -6, -5)
+polygon = PackedVector2Array(-1.5, -1.5, -2.5, -3, -2, -4, -1.5, -4.5, 0, -5, 1.5, -4.5, 2, -4, 2.5, -3, 1.5, -1.5, 3, -2.5, 4, -2, 4.5, -1.5, 5, 0, 4.5, 1.5, 4, 2, 3, 2.5, 1.5, 1.5, 2.5, 3, 2, 4, 1.5, 4.5, 0, 5, -1.5, 4.5, -2, 4, -2.5, 3, -1.5, 1.5, -3, 2.5, -4, 2, -4.5, 1.5, -5, 0, -4.5, -1.5, -4, -2, -3, -2.5)
 
 [node name="Label" type="Label" parent="Puppet/Polygon2D" unique_id=794833928]
 anchors_preset = 8
@@ -84,12 +83,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -2.385
+offset_top = -3.185
+offset_right = 2.615
+offset_bottom = 3.815
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 text = "10"
 label_settings = SubResource("LabelSettings_wagxh")
 horizontal_alignment = 1

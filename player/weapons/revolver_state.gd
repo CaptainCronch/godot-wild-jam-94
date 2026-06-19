@@ -1,8 +1,8 @@
 extends State
 
 const BULLET := preload("uid://bgraey60p2frl")
-const HEIGHT_OFFSET := -20.0
-const SELF_KNOCKBACK := -50.0
+const HEIGHT_OFFSET := -10.0
+const SELF_KNOCKBACK := -25.0
 const MAX_AMMO := 6
 const RELOAD_TIME := 1.0
 

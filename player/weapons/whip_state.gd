@@ -1,7 +1,7 @@
 extends State
 
 const FIRE_DELAY := 0.5
-const SELF_KNOCKBACK := 100.0
+const SELF_KNOCKBACK := 50.0
 
 @export var player: Player
 @export var weapon: Weapon

@@ -4,16 +4,16 @@ class_name PlatformerComponent
 signal bounced
 
 @export_category("Values")
-@export var base_speed := 15000.0
+@export var base_speed := 7500.0
 @export var base_acceleration := 18.0
 @export var base_friction := 10.0
 @export var base_air_acceleration := 8.0
 @export var base_air_friction := 0.5
-@export var base_jump_force := -12.0
-@export var base_gravity := 25.0
+@export var base_jump_force := -6.0
+@export var base_gravity := 12.5
 @export var base_fall_boost := 1.8
 @export var bouncy := false
-@export var bounce_factor := 0.8
+@export var bounce_factor := 0.9
 @export var override_functions := false
 
 @export_category("Nodes")

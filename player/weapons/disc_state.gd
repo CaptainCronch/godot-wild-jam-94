@@ -1,8 +1,8 @@
 extends State
 
 const DISC := preload("uid://csu51ow423c4m")
-const HEIGHT_OFFSET := -20.0
-const SELF_KNOCKBACK := -300.0
+const HEIGHT_OFFSET := -10.0
+const SELF_KNOCKBACK := -150.0
 #const MAX_AMMO := 6
 const RELOAD_TIME := 2.0
 

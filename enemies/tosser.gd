@@ -3,10 +3,10 @@ class_name Tosser
 
 const TOSSER_BULLET := preload("uid://covbg35vkc3vd")
 
-const HEIGHT_OFFSET := -40.0
+const HEIGHT_OFFSET := -20.0
 const CLIMB_ACCELERATION := 15.0
-const CLIMB_SPEED := -4.0
-const CLIMB_BOOST := 1000.0
+const CLIMB_SPEED := -2.0
+const CLIMB_BOOST := 500.0
 
 @export var wall_check: RayCast2D
 

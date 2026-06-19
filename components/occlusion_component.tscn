@@ -1,6 +1,40 @@
 [gd_scene format=3 uid="uid://nxtwfdcjjwfu"]
 
-[ext_resource type="Script" uid="uid://2dqn2cd6qje" path="res://components/occlusion_component.gd" id="1_ti51g"]
+[sub_resource type="GDScript" id="GDScript_o2x5p"]
+script/source = "extends Area2D
+class_name OcclusionComponent
+
+@export var transparency := 0.3
+@export var entity := false
+@export var target: Node2D
+
+var height := 0.0
+var floor_height := 0.0
+
+@onready var height_check: Area2D = $HeightCheck
+
+
+func _process(_delta: float) -> void:
+	position.y = floor_height
+	height_check.position.y = height
+
+
+func _physics_process(_delta: float) -> void:
+	if monitoring and height_check.has_overlapping_bodies():
+		#for target in targets:
+		#if target.global_position.y < (snappedf(global_position.y, 128.0)) + 64.0:
+		if has_overlapping_bodies():
+			if entity:
+				(target.material as ShaderMaterial).set_shader_parameter(\"transparency\", transparency)
+			else:
+				target.modulate = Color(1.0, 1.0, 1.0, transparency)
+			return
+	
+	if entity:
+		(target.material as ShaderMaterial).set_shader_parameter(\"transparency\", 1.0)
+	else:
+		target.modulate = Color(1.0, 1.0, 1.0, 1.0)
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8id3"]
 radius = 5.0
@@ -8,7 +42,7 @@ radius = 5.0
 [node name="OcclusionComponent" type="Area2D" unique_id=646099552]
 collision_layer = 256
 collision_mask = 256
-script = ExtResource("1_ti51g")
+script = SubResource("GDScript_o2x5p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1005919188]
 shape = SubResource("CircleShape2D_l8id3")

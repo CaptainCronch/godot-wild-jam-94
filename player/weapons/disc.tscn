@@ -6,22 +6,22 @@
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="4_efuvy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
-radius = 8.0
+radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmeu4"]
-radius = 8.0
+radius = 3.0
 
 [sub_resource type="Resource" id="Resource_14enh"]
 script = ExtResource("4_efuvy")
 attack_damage = 2
-knockback_force = 300.0
-knockup_force = -1.0
+knockback_force = 150.0
+knockup_force = -0.5
 stun_time = 0.1
-size = 128.0
+size = 64.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_am8n8"]
-radius = 64.0
+radius = 32.0
 
 [node name="Disc" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "shadow", "hurtbox")]
 collision_layer = 64
@@ -33,12 +33,11 @@ shadow = NodePath("ShadowComponent")
 hurtbox = NodePath("HurtboxComponent")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_sjuiy")]
-radius = 35.0
+radius = 16.0
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
-rotation = 6.2831855
 color = Color(0.53083336, 0.91, 0, 1)
-polygon = PackedVector2Array(60, 0, 20, -5, 30, -30, 5, -20, 0, -60, -5, -20, -30, -30, -20, -5, -60, 0, -20, 5, -30, 30, -5, 20, 0, 60, 5, 20, 30, 30, 20, 5)
+polygon = PackedVector2Array(30, 0, 10, -2.5, 15, -15, 2.5, -10, 0, -30, -2.5, -10, -15, -15, -10, -2.5, -30, 0, -10, 2.5, -15, 15, -2.5, 10, 0, 30, 2.5, 10, 15, 15, 10, 2.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
 shape = SubResource("CircleShape2D_orxtn")

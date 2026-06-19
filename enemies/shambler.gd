@@ -2,8 +2,8 @@ extends Enemy
 class_name Shambler
 
 const CLIMB_ACCELERATION := 15.0
-const CLIMB_SPEED := -4.0
-const CLIMB_BOOST := 1000.0
+const CLIMB_SPEED := -2.0
+const CLIMB_BOOST := 500.0
 
 @export var wall_check: RayCast2D
 

@@ -14,15 +14,15 @@ height = 8
 [node name="Blood" type="CPUParticles2D" unique_id=406917420]
 emitting = false
 texture = SubResource("GradientTexture2D_wagxh")
-lifetime = 0.5
+lifetime = 0.3
 one_shot = true
 explosiveness = 0.9
 lifetime_randomness = 1.0
 spread = 30.0
 gravity = Vector2(0, 490)
-initial_velocity_min = 242.73
-initial_velocity_max = 456.31
-scale_amount_max = 2.0
+initial_velocity_min = 346.18
+initial_velocity_max = 559.77
+scale_amount_min = 0.5
 script = ExtResource("1_44s4y")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

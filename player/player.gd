@@ -1,25 +1,25 @@
 extends CharacterBody2D
 class_name Player
 
-const BASE_JUMP_BOOST := 250.0
-const BASE_DIVE_BOOST := 500.0
-const BASE_DIVE_JUMP_BOOST := -5.0
-const JUMP_BUFFER := 30.0
+const BASE_JUMP_BOOST := 125.0
+const BASE_DIVE_BOOST := 250.0
+const BASE_DIVE_JUMP_BOOST := -2.5
+const JUMP_BUFFER := 15.0
 const COYOTE_TIME := 0.1
-const KICK_SELF_KNOCKBACK := -500.0
-const KICK_AIR_JUMP_BOOST := -3.0
-const KICK_BOOST := 200.0
+const KICK_SELF_KNOCKBACK := -250.0
+const KICK_AIR_JUMP_BOOST := -1.5
+const KICK_BOOST := 100.0
 const BASE_KICK_TIME := 0.3
 const BASE_AIR_KICK_TIME_FACTOR := 0.5
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
 @export var hurtbox: HurtBoxComponent
-@export var sprite: Polygon2D
+@export var sprite: Sprite2D
 @export var leg: Polygon2D
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
-@export var weapon_sprite: Polygon2D
+@export var weapon_sprite: Sprite2D
 @export var camera_holder: CameraHolder
 @export var debug_text: Label
 
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 	if not reloading:
 		weapon_sprite.rotation = weapon_holder.rotation
 	else:
-		weapon_sprite.rotation = (absf(weapon_holder.rotation) / 2) + (PI/4)
+		weapon_sprite.rotation = (absf(weapon_holder.rotation) / 2.0) + (PI/4.0)
 	
 	hurtbox.rotation = weapon_holder.rotation
 	if absf(weapon_sprite.rotation) > PI/2.0:
@@ -72,15 +72,11 @@ func _process(delta: float) -> void:
 		weapon_sprite.scale.y = 1.0
 	
 	weapon_sprite.show_behind_parent = weapon_sprite.rotation < 0.0
-	#debug_text.text = str(weapon_holder.rotation)
 	
 	coyote_timer = minf(coyote_timer + delta, COYOTE_TIME)
 	
 	if kick_timer > 0.0:
 		kick_timer -= delta * (BASE_AIR_KICK_TIME_FACTOR if plat_comp.airborne else 1.0)
-	
-	var brightness := remap(plat_comp.position_z, -256.0, 0.0, 1.0, 0.5)
-	sprite.self_modulate = Color(brightness, brightness, brightness)
 
 
 func _physics_process(delta: float) -> void:
@@ -140,9 +136,6 @@ func movement_z(delta: float) -> void:
 	if not found: plat_comp.floor_height = 0.0
 	
 	plat_comp.puppet.position.y = plat_comp.position_z
-	
-	#occlusion.height = plat_comp.position_z
-	#occlusion_component.monitoring = is_zero_approx(plat_comp.floor_height) #and plat_comp.position_z > -200.0)
 
 
 func jump() -> void:
