@@ -47,7 +47,7 @@ func damage(attack: Attack):
 
 	health -= total_attack
 	damage_taken.emit(attack)
-	health_changed.emit(-attack.attack_damage)
+	health_changed.emit(-total_attack)
 	#spawn_number_popup(str(roundf(total_attack)), default_color)
 
 	if health <= 0:
