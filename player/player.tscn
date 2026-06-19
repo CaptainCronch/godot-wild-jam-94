@@ -24,12 +24,12 @@ size = Vector2(24, 8)
 script = ExtResource("6_yllr7")
 knockback_force = 1000.0
 knockup_force = -5.0
-stun_time = 0.4
+stun_time = 0.5
 size = 254.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
-size = Vector2(128, 84)
+size = Vector2(170, 120)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yllr7"]
 noise_type = 0
@@ -101,7 +101,7 @@ updates = false
 multihit = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1696951197]
-position = Vector2(56, 0)
+position = Vector2(77, 0)
 shape = SubResource("RectangleShape2D_8t03j")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_boad6")]
@@ -156,7 +156,7 @@ position = Vector2(0, -20.43)
 
 [node name="Leg" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1481174697]
 visible = false
-position = Vector2(0, 20.43)
+position = Vector2(18, 22.43)
 polygon = PackedVector2Array(-7, -12, 89, -11, 91, -31, 95, -36, 105, -37, 108, -36, 113, -33, 116, -24, 116, -15, 116, -7, 116, 3, 117, 8, 117, 11, 114, 14, 108, 14, -8, 8)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Puppet/WeaponHolder" unique_id=1000360415]
@@ -173,7 +173,7 @@ position = Vector2(40, 0)
 
 [node name="WeaponStateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
-initial_state = NodePath("DiscState")
+initial_state = NodePath("RevolverState")
 
 [node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash")]
 script = ExtResource("15_wodsf")

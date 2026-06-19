@@ -3,7 +3,7 @@ class_name Disc
 
 const BASE_SPEED := 500.0
 const SPIN_SPEED := 2.0
-const MAX_BOUNCES := 5
+const LIFETIME := 20.0
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
@@ -11,7 +11,7 @@ const MAX_BOUNCES := 5
 
 var height := 0.0
 var angle := 0.0
-var bounces := 0
+var timer := 0.0
 
 
 func _ready() -> void:
@@ -21,12 +21,15 @@ func _ready() -> void:
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.5).timeout
 	hurtbox.set_collision_mask_value(5, true)
 
 
 func _process(delta: float) -> void:
-	sprite.rotate(SPIN_SPEED * delta)
+	sprite.rotate(SPIN_SPEED * delta * sign(velocity.x))
+	timer += delta
+	if timer >= LIFETIME:
+		queue_free()
 
 
 func _physics_process(delta: float) -> void:
@@ -35,6 +38,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(result):
 		#velocity = Vector2.from_angle(result.get_angle()) * BASE_SPEEDs
 		velocity = velocity.reflect(Vector2.from_angle(result.get_angle()))
-		bounces += 1
-		if bounces >= MAX_BOUNCES:
-			queue_free()
+		hurtbox.attack.attack_direction = velocity.normalized()
+		#bounces += 1
+		#if bounces >= MAX_BOUNCES:
+			#queue_free()

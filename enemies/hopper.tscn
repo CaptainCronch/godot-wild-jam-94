@@ -41,7 +41,7 @@ width = 1
 radius = 13.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6423d"]
-radius = 24.0
+radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 14.0
@@ -57,6 +57,8 @@ enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Polygon2D")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hurtbox") groups=["Enemy"] instance=ExtResource("2_04cx2")]
+base_speed = 0.0
+base_air_acceleration = 0.5
 base_jump_force = -18.0
 base_gravity = 50.0
 target = NodePath("..")

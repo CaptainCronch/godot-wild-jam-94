@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://covbg35vkc3vd"]
+
+[ext_resource type="Script" uid="uid://duar6t0k8qopv" path="res://enemies/tosser_bullet.gd" id="1_raj2n"]
+[ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_xhbl1"]
+[ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_vgb4m"]
+[ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="4_k2526"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kmeu4"]
+radius = 7.0
+
+[sub_resource type="Resource" id="Resource_raj2n"]
+script = ExtResource("4_k2526")
+attack_damage = 1
+knockback_force = 1000.0
+stun_time = 0.1
+size = 48.0
+metadata/_custom_type_script = "uid://crg4f1ccw336i"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_am8n8"]
+radius = 32.0
+
+[node name="TosserBullet" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "shadow", "hurtbox")]
+collision_layer = 128
+collision_mask = 15
+motion_mode = 1
+script = ExtResource("1_raj2n")
+sprite = NodePath("Polygon2D")
+shadow = NodePath("ShadowComponent")
+hurtbox = NodePath("HurtboxComponent")
+
+[node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_xhbl1")]
+radius = 40.0
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
+rotation = 6.2831855
+color = Color(0.91, 0, 0.89483315, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
+shape = SubResource("CircleShape2D_orxtn")
+
+[node name="WorldArea" type="Area2D" parent="." unique_id=1588874399]
+collision_layer = 128
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=1487419424]
+shape = SubResource("CircleShape2D_kmeu4")
+
+[node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("3_vgb4m")]
+collision_layer = 128
+collision_mask = 16
+attack = SubResource("Resource_raj2n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1092665477]
+shape = SubResource("CircleShape2D_am8n8")
+
+[connection signal="hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_hit"]

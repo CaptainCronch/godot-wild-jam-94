@@ -1,8 +1,7 @@
 extends CharacterBody2D
-class_name RevolverBullet
+class_name TosserBullet
 
-const BASE_SPEED := 2000.0
-const MAX_PIERCE := 2
+const BASE_SPEED := 200.0
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
@@ -10,7 +9,6 @@ const MAX_PIERCE := 2
 
 var height := 0.0
 var angle := 0.0
-var pierced := 0
 
 
 func _ready() -> void:
@@ -20,6 +18,7 @@ func _ready() -> void:
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
 	
+	sprite.polygon = Global.generate_circle_polygon(38.0, 24)
 	#occlusion.height = height
 
 
@@ -30,6 +29,4 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_hurtbox_component_hit(_hitbox: HitboxComponent) -> void:
-	pierced += 1
-	if pierced >= MAX_PIERCE:
-		queue_free()
+	queue_free()

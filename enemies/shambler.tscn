@@ -117,7 +117,7 @@ shape = SubResource("CircleShape2D_pfo6o")
 
 [node name="WallCheck" type="RayCast2D" parent="." unique_id=698982734]
 target_position = Vector2(24, 0)
-collision_mask = 15
+collision_mask = 7
 hit_from_inside = true
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]
