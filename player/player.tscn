@@ -113,7 +113,7 @@ shape = SubResource("RectangleShape2D_hg6s5")
 
 [node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("5_ebec5")]
 collision_layer = 16
-collision_mask = 32
+collision_mask = 544
 attack = SubResource("Resource_kb6p2")
 updates = false
 multihit = true
@@ -132,7 +132,7 @@ noise = SubResource("FastNoiseLite_yllr7")
 
 [node name="Camera2D" type="Camera2D" parent="CameraHolder" unique_id=2024447866]
 position_smoothing_enabled = true
-position_smoothing_speed = 3.0
+position_smoothing_speed = 2.0
 drag_left_margin = 0.05
 drag_top_margin = 0.05
 drag_right_margin = 0.05

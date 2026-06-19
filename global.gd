@@ -7,6 +7,7 @@ var navigation_layers: Array[TileMapLayer]
 var player: Player
 var shadow_group: CanvasGroup
 var corpse_group: CanvasGroup
+var world: World
 
 
 func _process(_delta: float) -> void:

@@ -23,7 +23,6 @@ Global="*uid://bf2qidiy358us"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
@@ -103,6 +102,7 @@ debug_key={
 2d_physics/layer_7="Player Projectile"
 2d_physics/layer_8="Enemy Projectile"
 2d_physics/layer_9="Facade"
+2d_physics/layer_10="Environment"
 
 [physics]
 

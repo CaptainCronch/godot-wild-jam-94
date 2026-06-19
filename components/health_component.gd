@@ -8,15 +8,13 @@ signal stunned(attack: Attack)
 signal unstunned()
 signal death(attack: Attack)
 
-#const number_popup := preload("res://Scenes/number_popup.tscn")
-
-@export var default_color := Color.RED
 @export var max_health: int
 @export var invincibility_time := 0.0
 @export var max_damage := 9999
+@export var knockback_factor := 1.0
+@export var knockup_factor := 1.0
 @export var target: Node2D
 @export var plat_comp: PlatformerComponent
-#@export var entity := true
 
 var health := 0
 var is_stunned := false
@@ -35,20 +33,15 @@ func damage(attack: Attack):
 	if not invincibility_timer.is_stopped(): return
 	if attack.stun_time > 0.0: stun(attack)
 	if target is CharacterBody2D:
-		#target.velocity += global_position.direction_to(attack.attack_position) * attack.knockback_force
-		target.velocity += attack.attack_direction * attack.knockback_force
+		target.velocity += attack.attack_direction * attack.knockback_force * knockback_factor
 		if is_instance_valid(plat_comp):
-			plat_comp.velocity_z += attack.knockup_force
+			plat_comp.velocity_z += attack.knockup_force * knockup_factor
+	damage_taken.emit(attack)
 	if attack.attack_damage <= 0: return
 	var total_attack := mini(attack.attack_damage, max_damage)
-	if total_attack <= 0:
-		#spawn_number_popup("BLOCKED!!", blocked_color)
-		return
 
 	health -= total_attack
-	damage_taken.emit(attack)
 	health_changed.emit(-total_attack)
-	#spawn_number_popup(str(roundf(total_attack)), default_color)
 
 	if health <= 0:
 		die(attack)
@@ -76,15 +69,6 @@ func heal(amount: int) -> void:
 	health = mini(health + amount, max_health)
 	healed.emit(amount)
 	health_changed.emit(amount)
-
-
-#func spawn_number_popup(value : String, color := Color.RED):
-	#if dead: return
-	#var new_popup := number_popup.instantiate()
-	#get_tree().current_scene.add_child(new_popup)
-	#new_popup.global_position = global_position
-	#new_popup.text = value
-	#new_popup.modulate = color
 
 
 func _on_stun_timeout() -> void:

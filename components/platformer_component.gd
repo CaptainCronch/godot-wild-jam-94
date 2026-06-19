@@ -1,6 +1,8 @@
 extends Node2D
 class_name PlatformerComponent
 
+signal bounced
+
 @export_category("Values")
 @export var base_speed := 15000.0
 @export var base_acceleration := 18.0
@@ -10,6 +12,8 @@ class_name PlatformerComponent
 @export var base_jump_force := -12.0
 @export var base_gravity := 25.0
 @export var base_fall_boost := 1.8
+@export var bouncy := false
+@export var bounce_factor := 0.8
 @export var override_functions := false
 
 @export_category("Nodes")
@@ -63,18 +67,31 @@ func _physics_process(delta: float) -> void:
 	
 	target.velocity.x = Global.decay_towards(target.velocity.x, desired_velocity.x, decay.x, delta)
 	target.velocity.y = Global.decay_towards(target.velocity.y, desired_velocity.y, decay.y, delta)
-	target.move_and_slide()
+	
+	if not bouncy:
+		target.move_and_slide()
+	else:
+		var result := target.move_and_collide(target.velocity * delta)
+		if is_instance_valid(result):
+			target.velocity = target.velocity.reflect(Vector2.from_angle(result.get_angle())) * bounce_factor
+			bounced.emit()
 
 
 func movement_z(delta: float) -> void:
 	if override_functions: return
 	gravity = base_gravity * (1.0 if velocity_z < 0.0 or not jumping else base_fall_boost) 
 	velocity_z += gravity * delta
-	position_z = minf(position_z + velocity_z, floor_height)
+	position_z += velocity_z
+	
+	if bouncy and position_z > floor_height:
+		velocity_z *= -bounce_factor
+		if airborne and absf(velocity_z) > absf(base_jump_force/2.0): bounced.emit()
+	
+	position_z = minf(position_z, floor_height)
 	if is_equal_approx(position_z, floor_height):
 		airborne = false
 		jumping = false
-		velocity_z = 0.0
+		if not bouncy: velocity_z = 0.0
 	else:
 		airborne = true
 	

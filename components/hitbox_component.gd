@@ -12,4 +12,4 @@ func _ready() -> void:
 
 
 func damage(attack: Attack) -> void:
-	if health_comp: health_comp.damage(attack)
+	if is_instance_valid(health_comp): health_comp.damage(attack)
