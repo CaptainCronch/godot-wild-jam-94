@@ -30,7 +30,7 @@ size = 127.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t03j"]
-size = Vector2(85, 60)
+size = Vector2(120, 60)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yllr7"]
 noise_type = 0
@@ -45,17 +45,17 @@ shader_parameter/active = false
 [sub_resource type="Resource" id="Resource_tqiix"]
 script = ExtResource("6_yllr7")
 attack_damage = 5
-knockback_force = 700.0
-knockup_force = -3.0
+knockback_force = 350.0
+knockup_force = -1.5
 stun_time = 0.2
-size = 128.0
+size = 64.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wagxh"]
 size = Vector2(232, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32hag"]
-size = Vector2(24, 24)
+size = Vector2(32, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 7.0
@@ -66,13 +66,14 @@ radius = 6.0
 [sub_resource type="LabelSettings" id="LabelSettings_ry6om"]
 font_size = 8
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text")]
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "hitbox", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text")]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 hurtbox = NodePath("HurtboxComponent")
+hitbox = NodePath("HitboxComponent")
 sprite = NodePath("Puppet/Sprite2D")
 leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
@@ -114,7 +115,7 @@ updates = false
 multihit = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1696951197]
-position = Vector2(38.5, 0)
+position = Vector2(56, 0)
 shape = SubResource("RectangleShape2D_8t03j")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_boad6")]
@@ -166,23 +167,24 @@ position = Vector2(0, -10.215)
 [node name="Leg" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1481174697]
 visible = false
 position = Vector2(9, 11.215)
-polygon = PackedVector2Array(-3.5, -6, 44.5, -5.5, 45.5, -15.5, 47.5, -18, 52.5, -18.5, 54, -18, 56.5, -16.5, 58, -12, 58, -7.5, 58, -3.5, 58, 1.5, 58.5, 4, 58.5, 5.5, 57, 7, 54, 7, -4, 4)
+polygon = PackedVector2Array(-8, -4, 60, -5, 87, -3, 85, -14, 87, -17, 92, -18, 97, -16, 100, -10, 102, 5, 97, 7, 29, 5, -10, -1)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Puppet/WeaponHolder" unique_id=1000360415]
 remote_path = NodePath("../../../Weapon")
 update_position = false
 update_scale = false
 
-[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("state_machine")]
+[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("state_machine", "states")]
 script = ExtResource("5_g6k8r")
 state_machine = NodePath("WeaponStateMachine")
+states = [NodePath("WeaponStateMachine/RevolverState"), NodePath("WeaponStateMachine/LauncherState"), NodePath("WeaponStateMachine/DiscState"), NodePath("WeaponStateMachine/WhipState")]
 
 [node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
 position = Vector2(20, 0)
 
 [node name="WeaponStateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
-initial_state = NodePath("DiscState")
+initial_state = NodePath("RevolverState")
 
 [node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash")]
 script = ExtResource("15_wodsf")

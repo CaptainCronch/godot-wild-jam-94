@@ -16,6 +16,17 @@ var reload_timer := RELOAD_TIME
 @export var muzzle_flash: Polygon2D
 
 
+func enter() -> void:
+	ammo = MAX_AMMO
+	ui_info = ammo
+	reload_timer = RELOAD_TIME
+	player.reloading = false
+
+
+func exit() -> void:
+	player.reloading = false
+
+
 func update(delta: float) -> void:
 	if reload_timer > 0.0:
 		reload_timer -= delta

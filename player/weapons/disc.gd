@@ -3,7 +3,7 @@ class_name Disc
 
 const BASE_SPEED := 250.0
 const SPIN_SPEED := 2.0
-const LIFETIME := 30.0
+const LIFETIME := 10.0
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
@@ -16,6 +16,7 @@ var timer := 0.0
 
 func _ready() -> void:
 	velocity = Vector2.RIGHT.rotated(angle) * BASE_SPEED
+	#$Polygon2D2.rotation = hurtbox.attack.attack_direction.angle()
 	
 	set_collision_mask_value(1, height > Global.TILE_HEIGHT)
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
@@ -26,6 +27,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	#$Polygon2D2.rotation = hurtbox.attack.attack_direction.angle()
 	sprite.rotate(SPIN_SPEED * delta * sign(velocity.x))
 	timer += delta
 	if timer >= LIFETIME:
@@ -35,10 +37,11 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	#if is_on_wall(): queue_free()
 	var result := move_and_collide(velocity * delta)
-	if is_instance_valid(result):
+	if is_instance_valid(result) and result.get_collider() is TileMapLayer:
+		#print(result.get_collider())
 		#velocity = Vector2.from_angle(result.get_angle()) * BASE_SPEEDs
 		velocity = velocity.reflect(Vector2.from_angle(result.get_angle()))
-		hurtbox.attack.attack_direction = hurtbox.attack.attack_direction.reflect(Vector2.from_angle(result.get_angle()))
+		hurtbox.attack.attack_direction = velocity.normalized()
 		#bounces += 1
 		#if bounces >= MAX_BOUNCES:
 			#queue_free()

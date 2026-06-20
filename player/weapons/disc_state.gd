@@ -4,7 +4,7 @@ const DISC := preload("uid://csu51ow423c4m")
 const HEIGHT_OFFSET := -10.0
 const SELF_KNOCKBACK := -150.0
 #const MAX_AMMO := 6
-const RELOAD_TIME := 2.0
+const RELOAD_TIME := 1.0
 
 #var ammo := MAX_AMMO
 var ui_info := reload_timer
@@ -14,6 +14,16 @@ var reload_timer := 0.0
 @export var weapon: Weapon
 @export var muzzle: Marker2D
 #@export var muzzle_flash: Polygon2D
+
+
+func enter() -> void:
+	ui_info = reload_timer
+	reload_timer = 0.0
+	player.reloading = false
+
+
+func exit() -> void:
+	player.reloading = false
 
 
 func update(delta: float) -> void:

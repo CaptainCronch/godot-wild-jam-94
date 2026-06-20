@@ -1,7 +1,9 @@
 extends CharacterBody2D
+class_name DemonHeart
 
 @export var sprite: Polygon2D
 @export var health_comp: HealthComponent
+@export var plat_comp: PlatformerComponent
 @export var health_label: Label
 
 
@@ -34,5 +36,5 @@ func _on_bounced() -> void:
 
 
 func _on_death(_attack: Attack) -> void:
-	Global.world.demon_hearts_collected += 1
+	Global.world.collected_heart()
 	queue_free()

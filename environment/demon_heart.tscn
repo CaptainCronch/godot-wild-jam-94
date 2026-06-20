@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dxlsjjfqpvly3" path="res://components/health_component.tscn" id="3_u7tmi"]
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="4_wa3uv"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="6_ep08v"]
+[ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="7_wa3uv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wagxh"]
 radius = 20.0
@@ -24,7 +25,7 @@ gradient = SubResource("Gradient_wa3uv")
 width = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_wagxh"]
-font_size = 4
+font = ExtResource("7_wa3uv")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qk3k"]
 radius = 14.0
@@ -32,12 +33,13 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ncxm4"]
 radius = 12.0
 
-[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "health_label")]
+[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label")]
 collision_layer = 512
 collision_mask = 15
 script = ExtResource("1_ayjrt")
 sprite = NodePath("Puppet/Polygon2D")
 health_comp = NodePath("HealthComponent")
+plat_comp = NodePath("PlatformerComponent")
 health_label = NodePath("Puppet/Polygon2D/Label")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") instance=ExtResource("2_u7tmi")]
@@ -83,10 +85,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -2.385
-offset_top = -3.185
-offset_right = 2.615
-offset_bottom = 3.815
+offset_left = -5.5
+offset_top = -7.5
+offset_right = 5.5
+offset_bottom = 7.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)

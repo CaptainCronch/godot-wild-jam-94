@@ -20,6 +20,18 @@ var reloading := false
 #@export var muzzle_flash: Polygon2D
 
 
+func enter() -> void:
+	ui_info = fuse_timer
+	fuse_timer = FUSE_MAX
+	charging = false
+	reloading = false
+	player.reloading = false
+
+
+func exit() -> void:
+	player.reloading = false
+
+
 func update(delta: float) -> void:
 	#if delay_timer > 0.0:
 		#delay_timer -= delta

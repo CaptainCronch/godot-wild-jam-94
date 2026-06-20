@@ -3,7 +3,7 @@ class_name HealthComponent
 
 signal damage_taken(attack: Attack)
 signal healed(amount: int)
-signal health_changed(amount: int)
+signal health_changed(health: int)
 signal stunned(attack: Attack)
 signal unstunned()
 signal death(attack: Attack)
@@ -41,7 +41,7 @@ func damage(attack: Attack):
 	var total_attack := mini(attack.attack_damage, max_damage)
 
 	health -= total_attack
-	health_changed.emit(-total_attack)
+	health_changed.emit(health)
 
 	if health <= 0:
 		die(attack)

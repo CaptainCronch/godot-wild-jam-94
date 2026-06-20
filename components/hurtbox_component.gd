@@ -62,7 +62,7 @@ func check_collision() -> bool:
 						else:
 							hit.emit(area)
 							area.damage(attack)
-						
+					
 						hit_anything = true
 						if not multihit: break
 	return hit_anything

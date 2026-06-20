@@ -13,6 +13,11 @@ var fire_timer := 0.0
 var ui_info := fire_timer
 
 
+func enter() -> void:
+	fire_timer = 0.0
+	ui_info = fire_timer
+
+
 func update(delta: float) -> void:
 	if fire_timer < FIRE_DELAY: fire_timer += delta
 	ui_info = fire_timer

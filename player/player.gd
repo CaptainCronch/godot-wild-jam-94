@@ -11,10 +11,13 @@ const KICK_AIR_JUMP_BOOST := -1.5
 const KICK_BOOST := 100.0
 const BASE_KICK_TIME := 0.3
 const BASE_AIR_KICK_TIME_FACTOR := 0.5
+const HITBOX_SIZE := 8.0
+const HITBOX_SIZE_DIVE := 1.0
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
 @export var hurtbox: HurtBoxComponent
+@export var hitbox: HitboxComponent
 @export var sprite: Sprite2D
 @export var leg: Polygon2D
 @export var weapon: Weapon
@@ -36,6 +39,8 @@ var kick_timer := BASE_KICK_TIME
 func _ready() -> void:
 	Global.player = self
 	health_comp.death.connect(_on_death)
+	await get_tree().process_frame
+	Global.world.collected_demon_heart.connect(_on_collected_demon_heart)
 	#modulate = Color(1.0, 1.0, 1.0, 0.5)
 	#print(Global.tilemaps)
 
@@ -111,6 +116,7 @@ func movement_z(delta: float) -> void:
 	if is_equal_approx(plat_comp.position_z, plat_comp.floor_height):
 		if not (diving and Input.is_action_pressed("space")):
 			diving = false
+			hitbox.size = HITBOX_SIZE
 			sprite.rotation = 0.0
 		plat_comp.airborne = false
 		plat_comp.jumping = false
@@ -150,6 +156,7 @@ func jump() -> void:
 		plat_comp.velocity_z = BASE_DIVE_JUMP_BOOST
 		diving = true
 		sprite.rotation = PI/2.0
+		hitbox.size = HITBOX_SIZE_DIVE
 		#jump_boost = BASE_JUMP_BOOST
 
 
@@ -192,3 +199,7 @@ func _on_damage_taken(_attack: Attack) -> void:
 
 func _on_death(_attack: Attack) -> void:
 	queue_free()
+
+
+func _on_collected_demon_heart() -> void:
+	weapon.switch()
