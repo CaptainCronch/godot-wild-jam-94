@@ -3,7 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://sdlf3ieypnjb" path="res://art_debug/100x100player.png" id="1_tibap"]
 [ext_resource type="Texture2D" uid="uid://cf4i1owo5pqtl" path="res://art_debug/200x200player.png" id="2_fj5l7"]
 [ext_resource type="Texture2D" uid="uid://bopndkavsbcl6" path="res://art_debug/50x50player.png" id="3_df8d3"]
-[ext_resource type="Texture2D" uid="uid://q5ma63uxsvqs" path="res://player/player_animations/player idle turnaround.png" id="4_fj5l7"]
+[ext_resource type="Texture2D" uid="uid://q5ma63uxsvqs" path="res://player/player-idle-sheet.png" id="4_fj5l7"]
+[ext_resource type="Texture2D" uid="uid://d3eeytt0pktes" path="res://player/weapons/revolver-sheet.png" id="5_df8d3"]
 
 [sub_resource type="Animation" id="Animation_df8d3"]
 resource_name = "front_player_idle"
@@ -51,7 +52,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mxw0g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
@@ -77,3 +78,7 @@ libraries/ = SubResource("AnimationLibrary_j72gv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1127874671]
 sprite_frames = SubResource("SpriteFrames_13aq7")
 frame_progress = 0.42122754
+
+[node name="RevolverSheet" type="Sprite2D" parent="." unique_id=2113964392]
+position = Vector2(67, -2)
+texture = ExtResource("5_df8d3")
