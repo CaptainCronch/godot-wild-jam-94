@@ -9,6 +9,11 @@
 [ext_resource type="FontFile" uid="uid://kund0gjtq0ga" path="res://ui/Noble_Blabber.ttf" id="6_50k4n"]
 [ext_resource type="Texture2D" uid="uid://dopamo8vtbjvn" path="res://ui/mutationcountersheet.png" id="7_7yx4j"]
 [ext_resource type="PackedScene" uid="uid://duym521mltand" path="res://ui/mutation_control.tscn" id="8_7yx4j"]
+[ext_resource type="Texture2D" uid="uid://ceb77llhff3gd" path="res://ui/keycap.png" id="10_m5jkx"]
+[ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="11_nn6gk"]
+[ext_resource type="Texture2D" uid="uid://cx585lthqbdir" path="res://ui/mouse.png" id="12_5pvp5"]
+[ext_resource type="Texture2D" uid="uid://c8i8ocgwvd3l6" path="res://ui/heartanim.png" id="13_gqmtt"]
+[ext_resource type="Texture2D" uid="uid://d1mdqfpirgyae" path="res://ui/keycapshift.png" id="14_ie4ph"]
 
 [sub_resource type="GDScript" id="GDScript_wpdqf"]
 resource_name = "CorpseGroup"
@@ -145,6 +150,136 @@ _data = {
 &"RESET": SubResource("Animation_50k4n"),
 &"add_heart": SubResource("Animation_7yx4j")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_bvmin"]
+line_spacing = 1.0
+paragraph_spacing = -10.0
+font = ExtResource("11_nn6gk")
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font = ExtResource("11_nn6gk")
+font_size = 32
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn6gk"]
+atlas = ExtResource("10_m5jkx")
+region = Rect2(0, 0, 89, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxqaf"]
+atlas = ExtResource("10_m5jkx")
+region = Rect2(89, 0, 89, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdpkf"]
+atlas = ExtResource("10_m5jkx")
+region = Rect2(178, 0, 89, 93)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nn6gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxqaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdpkf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yf5fn"]
+font = ExtResource("11_nn6gk")
+font_size = 40
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr1ho"]
+atlas = ExtResource("12_5pvp5")
+region = Rect2(0, 0, 26, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxd8x"]
+atlas = ExtResource("12_5pvp5")
+region = Rect2(26, 0, 26, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cev3"]
+atlas = ExtResource("12_5pvp5")
+region = Rect2(52, 0, 26, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_di2q3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sr1ho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxd8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cev3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qgsw"]
+atlas = ExtResource("13_gqmtt")
+region = Rect2(0, 0, 49, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo3ge"]
+atlas = ExtResource("13_gqmtt")
+region = Rect2(49, 0, 49, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwon8"]
+atlas = ExtResource("13_gqmtt")
+region = Rect2(98, 0, 49, 45)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5kios"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qgsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo3ge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwon8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oenle"]
+atlas = ExtResource("14_ie4ph")
+region = Rect2(0, 0, 267, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8g2h"]
+atlas = ExtResource("14_ie4ph")
+region = Rect2(267, 0, 267, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7qof"]
+atlas = ExtResource("14_ie4ph")
+region = Rect2(534, 0, 267, 93)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tp4gl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oenle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8g2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7qof")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="World" type="Node2D" unique_id=1108271376 node_paths=PackedStringArray("ui", "step_tick", "spawners")]
 y_sort_enabled = true
@@ -325,6 +460,7 @@ z_index = -1
 script = SubResource("GDScript_eqq5c")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "ammo_label", "progress_bar", "eye", "eye_animation_player", "total_score", "mutation_control")]
+process_mode = 3
 script = ExtResource("3_wpdqf")
 world = NodePath("..")
 health_bar = NodePath("HealthContainer/AspectRatioContainer/HealthBar")
@@ -437,3 +573,241 @@ offset_right = 10.0
 offset_bottom = 10.0
 
 [node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]
+
+[node name="TutorialScreen" type="ColorRect" parent="." unique_id=1970304529]
+unique_name_in_owner = true
+process_mode = 3
+offset_left = -842.901
+offset_top = -517.0
+offset_right = 871.901
+offset_bottom = 497.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="TutorialScreen" unique_id=102927946]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 108.0
+offset_right = 245.0
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Kill as many wretched demons as possible.
+may god rest your soul.
+
+Press any button to continue"
+label_settings = SubResource("LabelSettings_bvmin")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="TutorialScreen" unique_id=412814024]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.75006
+offset_top = -154.9129
+offset_right = -51.75006
+offset_bottom = -119.9129
+grow_horizontal = 2
+grow_vertical = 2
+text = "To WALK"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="TutorialScreen" unique_id=1485756478]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 126.270996
+offset_top = -173.74338
+offset_right = 272.271
+offset_bottom = -138.74338
+grow_horizontal = 2
+grow_vertical = 2
+text = "To SHOOT"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="TutorialScreen" unique_id=1007146343]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.5
+offset_top = -19.743408
+offset_right = 388.5
+offset_bottom = 43.25659
+grow_horizontal = 2
+grow_vertical = 2
+text = "Destroy demon hearts to
+mutate your gun.
+(use your KICK to damage them)"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="TutorialScreen" unique_id=1288214864]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.75006
+offset_top = -64.912964
+offset_right = -57.75006
+offset_bottom = -29.912964
+grow_horizontal = 2
+grow_vertical = 2
+text = "To KICK"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=228689545]
+position = Vector2(546.90094, 370.5)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+autoplay = "default"
+frame_progress = 0.62826085
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D" unique_id=174837194]
+offset_left = -24.306723
+offset_top = -46.987408
+offset_right = 26.550425
+offset_bottom = 0.87813187
+text = "S"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=1208586534]
+position = Vector2(963.672, 350.25662)
+scale = Vector2(1.8285394, 1.8285393)
+sprite_frames = SubResource("SpriteFrames_di2q3")
+autoplay = "default"
+frame_progress = 0.82712734
+
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=908056363]
+position = Vector2(1041.901, 432.25662)
+scale = Vector2(1.8285394, 1.8285393)
+sprite_frames = SubResource("SpriteFrames_5kios")
+autoplay = "default"
+frame_progress = 0.024394853
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=1292218646]
+position = Vector2(485.651, 370.5)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+autoplay = "default"
+frame_progress = 0.16541013
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D3" unique_id=956309803]
+offset_left = -24.306723
+offset_top = -46.987408
+offset_right = 26.550425
+offset_bottom = 0.87813187
+text = "A"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=2116933734]
+position = Vector2(608.65094, 370.5)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+autoplay = "default"
+frame_progress = 0.89424264
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D4" unique_id=1074480935]
+offset_left = -24.306723
+offset_top = -46.987408
+offset_right = 26.550425
+offset_bottom = 0.87813187
+text = "D"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=731394275]
+position = Vector2(547.651, 312.0871)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+autoplay = "default"
+frame_progress = 0.4956738
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D5" unique_id=1588449528]
+offset_left = -24.306723
+offset_top = -46.987408
+offset_right = 26.550425
+offset_bottom = 0.87813187
+text = "W"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=691251013]
+position = Vector2(546.90094, 455.08704)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_tp4gl")
+autoplay = "default"
+frame_progress = 0.22141594
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D2" unique_id=1760653059]
+offset_left = -37.768906
+offset_top = -46.987408
+offset_right = 47.231094
+offset_bottom = 0.87813187
+text = "SHIFT"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="TutorialScreen" unique_id=1632998042]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.75006
+offset_top = 38.087036
+offset_right = -57.75006
+offset_bottom = 73.087036
+grow_horizontal = 2
+grow_vertical = 2
+text = "To JUMP"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="TutorialScreen" unique_id=96905337]
+position = Vector2(546.90094, 558.0871)
+scale = Vector2(0.66853935, 0.6685393)
+sprite_frames = SubResource("SpriteFrames_tp4gl")
+autoplay = "default"
+frame_progress = 0.20072666
+
+[node name="Label" type="Label" parent="TutorialScreen/AnimatedSprite2D6" unique_id=442892534]
+offset_left = -37.768906
+offset_top = -46.987408
+offset_right = 47.231094
+offset_bottom = 0.87813187
+text = "SPACE"
+label_settings = SubResource("LabelSettings_yf5fn")
+horizontal_alignment = 1
+vertical_alignment = 1

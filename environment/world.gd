@@ -32,9 +32,11 @@ var current_wave := 0
 
 @onready var positions := spawners.get_children()
 @onready var enemy_delay := (STARTER_ENEMY_DELAY if Global.difficulty == Global.DIFFICULTIES.STARTER else DIFFICULT_ENEMY_DELAY)
+@onready var tutorial_screen: ColorRect = %TutorialScreen
 
 
 func _ready() -> void:
+	get_tree().paused = true
 	Global.world = self
 	Global.navigation_layers.append($Base)
 	Global.navigation_layers.append($Height1)
@@ -96,4 +98,5 @@ func spawn_demon_heart() -> void:
 	get_tree().current_scene.add_child(heart)
 
 func select_mutation() -> void:
+	get_tree().paused = true
 	ui.show_mutation_screen()

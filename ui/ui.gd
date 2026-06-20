@@ -13,6 +13,7 @@ const HEALTH_BAR_TIME := 0.1
 @export var eye_animation_player: AnimationPlayer
 @export var total_score: Label
 @export var mutation_control : Mutation_Control
+@onready var tutorial_screen: ColorRect = %TutorialScreen
 
 var health_tween: Tween
 
@@ -43,3 +44,8 @@ func _on_health_changed(health: int) -> void:
 
 func show_mutation_screen() -> void:
 	mutation_control.select_new_mutation()
+
+func _input(event: InputEvent) -> void:
+	if event is not InputEventMouseMotion and tutorial_screen.visible:
+		tutorial_screen.hide()
+		get_tree().paused = false

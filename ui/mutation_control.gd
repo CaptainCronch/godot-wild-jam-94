@@ -30,3 +30,4 @@ func card_selected(card : Card) -> void:
 
 func close_mutation_screen() -> void:
 	hide()
+	get_tree().paused = false
