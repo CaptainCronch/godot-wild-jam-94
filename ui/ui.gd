@@ -12,6 +12,7 @@ const HEALTH_BAR_TIME := 0.1
 @export var eye: TextureRect
 @export var eye_animation_player: AnimationPlayer
 @export var total_score: Label
+@export var mutation_control : Mutation_Control
 
 var health_tween: Tween
 
@@ -39,3 +40,6 @@ func _on_health_changed(health: int) -> void:
 	if is_instance_valid(health_tween): health_tween.kill()
 	health_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	health_tween.tween_property(health_bar, "value", health, HEALTH_BAR_TIME)
+
+func show_mutation_screen() -> void:
+	mutation_control.select_new_mutation()

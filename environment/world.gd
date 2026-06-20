@@ -56,13 +56,16 @@ func _process(delta: float) -> void:
 		for _i in 100:
 			var enemy := FLAPPER.instantiate()
 			add_child(enemy)
-
+	if Input.is_action_just_pressed("debug_key_2"):
+		collected_heart()
 
 func collected_heart() -> void:
 	demon_hearts_collected += 1
 	collected_demon_heart.emit()
 	spawn_demon_heart()
 	ui.animate_eye(demon_hearts_collected)
+	if demon_hearts_collected % 10 == 0:
+		select_mutation()
 
 
 func spawn_enemies() -> void:
@@ -91,3 +94,6 @@ func spawn_demon_heart() -> void:
 	heart.plat_comp.floor_height = ENEMY_SPAWN_HEIGHT
 	heart.plat_comp.position_z = ENEMY_SPAWN_HEIGHT
 	get_tree().current_scene.add_child(heart)
+
+func select_mutation() -> void:
+	ui.show_mutation_screen()

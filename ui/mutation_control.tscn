@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://duym521mltand"]
+
+[ext_resource type="PackedScene" uid="uid://cacok14bcvc21" path="res://ui/card.tscn" id="1_edw6i"]
+[ext_resource type="Script" uid="uid://bqdnes26pvqkm" path="res://ui/mutation_control.gd" id="1_hvd2t"]
+[ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="3_53cmh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font = ExtResource("3_53cmh")
+font_size = 64
+
+[node name="MutationControl" type="PanelContainer" unique_id=2138294210]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hvd2t")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2035802449]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="CardContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1932857565]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Card" parent="MarginContainer/CardContainer" unique_id=735816333 instance=ExtResource("1_edw6i")]
+layout_mode = 2
+
+[node name="Card2" parent="MarginContainer/CardContainer" unique_id=1361840591 instance=ExtResource("1_edw6i")]
+layout_mode = 2
+
+[node name="Card3" parent="MarginContainer/CardContainer" unique_id=1845153462 instance=ExtResource("1_edw6i")]
+layout_mode = 2
+
+[node name="SelectionTimer" type="Timer" parent="." unique_id=2061224741]
+unique_name_in_owner = true
+wait_time = 30.0
+
+[node name="CountdownLabel" type="Label" parent="." unique_id=1867268755]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "0"
+label_settings = SubResource("LabelSettings_g4v7s")
+
+[connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]

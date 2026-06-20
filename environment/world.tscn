@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b8gvi8xqf41ou" path="res://ui/healthbar.png" id="5_na063"]
 [ext_resource type="FontFile" uid="uid://kund0gjtq0ga" path="res://ui/Noble_Blabber.ttf" id="6_50k4n"]
 [ext_resource type="Texture2D" uid="uid://dopamo8vtbjvn" path="res://ui/mutationcountersheet.png" id="7_7yx4j"]
+[ext_resource type="PackedScene" uid="uid://duym521mltand" path="res://ui/mutation_control.tscn" id="8_7yx4j"]
 
 [sub_resource type="GDScript" id="GDScript_wpdqf"]
 resource_name = "CorpseGroup"
@@ -54,7 +55,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_nn6gk"]
 resource_name = "health_changed"
-length = 0.19999999999999998
+length = 0.2
 step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -112,7 +113,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_7yx4j"]
 resource_name = "add_heart"
-length = 0.39999999999999997
+length = 0.4
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -323,7 +324,7 @@ self_modulate = Color(1, 1, 1, 0.5)
 z_index = -1
 script = SubResource("GDScript_eqq5c")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "ammo_label", "progress_bar", "eye", "eye_animation_player", "total_score")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "ammo_label", "progress_bar", "eye", "eye_animation_player", "total_score", "mutation_control")]
 script = ExtResource("3_wpdqf")
 world = NodePath("..")
 health_bar = NodePath("HealthContainer/AspectRatioContainer/HealthBar")
@@ -333,6 +334,7 @@ progress_bar = NodePath("ProgressBar")
 eye = NodePath("EyeContainer/VBoxContainer/Eye")
 eye_animation_player = NodePath("EyeContainer/VBoxContainer/Eye/AnimationPlayer")
 total_score = NodePath("EyeContainer/VBoxContainer/TotalScore")
+mutation_control = NodePath("MutationControl")
 
 [node name="AmmoLabel" type="Label" parent="UI" unique_id=1240045592]
 visible = false
@@ -428,5 +430,10 @@ stretch_mode = 5
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/EyeContainer/VBoxContainer/Eye" unique_id=854763981]
 root_node = NodePath("../../../../..")
 libraries/ = SubResource("AnimationLibrary_m5jkx")
+
+[node name="MutationControl" parent="UI" unique_id=2138294210 instance=ExtResource("8_7yx4j")]
+visible = false
+offset_right = 10.0
+offset_bottom = 10.0
 
 [node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]

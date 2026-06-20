@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Mutation" format=3 uid="uid://bsrgty6ejuhs5"]
+
+[ext_resource type="Script" uid="uid://ds5q3gm4hlqs1" path="res://classes/mutation.gd" id="1_cr3b7"]
+
+[resource]
+script = ExtResource("1_cr3b7")
+name = "Test Mutation"
+description = "This mutation doesn't do anything so far"
+tooltip = "Let me hold your paw while i tell you this"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
