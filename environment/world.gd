@@ -72,6 +72,11 @@ func _ready() -> void:
 	Global.player.health_comp.death.connect(func(_attack: Attack):
 		game_over = true
 		Global.rounds_survived = current_wave
+		
+		Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
+		Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
+		Global.most_rounds_survived = max(Global.most_rounds_survived, Global.rounds_survived)
+		
 		await get_tree().create_timer(2.0).timeout
 		get_tree().paused = true
 		await get_tree().create_timer(1.0).timeout
@@ -91,6 +96,8 @@ func _process(delta: float) -> void:
 	if spawn_timer >= SPAWN_DELAY:
 		pop_spawn_queue()
 	
+	if Input.is_action_just_pressed("debug_key_2"):
+		select_mutation()
 	if Input.is_action_just_pressed("debug_key"):
 		Global.player.health_comp.damage(Attack.new(0, 10))
 		#for _i in 100:

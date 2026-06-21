@@ -16,6 +16,7 @@ func _ready() -> void:
 	title_label.text = mutation.name
 	description_label.text = mutation.description
 	tooltip_label.text = mutation.tooltip
+	card_texture.texture = mutation.card_texture
 
 
 func _on_gui_input(event: InputEvent) -> void:

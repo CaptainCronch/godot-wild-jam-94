@@ -5,3 +5,4 @@ class_name Mutation
 @export_multiline var description: String
 @export var tooltip: String
 @export var code: String
+@export var card_texture : CompressedTexture2D

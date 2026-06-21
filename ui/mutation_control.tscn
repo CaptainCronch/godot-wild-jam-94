@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://duym521mltand"]
 
 [ext_resource type="Script" uid="uid://bqdnes26pvqkm" path="res://ui/mutation_control.gd" id="1_hvd2t"]
+[ext_resource type="Texture2D" uid="uid://btkbkl46muapf" path="res://ui/cardpistol.png" id="3_26tut"]
 [ext_resource type="Script" uid="uid://ds5q3gm4hlqs1" path="res://classes/mutation.gd" id="3_48us1"]
 [ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="3_53cmh"]
+[ext_resource type="Texture2D" uid="uid://ctyn80gg4gh4r" path="res://ui/cardgrenade.png" id="4_a2gua"]
+[ext_resource type="Texture2D" uid="uid://dfoo17sl5n87" path="res://ui/cardsaw.png" id="5_84hke"]
+[ext_resource type="Texture2D" uid="uid://bohkti14wcbkf" path="res://ui/cardwhip.png" id="6_t2fnn"]
+[ext_resource type="Texture2D" uid="uid://dw3ads6xd3p4u" path="res://ui/cardrandom.png" id="7_hdr1k"]
+[ext_resource type="Texture2D" uid="uid://dss83lxuja3v5" path="res://ui/cardheal.png" id="8_3wyq2"]
 
 [sub_resource type="Resource" id="Resource_48us1"]
 script = ExtResource("3_48us1")
@@ -10,6 +16,7 @@ name = "Mouthful"
 description = "Automatic firing in revolver form. Doubles reload speed."
 tooltip = "~ Use more gun. ~"
 code = "revolver_uzi"
+card_texture = ExtResource("3_26tut")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_roa3u"]
@@ -18,6 +25,7 @@ name = "Ballistic"
 description = "Pierce three demons with one projectile, while in revolver form."
 tooltip = "~ Higher caliber. ~"
 code = "revolver_pierce"
+card_texture = ExtResource("3_26tut")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_knmdi"]
@@ -26,6 +34,7 @@ name = "Brimstone"
 description = "Explosions deal double damage."
 tooltip = "~ Erase them. ~"
 code = "explosion_damage"
+card_texture = ExtResource("4_a2gua")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_ap8sn"]
@@ -34,6 +43,7 @@ name = "Discernment"
 description = "Explosives no longer harm you."
 tooltip = "~ Point blank. ~"
 code = "explosion_self_damage"
+card_texture = ExtResource("4_a2gua")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_26tut"]
@@ -42,6 +52,7 @@ name = "Grinder"
 description = "Discs slow after their first hit, and are physically taller."
 tooltip = "~ They understand. ~"
 code = "disc_girth"
+card_texture = ExtResource("5_84hke")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_a2gua"]
@@ -50,6 +61,7 @@ name = "Disc Hell"
 description = "Discs no longer damage you. Also doubles firing rate."
 tooltip = "~ Nowhere is safe. ~"
 code = "disc_double"
+card_texture = ExtResource("5_84hke")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_84hke"]
@@ -58,6 +70,7 @@ name = "Agility"
 description = "Strike twice as often in whip form."
 tooltip = "~ Be unrelenting. ~"
 code = "whip_double"
+card_texture = ExtResource("6_t2fnn")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_t2fnn"]
@@ -66,23 +79,26 @@ name = "Technique"
 description = "Strike wider and taller in whip form."
 tooltip = "~ It comes for all. ~"
 code = "whip_girth"
+card_texture = ExtResource("6_t2fnn")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_cr3b7"]
 script = ExtResource("3_48us1")
-name = "Unknown"
+name = "Gambler"
 description = "Random mutation."
 tooltip = "~ Try your luck. ~"
 code = "random"
+card_texture = ExtResource("7_hdr1k")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="Resource" id="Resource_hdr1k"]
 script = ExtResource("3_48us1")
-name = "Restore"
+name = "Symbiosis"
 description = "Heal NUM points.
 Becomes weaker the more it is used."
 tooltip = "~ The show must go on. ~"
 code = "heal"
+card_texture = ExtResource("8_3wyq2")
 metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]

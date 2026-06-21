@@ -397,7 +397,7 @@ self_modulate = Color(1, 1, 1, 0.5)
 z_index = -1
 script = SubResource("GDScript_eqq5c")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "eye", "eye_animation_player", "total_score", "mutation_control", "revolver_chamber", "revolver_chamber_background", "fuse_bar", "disc_bar", "heart_pointer", "round_label", "demon_label", "heart_label", "tutorial_delay", "end_screen")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "eye", "eye_animation_player", "total_score", "mutation_control", "revolver_chamber", "revolver_chamber_background", "fuse_bar", "disc_bar", "heart_pointer", "round_label", "demon_label", "heart_label", "tutorial_delay", "end_screen", "max_round_label", "max_demon_label", "max_heart_label")]
 process_mode = 3
 script = ExtResource("3_wpdqf")
 world = NodePath("..")
@@ -412,11 +412,14 @@ revolver_chamber_background = NodePath("WeaponContainer/RevolverChamberBackgroun
 fuse_bar = NodePath("WeaponContainer/FuseBar")
 disc_bar = NodePath("WeaponContainer/DiscBar")
 heart_pointer = NodePath("HeartPointer")
-round_label = NodePath("EndScreen/ResultsContainer/VBoxContainer/RoundLabel")
-demon_label = NodePath("EndScreen/ResultsContainer/VBoxContainer/DemonLabel")
-heart_label = NodePath("EndScreen/ResultsContainer/VBoxContainer/HeartLabel")
+round_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer2/RoundLabel")
+demon_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer2/DemonLabel")
+heart_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer2/HeartLabel")
 tutorial_delay = NodePath("../TutorialScreen/TutorialDelay")
 end_screen = NodePath("EndScreen")
+max_round_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer3/MaxRoundLabel")
+max_demon_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer3/MaxDemonLabel")
+max_heart_label = NodePath("EndScreen/ResultsContainer/MarginContainer/VBoxContainer3/MaxHeartLabel")
 
 [node name="Vignette" type="ColorRect" parent="UI" unique_id=496928846]
 material = SubResource("ShaderMaterial_wagxh")
@@ -563,7 +566,6 @@ offset_right = 10.0
 offset_bottom = 10.0
 
 [node name="EndScreen" type="Control" parent="UI" unique_id=1176006570]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -572,7 +574,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ResultsContainer" type="PanelContainer" parent="UI/EndScreen" unique_id=275742590]
-custom_minimum_size = Vector2(256, 288)
+custom_minimum_size = Vector2(512, 288)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -586,67 +588,97 @@ offset_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndScreen/ResultsContainer" unique_id=1527356470]
+[node name="MarginContainer" type="MarginContainer" parent="UI/EndScreen/ResultsContainer" unique_id=1840449399]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=1051795906]
+[node name="VBoxContainer3" type="VBoxContainer" parent="UI/EndScreen/ResultsContainer/MarginContainer" unique_id=1633472526]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=418804515]
+layout_mode = 2
+text = "Most rounds survived"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="MaxRoundLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=1785615907]
+layout_mode = 2
+text = "999"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=24712861]
+layout_mode = 2
+text = "Most demons killed"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="MaxDemonLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=1906914815]
+layout_mode = 2
+text = "999"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=895443233]
+layout_mode = 2
+text = "Most hearts collected"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="MaxHeartLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=653199798]
+layout_mode = 2
+text = "999"
+label_settings = SubResource("LabelSettings_57qmd")
+horizontal_alignment = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/EndScreen/ResultsContainer/MarginContainer" unique_id=1527356470]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=1051795906]
 layout_mode = 2
 text = "Rounds survived"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="RoundLabel" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=771413489]
+[node name="RoundLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=771413489]
 unique_name_in_owner = true
 layout_mode = 2
 text = "999"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="Label2" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=358905514]
+[node name="Label2" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=358905514]
 layout_mode = 2
 text = "Demons killed"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="DemonLabel" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=281841138]
+[node name="DemonLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=281841138]
 unique_name_in_owner = true
 layout_mode = 2
 text = "999"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="Label3" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=1112579835]
+[node name="Label3" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=1112579835]
 layout_mode = 2
 text = "Hearts collected"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="HeartLabel" type="Label" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=1314805646]
+[node name="HeartLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=1314805646]
 unique_name_in_owner = true
 layout_mode = 2
 text = "999"
 label_settings = SubResource("LabelSettings_57qmd")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/EndScreen/ResultsContainer/VBoxContainer" unique_id=2117887706]
+[node name="RetryButton" type="Button" parent="UI/EndScreen/ResultsContainer/MarginContainer" unique_id=1965115022]
 layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="RetryButton" type="Button" parent="UI/EndScreen/ResultsContainer/VBoxContainer/HBoxContainer" unique_id=1965115022]
-layout_mode = 2
+size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("11_nn6gk")
 theme_override_font_sizes/font_size = 46
 text = "Retry"
-
-[node name="LeaderboardContainer" type="PanelContainer" parent="UI/EndScreen" unique_id=731025194]
-custom_minimum_size = Vector2(320, 448)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -224.0
-offset_bottom = 224.0
-grow_horizontal = 0
-grow_vertical = 2
 
 [node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]
 
@@ -894,4 +926,4 @@ wait_time = 0.5
 one_shot = true
 autostart = true
 
-[connection signal="pressed" from="UI/EndScreen/ResultsContainer/VBoxContainer/HBoxContainer/RetryButton" to="UI" method="_on_retry_button_pressed"]
+[connection signal="pressed" from="UI/EndScreen/ResultsContainer/MarginContainer/RetryButton" to="UI" method="_on_retry_button_pressed"]

@@ -23,6 +23,9 @@ const HEALTH_BAR_TIME := 0.1
 @export var heart_label: Label
 @export var tutorial_delay: Timer
 @export var end_screen: Control
+@export var max_round_label: Label
+@export var max_demon_label: Label
+@export var max_heart_label: Label
 
 var health_tween: Tween
 
@@ -66,6 +69,9 @@ func show_end_screen() -> void:
 	round_label.text = str(Global.rounds_survived)
 	demon_label.text = str(Global.demons_killed)
 	heart_label.text = str(Global.points_collected)
+	max_round_label.text = str(Global.most_rounds_survived)
+	max_demon_label.text = str(Global.most_demons_killed)
+	max_heart_label.text = str(Global.most_points_collected)
 	end_screen.show()
 
 func _input(event: InputEvent) -> void:
