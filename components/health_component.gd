@@ -60,6 +60,10 @@ func stun(attack: Attack) -> void:
 
 func die(attack):
 	if dead: return
+	if target is CharacterBody2D:
+		target.velocity += attack.attack_direction * attack.knockback_force * knockback_factor
+		if is_instance_valid(plat_comp):
+			plat_comp.velocity_z += attack.knockup_force * knockup_factor - 5.0
 	death.emit(attack)
 	dead = true
 	#target.queue_free()

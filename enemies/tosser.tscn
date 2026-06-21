@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b4smnywsn66gx" path="res://components/hitbox_component.tscn" id="4_4h3ag"]
 [ext_resource type="Texture2D" uid="uid://bbvucpp2nsste" path="res://enemies/tosser-sheet.png" id="7_5ug8c"]
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="7_cpflh"]
+[ext_resource type="AudioStream" uid="uid://bx6hjsn57oiwi" path="res://sounds/enemy_hurt.ogg" id="8_5sp27"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_ugaon"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hxai"]
@@ -163,7 +164,13 @@ _data = {
 &"toss": SubResource("Animation_vw2uw")
 }
 
-[node name="Tosser" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("wall_check", "plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player") groups=["Enemy"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_flo4p"]
+random_pitch = 1.1265541
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("8_5sp27")
+
+[node name="Tosser" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("wall_check", "plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player", "hurt_sound") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
@@ -177,6 +184,7 @@ enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Sprite2D")
 shadow = NodePath("ShadowComponent")
 animation_player = NodePath("AnimationPlayer")
+hurt_sound = NodePath("Hurt")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") groups=["Enemy"] instance=ExtResource("2_flo4p")]
 base_speed = 5000.0
@@ -236,5 +244,9 @@ hit_from_inside = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=878099082]
 libraries/ = SubResource("AnimationLibrary_4h3ag")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." unique_id=723820827]
+stream = SubResource("AudioStreamRandomizer_flo4p")
+max_polyphony = 5
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

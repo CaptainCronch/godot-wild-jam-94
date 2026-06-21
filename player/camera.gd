@@ -21,9 +21,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if player.health_comp.dead: return
-	position = get_local_mouse_position() * BASE_PAN_FACTOR
-	position.y += player.plat_comp.position_z #Global.decay_towards(position.y, -player.plat_comp.floor_height, SPEED_Z, delta)
+	if not player.health_comp.dead:
+		position = get_local_mouse_position() * BASE_PAN_FACTOR
+		position.y += player.plat_comp.position_z #Global.decay_towards(position.y, -player.plat_comp.floor_height, SPEED_Z, delta)
 	
 	if trauma > 0.0:
 		trauma = Global.decay_towards(trauma, 0.0, BASE_DECAY, delta)

@@ -24,17 +24,20 @@ const DIFFICULT_ENEMY_DELAY := 30.0
 
 @export var ui: UI
 @export var step_tick: Timer
+@export var music: AudioStreamPlayer
+@export var song: AudioStream
 @export var spawner_nodes_starter: Array[CollisionShape2D]
 @export var spawner_nodes_difficult: Array[CollisionShape2D]
+@export var tilemaps_starter: Array[TileMapLayer]
+@export var tilemaps_difficult: Array[TileMapLayer]
 
 var demon_hearts_collected := 0
 var game_timer := 0.0
 var total_timer := 0.0
 var spawn_timer := 0.0
 var current_wave := 0
-var enemies_to_spawn := 10
+var enemies_to_spawn := 5
 var enemy_addition := 5
-var current_demon_heart: DemonHeart
 var total_spawn_area: Rect2
 var spawners: Array[Rect2]
 var spawn_queue: Array[CharacterBody2D] = []
@@ -49,6 +52,11 @@ func _ready() -> void:
 	if Global.difficulty == Global.DIFFICULTIES.DIFFICULT:
 		enemies_to_spawn = 50
 		spawner_nodes = spawner_nodes_difficult
+		for tilemap in tilemaps_starter:
+			tilemap.enabled = false
+	else:
+		for tilemap in tilemaps_difficult:
+			tilemap.enabled = false
 	get_tree().paused = true
 	
 	Global.world = self
@@ -66,7 +74,10 @@ func _ready() -> void:
 		total_spawn_area = total_spawn_area.expand(spawner.position + Vector2(spawner.size.x, spawner.size.y))
 	
 	await ui.start
+	music.play()
+	
 	spawn_enemies()
+	spawn_demon_heart()
 	spawn_demon_heart()
 	Global.player.health_comp.death.connect(func(_attack: Attack):
 		game_over = true
@@ -94,10 +105,10 @@ func _process(delta: float) -> void:
 	if spawn_timer >= SPAWN_DELAY:
 		pop_spawn_queue()
 	
-	if Input.is_action_just_pressed("debug_key_2"):
-		select_mutation()
-	if Input.is_action_just_pressed("debug_key"):
-		Global.player.health_comp.damage(Attack.new(0, 10))
+	#if Input.is_action_just_pressed("debug_key_2"):
+		#select_mutation()
+	#if Input.is_action_just_pressed("debug_key"):
+		#Global.player.health_comp.damage(Attack.new(0, 10))
 		#for _i in 100:
 			#var current_enemy := SHAMBLER.instantiate()
 			#current_enemy.hide()
@@ -147,17 +158,11 @@ func spawn_enemies() -> void:
 	elif current_wave % 20 == 0: enemy_addition += 10
 	elif current_wave % 10 == 0: enemy_addition += 5
 	enemies_to_spawn += enemy_addition
+	if current_wave % 10 == 0: spawn_demon_heart()
 
 
 func spawn_demon_heart() -> void:
 	var heart: DemonHeart = spawn_scene(DEMON_HEART.instantiate())
-	heart.screen_notifier.screen_entered.connect(func():
-		pass
-	)
-	heart.screen_notifier.screen_exited.connect(func():
-		pass
-	)
-	current_demon_heart = heart
 	get_tree().current_scene.add_child(heart)
 
 
@@ -206,3 +211,8 @@ func get_spawn_point() -> Vector2: # random point in spawn area
 func select_mutation() -> void:
 	if game_over: return
 	ui.show_mutation_screen()
+
+
+func _on_music_finished() -> void:
+	music.stream = song
+	music.play()

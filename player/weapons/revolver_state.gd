@@ -20,6 +20,7 @@ var chamber_background: TextureRect
 @export var weapon: Weapon
 @export var muzzle: Marker2D
 @export var muzzle_flash: Polygon2D
+@export var animator: AnimationPlayer
 
 
 func enter() -> void:
@@ -32,12 +33,14 @@ func enter() -> void:
 	player.reloading = false
 	chamber.show()
 	chamber_background.show()
+	play_animation("revolver_in")
 
 
 func exit() -> void:
 	player.reloading = false
 	chamber.hide()
 	chamber_background.hide()
+	play_animation("revolver_out")
 
 
 func update(delta: float) -> void:
@@ -89,12 +92,24 @@ func shoot() -> void:
 	reload_timer = RELOAD_TIME * (0.5 if uzi_upgrade else 1.0)
 	delay_timer = FIRE_DELAY
 	
+	play_animation("revolver_fire")
+	$"../../Muzzle/Shot".play()
+	
 	muzzle_flash.show()
 	await get_tree().create_timer(0.05).timeout
 	muzzle_flash.hide()
 	
 	if ammo <= 0:
 		player.reloading = true
+		play_animation("revolver_reloading")
 
 
 func fire_release() -> void: pass
+
+
+func play_animation(animation: String, interrupt := true) -> void:
+	if not animator.current_animation == animation:
+		if not interrupt and animator.is_playing(): return
+		animator.play("RESET")
+		animator.advance(0)
+		animator.play(animation)

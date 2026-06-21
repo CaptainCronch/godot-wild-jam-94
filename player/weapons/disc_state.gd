@@ -14,7 +14,7 @@ var bar: TextureProgressBar
 @export var player: Player
 @export var weapon: Weapon
 @export var muzzle: Marker2D
-#@export var muzzle_flash: Polygon2D
+@export var animator: AnimationPlayer
 
 
 func enter() -> void:
@@ -22,16 +22,19 @@ func enter() -> void:
 	reload_timer = 0.0
 	player.reloading = false
 	bar.show()
+	play_animation("disc_in")
 
 
 func exit() -> void:
 	player.reloading = false
 	bar.hide()
+	play_animation("disc_out")
 
 
 func update(delta: float) -> void:
 	if reload_timer > 0.0:
 		reload_timer -= delta
+		play_animation("disc_reloading", false)
 	else:
 		player.reloading = false
 	
@@ -40,6 +43,7 @@ func update(delta: float) -> void:
 
 func fire() -> void:
 	if reload_timer > 0.0: return
+	play_animation("disc_fire")
 	var disc: Disc = DISC.instantiate()
 	disc.height = player.plat_comp.position_z
 	disc.global_position = muzzle.global_position
@@ -65,6 +69,8 @@ func fire() -> void:
 	
 	reload_timer = RELOAD_TIME * (0.5 if double_upgrade else 1.0)
 	player.reloading = true
+	
+	$"../../Muzzle/Disc".play()
 
 
 func fire_hold() -> void:
@@ -72,3 +78,11 @@ func fire_hold() -> void:
 
 
 func fire_release() -> void: pass
+
+
+func play_animation(animation: String, interrupt := true) -> void:
+	if not animator.current_animation == animation:
+		if not interrupt and animator.is_playing(): return
+		animator.play("RESET")
+		animator.advance(0)
+		animator.play(animation)

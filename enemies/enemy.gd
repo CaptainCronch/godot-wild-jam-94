@@ -1,8 +1,9 @@
 extends CharacterBody2D
 class_name Enemy
 
-const BLOOD = preload("uid://dn5dtcu0dbhp6")
-const CORPSE = preload("uid://d0qauj3amib7m")
+const BLOOD := preload("uid://dn5dtcu0dbhp6")
+const CORPSE := preload("uid://d0qauj3amib7m")
+const SELF_DESTRUCT_AUDIO := preload("uid://brs8j5ij13tuu")
 
 const SEPARATION_SPEED := 5000.0
 const MAX_SEPARATION := 2
@@ -17,6 +18,7 @@ const AI_UPDATE := 1.0
 @export var sprite: Sprite2D
 @export var shadow: ShadowComponent
 @export var animation_player: AnimationPlayer
+@export var hurt_sound: AudioStreamPlayer2D
 
 var _player_follow_factor := 1.0
 var _separation_factor := 1.0
@@ -71,6 +73,11 @@ func play_animation(animation: String, interrupt := true) -> void:
 
 
 func _on_damage_taken(_attack: Attack) -> void:
+	var sound: AudioStreamPlayer2D = SELF_DESTRUCT_AUDIO.instantiate()
+	sound.global_position = global_position
+	sound.stream = hurt_sound.stream
+	get_tree().current_scene.add_child(sound)
+	sound.play()
 	Global.player.camera_holder.shake(0.01)
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
 	await get_tree().create_timer(0.1).timeout

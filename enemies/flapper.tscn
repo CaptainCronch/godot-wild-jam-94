@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="7_jw4om"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_aby4i"]
 [ext_resource type="Texture2D" uid="uid://fkbamwabjru" path="res://enemies/flapper-sheet.png" id="9_yn4mp"]
+[ext_resource type="AudioStream" uid="uid://bx6hjsn57oiwi" path="res://sounds/enemy_hurt.ogg" id="10_wb8pw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hxai"]
 radius = 12.0
@@ -101,7 +102,13 @@ _data = {
 &"flap": SubResource("Animation_lothe")
 }
 
-[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player") groups=["Enemy"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lothe"]
+random_pitch = 1.1265541
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("10_wb8pw")
+
+[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player", "hurt_sound") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
@@ -114,6 +121,7 @@ enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Sprite2D")
 shadow = NodePath("ShadowComponent")
 animation_player = NodePath("AnimationPlayer")
+hurt_sound = NodePath("Hurt")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox", "hurtbox") groups=["Enemy"] instance=ExtResource("2_yn4mp")]
 base_speed = 6000.0
@@ -181,5 +189,9 @@ shape = SubResource("CircleShape2D_pfo6o")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2067757828]
 libraries/ = SubResource("AnimationLibrary_k6mqd")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." unique_id=1823947864]
+stream = SubResource("AudioStreamRandomizer_lothe")
+max_polyphony = 5
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

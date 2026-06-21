@@ -2,9 +2,9 @@ extends CharacterBody2D
 class_name RevolverBullet
 
 const BASE_SPEED := 1000.0
-const MAX_PIERCE := 1
+const MAX_PIERCE := 2
 
-@export var sprite: Polygon2D
+@export var sprite: Sprite2D
 @export var shadow: ShadowComponent
 @export var hurtbox: HurtBoxComponent
 

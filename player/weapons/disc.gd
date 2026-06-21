@@ -2,10 +2,10 @@ extends CharacterBody2D
 class_name Disc
 
 const BASE_SPEED := 250.0
-const SPIN_SPEED := 2.0
+#const SPIN_SPEED := 2.0
 const LIFETIME := 10.0
 
-@export var sprite: Polygon2D
+@export var sprite: AnimatedSprite2D
 @export var shadow: ShadowComponent
 @export var hurtbox: HurtBoxComponent
 @export var hitbox: HitboxComponent
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	#$Polygon2D2.rotation = hurtbox.attack.attack_direction.angle()
-	sprite.rotate(SPIN_SPEED * delta * sign(velocity.x))
+	#sprite.rotate(SPIN_SPEED * delta * sign(velocity.x))
 	timer += delta
 	if timer >= LIFETIME:
 		queue_free()

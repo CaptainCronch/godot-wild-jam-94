@@ -3,7 +3,44 @@
 [ext_resource type="Script" uid="uid://duar6t0k8qopv" path="res://enemies/tosser_bullet.gd" id="1_raj2n"]
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_xhbl1"]
 [ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_vgb4m"]
+[ext_resource type="Texture2D" uid="uid://cdtalfryi6fic" path="res://enemies/tosserBullet-sheet.png" id="3_xhbl1"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="4_k2526"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgb4m"]
+atlas = ExtResource("3_xhbl1")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2526"]
+atlas = ExtResource("3_xhbl1")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0us3g"]
+atlas = ExtResource("3_xhbl1")
+region = Rect2(0, 30, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ns5cl"]
+atlas = ExtResource("3_xhbl1")
+region = Rect2(30, 30, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_raj2n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgb4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2526")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0us3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ns5cl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
 radius = 4.0
@@ -27,15 +64,19 @@ collision_layer = 128
 collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_raj2n")
-sprite = NodePath("Polygon2D")
+sprite = NodePath("AnimatedSprite2D")
 shadow = NodePath("ShadowComponent")
 hurtbox = NodePath("HurtboxComponent")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_xhbl1")]
 radius = 20.0
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
-color = Color(1, 0.2509804, 0.3764706, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=115001261]
+position = Vector2(2.995, 0)
+scale = Vector2(1.42, 1.42)
+sprite_frames = SubResource("SpriteFrames_raj2n")
+autoplay = "default"
+frame_progress = 0.2272662
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
 shape = SubResource("CircleShape2D_orxtn")

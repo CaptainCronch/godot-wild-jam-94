@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 [sub_resource type="Resource" id="Resource_roa3u"]
 script = ExtResource("3_48us1")
 name = "Ballistic"
-description = "Pierce three demons with one projectile, while in revolver form."
+description = "Pierce four demons with one projectile, while in revolver form."
 tooltip = "~ Higher caliber. ~"
 code = "revolver_pierce"
 card_texture = ExtResource("3_26tut")

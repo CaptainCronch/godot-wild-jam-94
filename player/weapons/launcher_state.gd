@@ -21,6 +21,7 @@ var bar: TextureProgressBar
 @export var weapon: Weapon
 @export var muzzle: Marker2D
 #@export var muzzle_flash: Polygon2D
+@export var animator: AnimationPlayer
 
 
 func enter() -> void:
@@ -31,11 +32,13 @@ func enter() -> void:
 	reloading = false
 	player.reloading = false
 	bar.show()
+	play_animation("launcher_in")
 
 
 func exit() -> void:
 	player.reloading = false
 	bar.hide()
+	play_animation("launcher_out")
 
 
 func update(delta: float) -> void:
@@ -61,6 +64,7 @@ func fire() -> void:
 
 
 func fire_hold() -> void:
+	play_animation("launcher_reloading")
 	if fuse_timer <= 0.0: shoot()
 	if reloading: return
 	charging = true
@@ -73,6 +77,7 @@ func fire_release() -> void:
 
 func shoot() -> void:
 	#if delay_timer > 0.0: return
+	play_animation("launcher_fire")
 	charging = false
 	
 	var grenade: Grenade = GRENADE.instantiate()
@@ -109,3 +114,11 @@ func shoot() -> void:
 	
 	player.reloading = true
 	reloading = true
+
+
+func play_animation(animation: String, interrupt := true) -> void:
+	if not animator.current_animation == animation:
+		if not interrupt and animator.is_playing(): return
+		animator.play("RESET")
+		animator.advance(0)
+		animator.play(animation)

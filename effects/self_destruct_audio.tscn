@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://brs8j5ij13tuu"]
+
+[sub_resource type="GDScript" id="GDScript_wagxh"]
+resource_name = "SelfDestructAudio"
+script/source = "extends AudioStreamPlayer2D
+
+
+func _on_finished() -> void:
+	queue_free()
+"
+
+[node name="SelfDestructAudio" type="AudioStreamPlayer2D" unique_id=378609276]
+script = SubResource("GDScript_wagxh")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

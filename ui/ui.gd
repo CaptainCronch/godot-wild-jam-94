@@ -25,6 +25,7 @@ const HEALTH_BAR_TIME := 0.1
 @export var max_round_label: Label
 @export var max_demon_label: Label
 @export var max_heart_label: Label
+@export var tutorial: AudioStreamPlayer
 
 var health_tween: Tween
 
@@ -64,6 +65,7 @@ func _on_health_changed(health: int) -> void:
 
 
 func show_mutation_screen() -> void:
+	tutorial.play()
 	mutation_control.select_new_mutation()
 
 
@@ -74,15 +76,19 @@ func show_end_screen() -> void:
 	max_round_label.text = str(Global.most_rounds_survived)
 	max_demon_label.text = str(Global.most_demons_killed)
 	max_heart_label.text = str(Global.most_points_collected)
+	tutorial.play()
 	end_screen.show()
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("space") and tutorial_screen.visible and tutorial_delay.is_stopped():
 		tutorial_screen.hide()
+		tutorial.play()
+		await tutorial.finished
 		get_tree().paused = false
 		start.emit()
 	if event.is_action_pressed("esc"):
+		tutorial.play()
 		Global.rounds_survived = world.current_wave
 		Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
 		Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
@@ -93,13 +99,19 @@ func _input(event: InputEvent) -> void:
 
 func _on_starter_button_pressed() -> void:
 	Global.difficulty = Global.DIFFICULTIES.STARTER
+	tutorial.play()
+	await tutorial.finished
 	get_tree().reload_current_scene()
 
 
 func _on_difficult_button_pressed() -> void:
 	Global.difficulty = Global.DIFFICULTIES.DIFFICULT
+	tutorial.play()
+	await tutorial.finished
 	get_tree().reload_current_scene()
 
 
 func _on_quit_button_pressed() -> void:
+	tutorial.play()
+	await tutorial.finished
 	get_tree().quit()

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b15lkfh64orq1" path="res://player/weapons/revolver_bullet.gd" id="1_kmeu4"]
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_orxtn"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="2_q0wpf"]
+[ext_resource type="Texture2D" uid="uid://kuvh65g8bi3s" path="res://player/weapons/playerProjectiles-sheet.png" id="3_14enh"]
 [ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_am8n8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
@@ -28,15 +29,17 @@ collision_layer = 64
 collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_kmeu4")
-sprite = NodePath("Polygon2D")
+sprite = NodePath("Sprite2D")
 shadow = NodePath("ShadowComponent")
 hurtbox = NodePath("HurtboxComponent")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_orxtn")]
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=823310940]
-color = Color(0.9098039, 0.8509804, 0, 1)
-polygon = PackedVector2Array(7.5, 0, 12.5, -10, -12.5, 0, 12.5, 10)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1877443080]
+scale = Vector2(1.705, 1.705)
+texture = ExtResource("3_14enh")
+region_enabled = true
+region_rect = Rect2(60, 0, 30, 30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=371310276]
 shape = SubResource("CircleShape2D_orxtn")

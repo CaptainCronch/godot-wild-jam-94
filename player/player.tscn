@@ -13,13 +13,22 @@
 [ext_resource type="Texture2D" uid="uid://q5ma63uxsvqs" path="res://player/player-idle-sheet.png" id="8_yllr7"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="9_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://d3eeytt0pktes" path="res://player/weapons/revolver-sheet.png" id="10_32hag"]
+[ext_resource type="Texture2D" uid="uid://df4rlqfvr7iha" path="res://player/weapons/whip-attack-sheet.png" id="12_g4c7l"]
+[ext_resource type="AudioStream" uid="uid://c6elpb4g37mhl" path="res://sounds/sharp_impact.ogg" id="14_uw77l"]
+[ext_resource type="AudioStream" uid="uid://coexrnapoyudk" path="res://sounds/projectile.ogg" id="15_rptt4"]
 [ext_resource type="Script" uid="uid://00a0mouqq4cw" path="res://player/weapons/revolver_state.gd" id="15_wodsf"]
 [ext_resource type="Script" uid="uid://dg16vbyhrqgn3" path="res://player/weapons/launcher_state.gd" id="16_32hag"]
 [ext_resource type="Script" uid="uid://k3okxricppl0" path="res://player/weapons/disc_state.gd" id="16_tqiix"]
 [ext_resource type="Script" uid="uid://6pc2e3gtnm2b" path="res://player/weapons/whip_state.gd" id="17_tqiix"]
 [ext_resource type="Texture2D" uid="uid://c1oxgo00bfai" path="res://player/player-jump-sheet.png" id="18_65viv"]
+[ext_resource type="Texture2D" uid="uid://bjktown6sqxcj" path="res://player/weapons/disc-sheet.png" id="18_bjvpn"]
 [ext_resource type="Texture2D" uid="uid://dhc3lrnjn50sk" path="res://player/player-move-sheet.png" id="18_e7oew"]
+[ext_resource type="Texture2D" uid="uid://br81hn72qpsk0" path="res://player/weapons/launcher-sheet.png" id="18_x7c3f"]
 [ext_resource type="Texture2D" uid="uid://cqhj8xu8p1rm8" path="res://player/player-speed-sheet.png" id="19_x7c3f"]
+[ext_resource type="Texture2D" uid="uid://bl08nh3qusciq" path="res://player/weapons/whip-sheet.png" id="20_s7qer"]
+[ext_resource type="AudioStream" uid="uid://b7d3wbibdvsq2" path="res://sounds/death.ogg" id="25_knn7v"]
+[ext_resource type="AudioStream" uid="uid://dixfg70rmnfad" path="res://sounds/hurt.ogg" id="26_7pqkx"]
+[ext_resource type="AudioStream" uid="uid://bx6hjsn57oiwi" path="res://sounds/enemy_hurt.ogg" id="29_r7pn3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(12, 4)
@@ -45,6 +54,61 @@ shader = ExtResource("9_kb6p2")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_knn7v"]
+atlas = ExtResource("12_g4c7l")
+region = Rect2(0, 0, 250, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pqkx"]
+atlas = ExtResource("12_g4c7l")
+region = Rect2(250, 0, 250, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uw77l"]
+atlas = ExtResource("12_g4c7l")
+region = Rect2(500, 0, 250, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rptt4"]
+atlas = ExtResource("12_g4c7l")
+region = Rect2(750, 0, 250, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7pn3"]
+atlas = ExtResource("12_g4c7l")
+region = Rect2(1000, 0, 250, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wagxh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knn7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pqkx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw77l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rptt4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7pn3")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wagxh"]
+random_pitch = 1.1024144
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("14_uw77l")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r7pn3"]
+random_pitch = 1.1024144
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("15_rptt4")
+
 [sub_resource type="Resource" id="Resource_tqiix"]
 script = ExtResource("6_yllr7")
 attack_damage = 5
@@ -55,10 +119,736 @@ size = 64.0
 metadata/_custom_type_script = "uid://crg4f1ccw336i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wagxh"]
-size = Vector2(232, 48)
+size = Vector2(232, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32hag"]
-size = Vector2(48, 48)
+size = Vector2(48, 32)
+
+[sub_resource type="Animation" id="Animation_art4l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_237xx"]
+resource_name = "disc_fire"
+length = 0.4166750124178827
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_bjvpn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_jfgyi"]
+resource_name = "disc_idle"
+length = 0.08334166915044189
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_bjvpn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wpyo2"]
+resource_name = "disc_in"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_bjvpn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_7crtr"]
+resource_name = "disc_out"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_bjvpn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18]
+}
+
+[sub_resource type="Animation" id="Animation_vgvch"]
+resource_name = "disc_reloading"
+length = 0.5000083482347428
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_bjvpn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="Animation" id="Animation_8pxes"]
+resource_name = "launcher_fire"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_mmwog"]
+resource_name = "launcher_idle"
+length = 0.08334166915044189
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fmu53"]
+resource_name = "launcher_in"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_w7j2h"]
+resource_name = "launcher_out"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_n0b8q"]
+resource_name = "launcher_reloading"
+length = 0.583341684051603
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("18_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_fjxoa"]
+resource_name = "revolver_fire"
+length = 0.16667083830051124
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_gswnw"]
+resource_name = "revolver_idle"
+length = 0.08334166915044189
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xcnuv"]
+resource_name = "revolver_in"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_j55il"]
+resource_name = "revolver_out"
+length = 0.3333416766010225
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [13, 14, 15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_hjies"]
+resource_name = "revolver_reloading"
+length = 0.583341684051603
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_32hag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_3dxkp"]
+resource_name = "whip_fire"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.083333336),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_s7qer")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -4)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_a1u5o"]
+resource_name = "whip_idle"
+length = 0.08334166915044189
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_s7qer")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -4)]
+}
+
+[sub_resource type="Animation" id="Animation_6wior"]
+resource_name = "whip_in"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_s7qer")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -4)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12]
+}
+
+[sub_resource type="Animation" id="Animation_p5tca"]
+resource_name = "whip_out"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_s7qer")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -4)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Puppet/WeaponSpriteHolder/WeaponSprite:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mmwog"]
+_data = {
+&"RESET": SubResource("Animation_art4l"),
+&"disc_fire": SubResource("Animation_237xx"),
+&"disc_idle": SubResource("Animation_jfgyi"),
+&"disc_in": SubResource("Animation_wpyo2"),
+&"disc_out": SubResource("Animation_7crtr"),
+&"disc_reloading": SubResource("Animation_vgvch"),
+&"launcher_fire": SubResource("Animation_8pxes"),
+&"launcher_idle": SubResource("Animation_mmwog"),
+&"launcher_in": SubResource("Animation_fmu53"),
+&"launcher_out": SubResource("Animation_w7j2h"),
+&"launcher_reloading": SubResource("Animation_n0b8q"),
+&"revolver_fire": SubResource("Animation_fjxoa"),
+&"revolver_idle": SubResource("Animation_gswnw"),
+&"revolver_in": SubResource("Animation_xcnuv"),
+&"revolver_out": SubResource("Animation_j55il"),
+&"revolver_reloading": SubResource("Animation_hjies"),
+&"whip_fire": SubResource("Animation_3dxkp"),
+&"whip_idle": SubResource("Animation_a1u5o"),
+&"whip_in": SubResource("Animation_6wior"),
+&"whip_out": SubResource("Animation_p5tca")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvfyp"]
 radius = 7.0
@@ -957,7 +1747,19 @@ _data = {
 &"walk_right": SubResource("Animation_a2xo5")
 }
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "hitbox", "sprite", "player_animator", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text") groups=["Player"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_knn7v"]
+random_pitch = 1.1024144
+random_volume_offset_db = 1.56
+streams_count = 1
+stream_0/stream = ExtResource("26_7pqkx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b8hi5"]
+random_pitch = 1.1265541
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("29_r7pn3")
+
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "hitbox", "sprite", "player_animator", "leg", "weapon", "weapon_holder", "weapon_sprite", "weapon_sprite_holder", "camera_holder", "debug_text") groups=["Player"]]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
@@ -970,7 +1772,8 @@ player_animator = NodePath("PlayerAnimationPlayer")
 leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
-weapon_sprite = NodePath("Puppet/WeaponSprite")
+weapon_sprite = NodePath("Puppet/WeaponSpriteHolder/WeaponSprite")
+weapon_sprite_holder = NodePath("Puppet/WeaponSpriteHolder")
 camera_holder = NodePath("CameraHolder")
 debug_text = NodePath("DebugText")
 
@@ -1037,22 +1840,27 @@ texture = ExtResource("8_yllr7")
 region_enabled = true
 region_rect = Rect2(0, 0, 25, 25)
 
-[node name="WeaponSprite" type="Sprite2D" parent="Puppet" unique_id=2004832199]
-texture_repeat = 2
-position = Vector2(0, -10.585)
-texture = ExtResource("10_32hag")
-offset = Vector2(14, 0)
-region_enabled = true
-region_rect = Rect2(0, 0, 25, 25)
+[node name="WeaponSpriteHolder" type="Node2D" parent="Puppet" unique_id=1846171992]
+position = Vector2(0, -10)
 
-[node name="MuzzleFlash" type="Polygon2D" parent="Puppet/WeaponSprite" unique_id=1332102063]
+[node name="WeaponSprite" type="Sprite2D" parent="Puppet/WeaponSpriteHolder" unique_id=2004832199]
+texture_repeat = 2
+position = Vector2(14, 0)
+texture = ExtResource("10_32hag")
+hframes = 5
+vframes = 5
+
+[node name="MuzzleFlash" type="Polygon2D" parent="Puppet/WeaponSpriteHolder/WeaponSprite" unique_id=1332102063]
 visible = false
-position = Vector2(27.205, -1.095)
+position = Vector2(10.17, -1.095)
 polygon = PackedVector2Array(0, -10, 10, 0, 0, 10, -10, 0)
 
-[node name="Whip" type="Polygon2D" parent="Puppet/WeaponSprite" unique_id=1017881524]
-visible = false
-polygon = PackedVector2Array(3, -2.5, -3, 0, 3, 4.5, 208.5, 7, 214, 16.5, 219, 6.5, 229, 0, 219, -4.5, 213.5, -14.5, 208.5, -5)
+[node name="Whip" type="AnimatedSprite2D" parent="Puppet/WeaponSpriteHolder/WeaponSprite" unique_id=1458172641]
+show_behind_parent = true
+position = Vector2(102, -1)
+sprite_frames = SubResource("SpriteFrames_wagxh")
+frame = 4
+frame_progress = 1.0
 
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -10.215)
@@ -1076,39 +1884,53 @@ weapon_animator = NodePath("WeaponAnimationPlayer")
 [node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
 position = Vector2(20, 0)
 
+[node name="Disc" type="AudioStreamPlayer2D" parent="Weapon/Muzzle" unique_id=142963877]
+stream = SubResource("AudioStreamRandomizer_wagxh")
+volume_db = 3.152
+max_polyphony = 3
+
+[node name="Shot" type="AudioStreamPlayer2D" parent="Weapon/Muzzle" unique_id=473372647]
+stream = SubResource("AudioStreamRandomizer_r7pn3")
+volume_db = 0.788
+pitch_scale = 0.58
+max_polyphony = 5
+
 [node name="WeaponStateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
 initial_state = NodePath("RevolverState")
 
-[node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash")]
+[node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash", "animator")]
 script = ExtResource("15_wodsf")
 player = NodePath("../../..")
 weapon = NodePath("../..")
 muzzle = NodePath("../../Muzzle")
-muzzle_flash = NodePath("../../../Puppet/WeaponSprite/MuzzleFlash")
+muzzle_flash = NodePath("../../../Puppet/WeaponSpriteHolder/WeaponSprite/MuzzleFlash")
+animator = NodePath("../../WeaponAnimationPlayer")
 
-[node name="LauncherState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1502189264 node_paths=PackedStringArray("player", "weapon", "muzzle")]
+[node name="LauncherState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1502189264 node_paths=PackedStringArray("player", "weapon", "muzzle", "animator")]
 script = ExtResource("16_32hag")
 player = NodePath("../../..")
 weapon = NodePath("../..")
 muzzle = NodePath("../../Muzzle")
+animator = NodePath("../../WeaponAnimationPlayer")
 
-[node name="DiscState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=952418509 node_paths=PackedStringArray("player", "weapon", "muzzle")]
+[node name="DiscState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=952418509 node_paths=PackedStringArray("player", "weapon", "muzzle", "animator")]
 script = ExtResource("16_tqiix")
 player = NodePath("../../..")
 weapon = NodePath("../..")
 muzzle = NodePath("../../Muzzle")
+animator = NodePath("../../WeaponAnimationPlayer")
 
-[node name="WhipState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=921579290 node_paths=PackedStringArray("player", "weapon", "sourspot", "sweetspot", "whip")]
+[node name="WhipState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=921579290 node_paths=PackedStringArray("player", "weapon", "sourspot", "sweetspot", "whip", "animator")]
 script = ExtResource("17_tqiix")
 player = NodePath("../../..")
 weapon = NodePath("../..")
 sourspot = NodePath("../../Sourspot")
 sweetspot = NodePath("../../Sweetspot")
-whip = NodePath("../../../Puppet/WeaponSprite/Whip")
+whip = NodePath("../../../Puppet/WeaponSpriteHolder/WeaponSprite/Whip")
+animator = NodePath("../../WeaponAnimationPlayer")
 
 [node name="Sourspot" parent="Weapon" unique_id=854077962 groups=["Player"] instance=ExtResource("5_ebec5")]
-visible = false
 collision_layer = 16
 collision_mask = 32
 attack = SubResource("Resource_tqiix")
@@ -1120,7 +1942,6 @@ position = Vector2(112, 0)
 shape = SubResource("RectangleShape2D_wagxh")
 
 [node name="Sweetspot" parent="Weapon" unique_id=249336522 groups=["Player"] instance=ExtResource("5_ebec5")]
-visible = false
 collision_layer = 16
 collision_mask = 32
 attack = SubResource("Resource_tqiix")
@@ -1132,6 +1953,8 @@ position = Vector2(204, 0)
 shape = SubResource("RectangleShape2D_32hag")
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="Weapon" unique_id=2028765469]
+libraries/ = SubResource("AnimationLibrary_mmwog")
+autoplay = &"revolver_idle"
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1915895890]
 shape = SubResource("CircleShape2D_hvfyp")
@@ -1153,6 +1976,18 @@ label_settings = SubResource("LabelSettings_ry6om")
 [node name="PlayerAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1012533958]
 libraries/ = SubResource("AnimationLibrary_bjvpn")
 autoplay = &"idle_front"
+
+[node name="Death" type="AudioStreamPlayer" parent="." unique_id=1024456480]
+stream = ExtResource("25_knn7v")
+volume_db = 2.993
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." unique_id=93469129]
+stream = SubResource("AudioStreamRandomizer_knn7v")
+max_polyphony = 3
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="." unique_id=970540716]
+stream = SubResource("AudioStreamRandomizer_b8hi5")
+max_polyphony = 5
 
 [connection signal="landed" from="PlatformerComponent" to="." method="_on_landed"]
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

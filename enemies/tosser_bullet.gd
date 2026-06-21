@@ -3,7 +3,7 @@ class_name TosserBullet
 
 const BASE_SPEED := 100.0
 
-@export var sprite: Polygon2D
+@export var sprite: AnimatedSprite2D
 @export var shadow: ShadowComponent
 @export var hurtbox: HurtBoxComponent
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
 	
-	sprite.polygon = Global.generate_circle_polygon(19.0, 12)
+	#sprite.polygon = Global.generate_circle_polygon(19.0, 12)
 	#occlusion.height = height
 
 

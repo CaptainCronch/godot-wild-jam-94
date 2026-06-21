@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_6423d"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_6423d"]
 [ext_resource type="Texture2D" uid="uid://dq38prrbthexc" path="res://enemies/shambler-sheet.png" id="9_ysxep"]
+[ext_resource type="AudioStream" uid="uid://bx6hjsn57oiwi" path="res://sounds/enemy_hurt.ogg" id="10_6p5g5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hxai"]
 radius = 8.0
@@ -162,7 +163,13 @@ _data = {
 &"step": SubResource("Animation_y2mqt")
 }
 
-[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("wall_check", "plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player") groups=["Enemy"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y2mqt"]
+random_pitch = 1.1265541
+random_volume_offset_db = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("10_6p5g5")
+
+[node name="Shambler" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("wall_check", "plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player", "hurt_sound") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
@@ -177,6 +184,7 @@ enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Sprite2D")
 shadow = NodePath("ShadowComponent")
 animation_player = NodePath("AnimationPlayer")
+hurt_sound = NodePath("Hurt")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox", "hurtbox") groups=["Enemy"] instance=ExtResource("2_2n88m")]
 base_speed = 15000.0
@@ -247,5 +255,9 @@ hit_from_inside = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=381640575]
 libraries/ = SubResource("AnimationLibrary_snlrn")
 autoplay = &"step"
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." unique_id=1350808606]
+stream = SubResource("AudioStreamRandomizer_y2mqt")
+max_polyphony = 5
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

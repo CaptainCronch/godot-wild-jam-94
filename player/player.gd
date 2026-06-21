@@ -24,6 +24,7 @@ const HITBOX_SIZE_DIVE := 1.0
 @export var weapon: Weapon
 @export var weapon_holder: Node2D
 @export var weapon_sprite: Sprite2D
+@export var weapon_sprite_holder: Node2D
 @export var camera_holder: CameraHolder
 @export var debug_text: Label
 
@@ -69,8 +70,8 @@ func _process(delta: float) -> void:
 		weapon.fire_release()
 	
 	weapon_holder.rotation = weapon_holder.global_position.direction_to(get_global_mouse_position()).angle()
-	weapon_sprite.rotation = weapon_holder.rotation
-	weapon_sprite.show_behind_parent = weapon_sprite.rotation < 0.0
+	weapon_sprite_holder.rotation = weapon_holder.rotation
+	weapon_sprite_holder.show_behind_parent = weapon_sprite_holder.rotation < 0.0
 	hurtbox.rotation = weapon_holder.rotation
 	
 	#if not reloading:
@@ -78,7 +79,7 @@ func _process(delta: float) -> void:
 	#else:
 		#weapon_sprite.rotation = (absf(weapon_holder.rotation) / 2.0) + (PI/4.0)
 	
-	if absf(weapon_sprite.rotation) > PI/2.0:
+	if absf(weapon_sprite_holder.rotation) > PI/2.0:
 		weapon_sprite.scale.y = -1.0
 	else:
 		weapon_sprite.scale.y = 1.0
@@ -176,11 +177,13 @@ func jump() -> void:
 		jump_cut = false
 		plat_comp.jumping = true
 		play_animation(player_animator, add_direction("jump", true))
+		$Jump.play()
 	elif plat_comp.airborne and not diving:
 		velocity = (plat_comp.dir if plat_comp.dir.length() > 0.0 else velocity.normalized()) * BASE_DIVE_BOOST
 		plat_comp.velocity_z = BASE_DIVE_JUMP_BOOST
 		diving = true
 		hitbox.size = HITBOX_SIZE_DIVE
+		$Jump.play()
 		#jump_boost = BASE_JUMP_BOOST
 
 
@@ -243,6 +246,7 @@ func add_direction(input: String, mouse := false) -> String:
 
 
 func _on_damage_taken(_attack: Attack) -> void:
+	$Hurt.play()
 	camera_holder.shake(0.5)
 	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
 	await get_tree().create_timer(0.05).timeout
@@ -259,6 +263,9 @@ func _on_damage_taken(_attack: Attack) -> void:
 
 func _on_death(_attack: Attack) -> void:
 	plat_comp.dir = Vector2()
+	weapon_sprite.hide()
+	camera_holder.shake(1.0)
+	$Death.play()
 	#queue_free()
 
 
