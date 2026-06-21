@@ -9,19 +9,23 @@ const HEALTH_BAR_TIME := 0.1
 @export var world: World
 @export var health_bar: TextureProgressBar
 @export var health_animation_player: AnimationPlayer
-@export var ammo_label: Label
-@export var progress_bar: TextureProgressBar
 @export var eye: TextureRect
 @export var eye_animation_player: AnimationPlayer
 @export var total_score: Label
-@export var mutation_control : Mutation_Control
-@onready var tutorial_screen: ColorRect = %TutorialScreen
+@export var mutation_control: MutationControl
+@export var revolver_chamber: TextureRect
+@export var revolver_chamber_background: TextureRect
+@export var fuse_bar: TextureProgressBar
+@export var disc_bar: TextureProgressBar
 
 var health_tween: Tween
+
+@onready var tutorial_screen: ColorRect = %TutorialScreen
 
 
 func _ready() -> void:
 	tutorial_screen.show()
+	Global.ui = self
 	await get_tree().process_frame
 	Global.player.health_comp.health_changed.connect(_on_health_changed)
 

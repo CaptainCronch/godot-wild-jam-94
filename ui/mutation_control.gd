@@ -1,5 +1,5 @@
 extends PanelContainer
-class_name Mutation_Control
+class_name MutationControl
 
 const CARD = preload("uid://cacok14bcvc21")
 

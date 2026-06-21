@@ -11,9 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://dopamo8vtbjvn" path="res://ui/mutationcountersheet.png" id="7_7yx4j"]
 [ext_resource type="PackedScene" uid="uid://duym521mltand" path="res://ui/mutation_control.tscn" id="8_7yx4j"]
 [ext_resource type="Shader" uid="uid://bo2pmbq85d8c3" path="res://shaders/vignette.gdshader" id="9_gqmtt"]
+[ext_resource type="Texture2D" uid="uid://htc0jmds7rmf" path="res://ui/fuse.png" id="10_bvmin"]
 [ext_resource type="Texture2D" uid="uid://ceb77llhff3gd" path="res://ui/keycap.png" id="10_m5jkx"]
 [ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="11_nn6gk"]
+[ext_resource type="Texture2D" uid="uid://cex21dfq1vaqp" path="res://ui/revolver.png" id="11_sr1ho"]
 [ext_resource type="Texture2D" uid="uid://cx585lthqbdir" path="res://ui/mouse.png" id="12_5pvp5"]
+[ext_resource type="Texture2D" uid="uid://c3yoa0tsj8jun" path="res://ui/disc.png" id="12_fxd8x"]
 [ext_resource type="Texture2D" uid="uid://c8i8ocgwvd3l6" path="res://ui/heartanim.png" id="13_gqmtt"]
 [ext_resource type="Texture2D" uid="uid://d1mdqfpirgyae" path="res://ui/keycapshift.png" id="14_ie4ph"]
 
@@ -160,6 +163,18 @@ _data = {
 &"RESET": SubResource("Animation_50k4n"),
 &"add_heart": SubResource("Animation_7yx4j")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_di2q3"]
+atlas = ExtResource("11_sr1ho")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wagxh"]
+atlas = ExtResource("11_sr1ho")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qk3k"]
+atlas = ExtResource("12_fxd8x")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bvmin"]
 line_spacing = 1.0
@@ -376,18 +391,20 @@ self_modulate = Color(1, 1, 1, 0.5)
 z_index = -1
 script = SubResource("GDScript_eqq5c")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "ammo_label", "progress_bar", "eye", "eye_animation_player", "total_score", "mutation_control")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "eye", "eye_animation_player", "total_score", "mutation_control", "revolver_chamber", "revolver_chamber_background", "fuse_bar", "disc_bar")]
 process_mode = 3
 script = ExtResource("3_wpdqf")
 world = NodePath("..")
 health_bar = NodePath("HealthContainer/AspectRatioContainer/HealthBar")
 health_animation_player = NodePath("HealthContainer/AspectRatioContainer/HealthBar/AnimationPlayer")
-ammo_label = NodePath("")
-progress_bar = NodePath("")
 eye = NodePath("EyeContainer/VBoxContainer/Eye")
 eye_animation_player = NodePath("EyeContainer/VBoxContainer/Eye/AnimationPlayer")
 total_score = NodePath("EyeContainer/VBoxContainer/TotalScore")
 mutation_control = NodePath("MutationControl")
+revolver_chamber = NodePath("WeaponContainer/RevolverChamber")
+revolver_chamber_background = NodePath("WeaponContainer/RevolverChamberBackground")
+fuse_bar = NodePath("WeaponContainer/FuseBar")
+disc_bar = NodePath("WeaponContainer/DiscBar")
 
 [node name="Vignette" type="ColorRect" parent="UI" unique_id=496928846]
 material = SubResource("ShaderMaterial_wagxh")
@@ -458,6 +475,68 @@ stretch_mode = 5
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/EyeContainer/VBoxContainer/Eye" unique_id=854763981]
 root_node = NodePath("../../../../..")
 libraries/ = SubResource("AnimationLibrary_m5jkx")
+
+[node name="WeaponContainer" type="MarginContainer" parent="UI" unique_id=160197332]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RevolverChamberBackground" type="TextureRect" parent="UI/WeaponContainer" unique_id=820957373]
+visible = false
+modulate = Color(1, 0, 0.08627451, 1)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.325, -0.325)
+offset_transform_scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_di2q3")
+stretch_mode = 2
+
+[node name="RevolverChamber" type="TextureRect" parent="UI/WeaponContainer" unique_id=1220234014]
+visible = false
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.325, -0.325)
+offset_transform_scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_wagxh")
+stretch_mode = 2
+
+[node name="FuseBar" type="TextureProgressBar" parent="UI/WeaponContainer" unique_id=79135154]
+visible = false
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.335, -0.545)
+offset_transform_scale = Vector2(-2, 2)
+max_value = 1.0
+step = 0.01
+value = 0.25
+texture_under = ExtResource("10_bvmin")
+texture_progress = ExtResource("10_bvmin")
+tint_under = Color(1, 0, 0.08627451, 1)
+tint_progress = Color(0, 0, 0, 1)
+
+[node name="DiscBar" type="TextureProgressBar" parent="UI/WeaponContainer" unique_id=687072999]
+visible = false
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.325, -0.325)
+offset_transform_scale = Vector2(2, 2)
+offset_transform_rotation = -1.5707964
+max_value = 8.0
+value = 8.0
+fill_mode = 5
+texture_under = SubResource("AtlasTexture_7qk3k")
+texture_progress = SubResource("AtlasTexture_7qk3k")
+tint_under = Color(1, 0, 0.08627451, 1)
+tint_progress = Color(0, 0, 0, 1)
 
 [node name="MutationControl" parent="UI" unique_id=2138294210 instance=ExtResource("8_7yx4j")]
 visible = false

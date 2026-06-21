@@ -15,6 +15,7 @@ var charging := false
 var reloading := false
 var damage_upgrade := false
 var self_damage_upgrade := false
+var bar: TextureProgressBar
 
 @export var player: Player
 @export var weapon: Weapon
@@ -23,15 +24,18 @@ var self_damage_upgrade := false
 
 
 func enter() -> void:
+	bar = Global.ui.fuse_bar
 	ui_info = fuse_timer
 	fuse_timer = FUSE_MAX
 	charging = false
 	reloading = false
 	player.reloading = false
+	bar.show()
 
 
 func exit() -> void:
 	player.reloading = false
+	bar.hide()
 
 
 func update(delta: float) -> void:
@@ -48,7 +52,7 @@ func update(delta: float) -> void:
 		reloading = false
 		player.reloading = false
 	
-	ui_info = fuse_timer
+	bar.value = remap(fuse_timer, 0.0, 1.0, 0.25, 1.0)
 
 
 func fire() -> void:

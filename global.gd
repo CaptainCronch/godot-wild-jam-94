@@ -11,6 +11,7 @@ var player: Player
 var shadow_group: CanvasGroup
 var corpse_group: CanvasGroup
 var world: World
+var ui: UI
 
 
 func _process(_delta: float) -> void:

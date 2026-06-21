@@ -13,6 +13,8 @@ var reload_timer := RELOAD_TIME * (0.5 if uzi_upgrade else 1.0)
 var delay_timer := 0.0
 var uzi_upgrade := false
 var pierce_upgrade := false
+var chamber: TextureRect
+var chamber_background: TextureRect
 
 @export var player: Player
 @export var weapon: Weapon
@@ -21,15 +23,21 @@ var pierce_upgrade := false
 
 
 func enter() -> void:
+	chamber = Global.ui.revolver_chamber
+	chamber_background = Global.ui.revolver_chamber_background
 	ammo = MAX_AMMO
 	ui_info = ammo
 	reload_timer = RELOAD_TIME * (0.5 if uzi_upgrade else 1.0)
 	delay_timer = FIRE_DELAY
 	player.reloading = false
+	chamber.show()
+	chamber_background.show()
 
 
 func exit() -> void:
 	player.reloading = false
+	chamber.hide()
+	chamber_background.hide()
 
 
 func update(delta: float) -> void:
@@ -42,7 +50,7 @@ func update(delta: float) -> void:
 	if delay_timer > 0.0:
 		delay_timer -= delta
 	
-	ui_info = ammo
+	(chamber.texture as AtlasTexture).region.position.y = remap(ammo, 0, MAX_AMMO, 384.0, 0.0)
 
 
 func fire() -> void:

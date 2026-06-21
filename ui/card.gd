@@ -8,6 +8,8 @@ signal card_selected(card: Card)
 @onready var description_label: Label = %DescriptionLabel
 @onready var tooltip_label: Label = %TooltipLabel
 
+var can_select := false
+
 @export var mutation: Mutation
 
 func _ready() -> void:
@@ -17,5 +19,10 @@ func _ready() -> void:
 
 
 func _on_gui_input(event: InputEvent) -> void:
+	if not can_select: return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		card_selected.emit(self)
+
+
+func _on_timer_timeout() -> void:
+	can_select = true

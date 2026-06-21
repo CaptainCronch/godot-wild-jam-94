@@ -21,7 +21,7 @@ func _ready() -> void:
 	step_tween.tween_callback(func():
 		current_speed = plat_comp.base_speed
 		disable_player_dir = false
-		if not wall_check.is_colliding(): play_animation("step", false)
+		if not wall_check.is_colliding(): play_animation("step")
 	)
 	step_tween.tween_interval(step_duration)
 	step_tween.tween_callback(func():
@@ -54,10 +54,11 @@ func _physics_process(delta: float) -> void:
 		velocity += player_dir * CLIMB_BOOST * delta
 		plat_comp.air_acceleration = CLIMB_ACCELERATION
 		plat_comp.speed = 0.0
-		play_animation("climb", false)
+		play_animation("climb")
 	else:
 		plat_comp.air_acceleration = plat_comp.base_air_acceleration
 		plat_comp.speed = current_speed
+		#play_animation("RESET", false)
 
 
 func _on_damage_taken(attack: Attack) -> void:

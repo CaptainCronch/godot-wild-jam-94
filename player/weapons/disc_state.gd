@@ -6,11 +6,10 @@ const SELF_KNOCKBACK := -100.0
 #const MAX_AMMO := 6
 const RELOAD_TIME := 1.0
 
-#var ammo := MAX_AMMO
-var ui_info := reload_timer
 var reload_timer := 0.0
 var girth_upgrade := false
 var double_upgrade := false
+var bar: TextureProgressBar
 
 @export var player: Player
 @export var weapon: Weapon
@@ -19,13 +18,15 @@ var double_upgrade := false
 
 
 func enter() -> void:
-	ui_info = reload_timer
+	bar = Global.ui.disc_bar
 	reload_timer = 0.0
 	player.reloading = false
+	bar.show()
 
 
 func exit() -> void:
 	player.reloading = false
+	bar.hide()
 
 
 func update(delta: float) -> void:
@@ -34,7 +35,7 @@ func update(delta: float) -> void:
 	else:
 		player.reloading = false
 	
-	ui_info = reload_timer
+	bar.value = remap(reload_timer, 1.0, 0.0, 0.0, 8.0)
 
 
 func fire() -> void:
