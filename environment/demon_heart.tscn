@@ -13,6 +13,7 @@
 radius = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ncxm4"]
+resource_local_to_scene = true
 shader = ExtResource("6_ep08v")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false

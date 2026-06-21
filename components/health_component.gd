@@ -70,7 +70,7 @@ func heal(amount: int) -> void:
 	if amount <= 0: return
 	health = mini(health + amount, max_health)
 	healed.emit(amount)
-	health_changed.emit(amount)
+	health_changed.emit(health)
 
 
 func _on_stun_timeout() -> void:

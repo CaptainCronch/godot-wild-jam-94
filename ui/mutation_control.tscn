@@ -1,8 +1,89 @@
 [gd_scene format=3 uid="uid://duym521mltand"]
 
-[ext_resource type="PackedScene" uid="uid://cacok14bcvc21" path="res://ui/card.tscn" id="1_edw6i"]
 [ext_resource type="Script" uid="uid://bqdnes26pvqkm" path="res://ui/mutation_control.gd" id="1_hvd2t"]
+[ext_resource type="Script" uid="uid://ds5q3gm4hlqs1" path="res://classes/mutation.gd" id="3_48us1"]
 [ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="3_53cmh"]
+
+[sub_resource type="Resource" id="Resource_48us1"]
+script = ExtResource("3_48us1")
+name = "Mouthful"
+description = "Automatic firing in revolver form. Doubles reload speed."
+tooltip = "~ Use more gun. ~"
+code = "revolver_uzi"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_roa3u"]
+script = ExtResource("3_48us1")
+name = "Ballistic"
+description = "Pierce three demons with one projectile, while in revolver form."
+tooltip = "~ Higher caliber. ~"
+code = "revolver_pierce"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_knmdi"]
+script = ExtResource("3_48us1")
+name = "Brimstone"
+description = "Explosions deal double damage."
+tooltip = "~ Erase them. ~"
+code = "explosion_damage"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_ap8sn"]
+script = ExtResource("3_48us1")
+name = "Discernment"
+description = "Explosives no longer harm you."
+tooltip = "~ Point blank. ~"
+code = "explosion_self_damage"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_26tut"]
+script = ExtResource("3_48us1")
+name = "Grinder"
+description = "Discs slow after their first hit, and are physically taller."
+tooltip = "~ They understand. ~"
+code = "disc_girth"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_a2gua"]
+script = ExtResource("3_48us1")
+name = "Disc Hell"
+description = "Discs no longer damage you. Also doubles firing rate."
+tooltip = "~ Nowhere is safe. ~"
+code = "disc_double"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_84hke"]
+script = ExtResource("3_48us1")
+name = "Agility"
+description = "Strike twice as often in whip form."
+tooltip = "~ Be unrelenting. ~"
+code = "whip_double"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_t2fnn"]
+script = ExtResource("3_48us1")
+name = "Technique"
+description = "Strike wider and taller in whip form."
+tooltip = "~ It comes for all. ~"
+code = "whip_girth"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_cr3b7"]
+script = ExtResource("3_48us1")
+name = "Unknown"
+description = "Random mutation."
+tooltip = "~ Try your luck. ~"
+code = "random"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
+
+[sub_resource type="Resource" id="Resource_hdr1k"]
+script = ExtResource("3_48us1")
+name = "Restore"
+description = "Heal NUM points.
+Becomes weaker the more it is used."
+tooltip = "~ The show must go on. ~"
+code = "heal"
+metadata/_custom_type_script = "uid://ds5q3gm4hlqs1"
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
 font = ExtResource("3_53cmh")
@@ -15,6 +96,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hvd2t")
+upgrades = Array[ExtResource("3_48us1")]([SubResource("Resource_48us1"), SubResource("Resource_roa3u"), SubResource("Resource_knmdi"), SubResource("Resource_ap8sn"), SubResource("Resource_26tut"), SubResource("Resource_a2gua"), SubResource("Resource_84hke"), SubResource("Resource_t2fnn")])
+random = SubResource("Resource_cr3b7")
+heal = SubResource("Resource_hdr1k")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2035802449]
 layout_mode = 2
@@ -29,15 +113,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
-
-[node name="Card" parent="MarginContainer/CardContainer" unique_id=735816333 instance=ExtResource("1_edw6i")]
-layout_mode = 2
-
-[node name="Card2" parent="MarginContainer/CardContainer" unique_id=1361840591 instance=ExtResource("1_edw6i")]
-layout_mode = 2
-
-[node name="Card3" parent="MarginContainer/CardContainer" unique_id=1845153462 instance=ExtResource("1_edw6i")]
-layout_mode = 2
 
 [node name="SelectionTimer" type="Timer" parent="." unique_id=2061224741]
 unique_name_in_owner = true

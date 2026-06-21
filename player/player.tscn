@@ -184,7 +184,7 @@ position = Vector2(20, 0)
 
 [node name="WeaponStateMachine" type="Node" parent="Weapon" unique_id=1468833635 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_rkbax")
-initial_state = NodePath("WhipState")
+initial_state = NodePath("RevolverState")
 
 [node name="RevolverState" type="Node" parent="Weapon/WeaponStateMachine" unique_id=1668296279 node_paths=PackedStringArray("player", "weapon", "muzzle", "muzzle_flash")]
 script = ExtResource("15_wodsf")

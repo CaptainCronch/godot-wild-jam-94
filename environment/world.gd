@@ -15,7 +15,7 @@ const SPAWN_DELAY := 0.1
 const STARTER_ENEMY_DELAY := 30.0
 const DIFFICULT_ENEMY_DELAY := 25.0
 const STARTER_WAVES := [
-	100,  25,  30,  35,  40,  45,  50,  55,  60,  70,
+	20,  25,  30,  35,  40,  45,  50,  55,  60,  70,
 	100, 110, 120, 130, 140, 150, 160, 170, 180, 190,
 	200, 220, 240, 260, 280, 300, 320, 340, 360, 380,
 	400, 450, 500, 550, 600, 650, 700, 750, 800, 850,
@@ -93,7 +93,8 @@ func _process(delta: float) -> void:
 			#get_tree().current_scene.add_child(current_enemy)
 			#await get_tree().create_timer(0.05).timeout
 	if Input.is_action_just_pressed("debug_key_2"):
-		collected_heart()
+		for _i in 10:
+			collected_heart()
 
 
 func collected_heart() -> void:
@@ -176,5 +177,4 @@ func get_spawn_point() -> Vector2: # random point in spawn area
 
 
 func select_mutation() -> void:
-	get_tree().paused = true
 	ui.show_mutation_screen()

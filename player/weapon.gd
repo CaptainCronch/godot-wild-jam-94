@@ -37,8 +37,8 @@ func upgrade(which: String) -> void:
 		"disc_girth": states[2].girth_upgrade = true
 		"disc_double": states[2].double_upgrade = true
 		"whip_double": states[3].double_upgrade = true
-		"disc_double":
+		"whip_girth":
 			states[3].sourspot.collider.shape.size.y *= 2
 			states[3].sweetspot.collider.shape.size.y *= 2
-			states[3].sourspot.collider.attack.size *= 2
-			states[3].sweetspot.collider.attack.size *= 2
+			states[3].sourspot.attack.size *= 2
+			states[3].sweetspot.attack.size *= 2

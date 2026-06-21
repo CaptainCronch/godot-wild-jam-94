@@ -47,6 +47,12 @@ func _ready() -> void:
 	Global.shadow_group = self
 "
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wagxh"]
+shader = ExtResource("9_gqmtt")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_na063"]
 font_size = 128
 
@@ -164,12 +170,6 @@ _data = {
 &"RESET": SubResource("Animation_50k4n"),
 &"add_heart": SubResource("Animation_7yx4j")
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wagxh"]
-shader = ExtResource("9_gqmtt")
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
-shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bvmin"]
 line_spacing = 1.0
@@ -337,129 +337,6 @@ disabled = true
 script = ExtResource("2_ie4ph")
 height = 3
 
-[node name="SpawnerOld" type="Node2D" parent="." unique_id=1639693676]
-visible = false
-
-[node name="Marker2D" type="Marker2D" parent="SpawnerOld" unique_id=2132688519]
-position = Vector2(-576, 640)
-
-[node name="Marker2D2" type="Marker2D" parent="SpawnerOld" unique_id=1027247093]
-position = Vector2(-576, 512)
-
-[node name="Marker2D3" type="Marker2D" parent="SpawnerOld" unique_id=1527987596]
-position = Vector2(-576, 384)
-
-[node name="Marker2D4" type="Marker2D" parent="SpawnerOld" unique_id=605156555]
-position = Vector2(-576, 256)
-
-[node name="Marker2D5" type="Marker2D" parent="SpawnerOld" unique_id=935504491]
-position = Vector2(-576, 128)
-
-[node name="Marker2D6" type="Marker2D" parent="SpawnerOld" unique_id=309710180]
-position = Vector2(-576, 0)
-
-[node name="Marker2D7" type="Marker2D" parent="SpawnerOld" unique_id=1972181612]
-position = Vector2(-576, -128)
-
-[node name="Marker2D8" type="Marker2D" parent="SpawnerOld" unique_id=2018862318]
-position = Vector2(-576, -192)
-
-[node name="Marker2D9" type="Marker2D" parent="SpawnerOld" unique_id=628876739]
-position = Vector2(-576, -320)
-
-[node name="Marker2D10" type="Marker2D" parent="SpawnerOld" unique_id=213571942]
-position = Vector2(-576, -384)
-
-[node name="Marker2D11" type="Marker2D" parent="SpawnerOld" unique_id=1364443206]
-position = Vector2(-576, -512)
-
-[node name="Marker2D12" type="Marker2D" parent="SpawnerOld" unique_id=972808054]
-position = Vector2(-576, -576)
-
-[node name="Marker2D13" type="Marker2D" parent="SpawnerOld" unique_id=1061458858]
-position = Vector2(640, 640)
-
-[node name="Marker2D14" type="Marker2D" parent="SpawnerOld" unique_id=455171427]
-position = Vector2(640, 512)
-
-[node name="Marker2D15" type="Marker2D" parent="SpawnerOld" unique_id=720461426]
-position = Vector2(640, 384)
-
-[node name="Marker2D16" type="Marker2D" parent="SpawnerOld" unique_id=1731472187]
-position = Vector2(640, 256)
-
-[node name="Marker2D17" type="Marker2D" parent="SpawnerOld" unique_id=1087957104]
-position = Vector2(640, 128)
-
-[node name="Marker2D18" type="Marker2D" parent="SpawnerOld" unique_id=1810322341]
-position = Vector2(640, 0)
-
-[node name="Marker2D19" type="Marker2D" parent="SpawnerOld" unique_id=1512507029]
-position = Vector2(640, -128)
-
-[node name="Marker2D20" type="Marker2D" parent="SpawnerOld" unique_id=1772725330]
-position = Vector2(640, -192)
-
-[node name="Marker2D21" type="Marker2D" parent="SpawnerOld" unique_id=1423017490]
-position = Vector2(640, -320)
-
-[node name="Marker2D22" type="Marker2D" parent="SpawnerOld" unique_id=166018366]
-position = Vector2(640, -384)
-
-[node name="Marker2D23" type="Marker2D" parent="SpawnerOld" unique_id=1334617129]
-position = Vector2(640, -512)
-
-[node name="Marker2D24" type="Marker2D" parent="SpawnerOld" unique_id=308207898]
-position = Vector2(640, -577)
-
-[node name="Marker2D25" type="Marker2D" parent="SpawnerOld" unique_id=1635724708]
-position = Vector2(512, 640)
-
-[node name="Marker2D26" type="Marker2D" parent="SpawnerOld" unique_id=338512633]
-position = Vector2(384, 640)
-
-[node name="Marker2D27" type="Marker2D" parent="SpawnerOld" unique_id=1738991407]
-position = Vector2(256, 640)
-
-[node name="Marker2D28" type="Marker2D" parent="SpawnerOld" unique_id=873203219]
-position = Vector2(128, 640)
-
-[node name="Marker2D29" type="Marker2D" parent="SpawnerOld" unique_id=1745858972]
-position = Vector2(-64, 640)
-
-[node name="Marker2D30" type="Marker2D" parent="SpawnerOld" unique_id=746631847]
-position = Vector2(-192, 640)
-
-[node name="Marker2D31" type="Marker2D" parent="SpawnerOld" unique_id=129867036]
-position = Vector2(-320, 640)
-
-[node name="Marker2D32" type="Marker2D" parent="SpawnerOld" unique_id=1989902317]
-position = Vector2(-448, 640)
-
-[node name="Marker2D33" type="Marker2D" parent="SpawnerOld" unique_id=1543056700]
-position = Vector2(-448, -576)
-
-[node name="Marker2D34" type="Marker2D" parent="SpawnerOld" unique_id=1204502678]
-position = Vector2(-320, -576)
-
-[node name="Marker2D35" type="Marker2D" parent="SpawnerOld" unique_id=1552234869]
-position = Vector2(-192, -576)
-
-[node name="Marker2D36" type="Marker2D" parent="SpawnerOld" unique_id=1352058795]
-position = Vector2(-64, -576)
-
-[node name="Marker2D37" type="Marker2D" parent="SpawnerOld" unique_id=753449267]
-position = Vector2(128, -576)
-
-[node name="Marker2D38" type="Marker2D" parent="SpawnerOld" unique_id=1123730152]
-position = Vector2(256, -576)
-
-[node name="Marker2D39" type="Marker2D" parent="SpawnerOld" unique_id=8910960]
-position = Vector2(384, -576)
-
-[node name="Marker2D40" type="Marker2D" parent="SpawnerOld" unique_id=1676206967]
-position = Vector2(512, -576)
-
 [node name="StepTick" type="Timer" parent="." unique_id=225766607]
 autostart = true
 
@@ -521,6 +398,15 @@ eye = NodePath("EyeContainer/VBoxContainer/Eye")
 eye_animation_player = NodePath("EyeContainer/VBoxContainer/Eye/AnimationPlayer")
 total_score = NodePath("EyeContainer/VBoxContainer/TotalScore")
 mutation_control = NodePath("MutationControl")
+
+[node name="Vignette" type="ColorRect" parent="UI" unique_id=496928846]
+material = SubResource("ShaderMaterial_wagxh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="AmmoLabel" type="Label" parent="UI" unique_id=1240045592]
 visible = false
@@ -621,14 +507,6 @@ libraries/ = SubResource("AnimationLibrary_m5jkx")
 visible = false
 offset_right = 10.0
 offset_bottom = 10.0
-
-[node name="Vignette" type="ColorRect" parent="UI" unique_id=496928846]
-material = SubResource("ShaderMaterial_wagxh")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Player" parent="." unique_id=903901623 instance=ExtResource("1_01qa0")]
 

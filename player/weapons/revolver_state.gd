@@ -12,7 +12,7 @@ var ui_info := ammo
 var reload_timer := RELOAD_TIME * (0.5 if uzi_upgrade else 1.0)
 var delay_timer := 0.0
 var uzi_upgrade := false
-var pierce_upgrade := true
+var pierce_upgrade := false
 
 @export var player: Player
 @export var weapon: Weapon
