@@ -1,16 +1,22 @@
 extends CharacterBody2D
 class_name DemonHeart
 
-@export var sprite: Polygon2D
+@export var sprite: AnimatedSprite2D
 @export var health_comp: HealthComponent
 @export var plat_comp: PlatformerComponent
 @export var health_label: Label
+@export var shadow: ShadowComponent
+@export var screen_notifier: VisibleOnScreenNotifier2D
+
+var flash_tween: Tween
 
 
 func _ready() -> void:
-	health_comp.max_health = randi_range(5, 15)
+	health_comp.max_health = randi_range(5, 10)
 	health_comp.health = health_comp.max_health
 	health_label.text = str(health_comp.health)
+	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+	reset_physics_interpolation()
 
 
 func _physics_process(_delta: float) -> void:
@@ -21,9 +27,16 @@ func flash() -> void:
 	health_comp.damage(Attack.new(1))
 	health_label.text = str(health_comp.health)
 	Global.player.camera_holder.shake(0.01)
-	(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
-	await get_tree().create_timer(0.1).timeout
-	(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+	
+	if is_instance_valid(flash_tween): flash_tween.kill()
+	flash_tween = create_tween()
+	flash_tween.tween_callback(func():
+		(sprite.material as ShaderMaterial).set_shader_parameter("active", true)
+	)
+	flash_tween.tween_interval(0.1)
+	flash_tween.tween_callback(func():
+		(sprite.material as ShaderMaterial).set_shader_parameter("active", false)
+	)
 
 
 func _on_damage_taken(attack: Attack) -> void:

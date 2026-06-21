@@ -13,6 +13,8 @@ var ui_info := fuse_timer
 var fuse_timer := FUSE_MAX
 var charging := false
 var reloading := false
+var damage_upgrade := false
+var self_damage_upgrade := false
 
 @export var player: Player
 @export var weapon: Weapon
@@ -82,6 +84,9 @@ func shoot() -> void:
 	
 	grenade.hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon.rotation)
 	grenade.hurtbox.attack.height = player.plat_comp.position_z
+	
+	grenade.damage_upgrade = damage_upgrade
+	grenade.self_damage_upgrade = self_damage_upgrade
 	
 	get_tree().current_scene.add_child(grenade)
 	grenade.fuse = maxf(fuse_timer, 0.01)

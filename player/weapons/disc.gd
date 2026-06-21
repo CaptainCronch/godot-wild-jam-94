@@ -8,10 +8,14 @@ const LIFETIME := 10.0
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
 @export var hurtbox: HurtBoxComponent
+@export var hitbox: HitboxComponent
 
 var height := 0.0
 var angle := 0.0
 var timer := 0.0
+var girth := false
+var self_damaging := true
+var first_hit := false
 
 
 func _ready() -> void:
@@ -22,8 +26,11 @@ func _ready() -> void:
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
 	
-	await get_tree().create_timer(0.5).timeout
-	hurtbox.set_collision_mask_value(5, true)
+	hitbox.height = height
+	
+	if self_damaging:
+		await get_tree().create_timer(0.5).timeout
+		hurtbox.set_collision_mask_value(5, true)
 
 
 func _process(delta: float) -> void:
@@ -45,3 +52,20 @@ func _physics_process(delta: float) -> void:
 		#bounces += 1
 		#if bounces >= MAX_BOUNCES:
 			#queue_free()
+
+
+func _on_hitbox_hit(attack: Attack) -> void:
+	velocity = attack.attack_direction * BASE_SPEED * 1.5
+	hurtbox.attack.attack_direction = velocity.normalized()
+	hurtbox.attack.attack_damage = 5
+	hurtbox.attack.knockback_force = 250.0
+	hurtbox.attack.knockup_force = -1.5
+	hurtbox.attack.stun_time = 0.2
+	#timer = 0.0
+	first_hit = false
+
+
+func _on_hurtbox_hit(_hitbox: HitboxComponent) -> void:
+	if not first_hit and girth:
+		velocity *= 0.5
+		first_hit = true

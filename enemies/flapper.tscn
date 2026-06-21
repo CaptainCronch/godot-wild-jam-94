@@ -46,7 +46,7 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 7.0
 
-[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite") groups=["Enemy"]]
+[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite", "shadow") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
@@ -57,6 +57,7 @@ plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 enemy_check = NodePath("EnemyCheck")
 sprite = NodePath("Puppet/Polygon2D")
+shadow = NodePath("ShadowComponent")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox", "hurtbox") groups=["Enemy"] instance=ExtResource("2_yn4mp")]
 base_speed = 6000.0

@@ -12,18 +12,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_wagxh"]
 radius = 20.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wa3uv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ncxm4"]
 shader = ExtResource("6_ep08v")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false
-
-[sub_resource type="Gradient" id="Gradient_wa3uv"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.4392157, 0.24705882, 0.81960785, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_u7tmi"]
-gradient = SubResource("Gradient_wa3uv")
-width = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fptno"]
 atlas = ExtResource("7_ncxm4")
@@ -56,7 +48,7 @@ animations = [{
 
 [sub_resource type="LabelSettings" id="LabelSettings_wagxh"]
 font = ExtResource("7_wa3uv")
-font_size = 20
+font_size = 32
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qk3k"]
@@ -65,14 +57,16 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ncxm4"]
 radius = 12.0
 
-[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label")]
+[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label", "shadow", "screen_notifier")]
 collision_layer = 512
 collision_mask = 15
 script = ExtResource("1_ayjrt")
-sprite = NodePath("Puppet/Polygon2D")
+sprite = NodePath("Puppet/AnimatedSprite2D")
 health_comp = NodePath("HealthComponent")
 plat_comp = NodePath("PlatformerComponent")
 health_label = NodePath("Puppet/AnimatedSprite2D/Label")
+shadow = NodePath("ShadowComponent")
+screen_notifier = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") instance=ExtResource("2_u7tmi")]
 base_gravity = 15.0
@@ -104,19 +98,11 @@ shape = SubResource("CircleShape2D_wagxh")
 
 [node name="Puppet" type="Node2D" parent="." unique_id=489027019]
 
-[node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=2087372681]
-visible = false
-material = SubResource("ShaderMaterial_wa3uv")
-position = Vector2(0, -13.5)
-scale = Vector2(3, 3)
-texture = SubResource("GradientTexture1D_u7tmi")
-polygon = PackedVector2Array(-1.5, -1.5, -2.5, -3, -2, -4, -1.5, -4.5, 0, -5, 1.5, -4.5, 2, -4, 2.5, -3, 1.5, -1.5, 3, -2.5, 4, -2, 4.5, -1.5, 5, 0, 4.5, 1.5, 4, 2, 3, 2.5, 1.5, 1.5, 2.5, 3, 2, 4, 1.5, 4.5, 0, 5, -1.5, 4.5, -2, 4, -2.5, 3, -1.5, 1.5, -3, 2.5, -4, 2, -4.5, 1.5, -5, 0, -4.5, -1.5, -4, -2, -3, -2.5)
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Puppet" unique_id=657762782]
+material = SubResource("ShaderMaterial_ncxm4")
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 autoplay = "default"
-frame_progress = 0.81615454
 
 [node name="Label" type="Label" parent="Puppet/AnimatedSprite2D" unique_id=794833928]
 anchors_preset = 15
@@ -143,6 +129,9 @@ collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArea" unique_id=991829385]
 shape = SubResource("CircleShape2D_ncxm4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1982336112]
+rect = Rect2(-24, -24, 48, 48)
 
 [connection signal="bounced" from="PlatformerComponent" to="." method="_on_bounced"]
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="2_sjuiy"]
 [ext_resource type="PackedScene" uid="uid://dsauk8syooypb" path="res://components/hurtbox_component.tscn" id="3_ueeow"]
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="4_efuvy"]
+[ext_resource type="PackedScene" uid="uid://b4smnywsn66gx" path="res://components/hitbox_component.tscn" id="5_ueeow"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxtn"]
 radius = 4.0
@@ -11,7 +12,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmeu4"]
 radius = 3.0
 
-[sub_resource type="Resource" id="Resource_14enh"]
+[sub_resource type="Resource" id="Resource_sjuiy"]
 resource_local_to_scene = true
 script = ExtResource("4_efuvy")
 attack_damage = 2
@@ -24,7 +25,7 @@ metadata/_custom_type_script = "uid://crg4f1ccw336i"
 [sub_resource type="CircleShape2D" id="CircleShape2D_am8n8"]
 radius = 32.0
 
-[node name="Disc" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "shadow", "hurtbox")]
+[node name="Disc" type="CharacterBody2D" unique_id=495503291 node_paths=PackedStringArray("sprite", "shadow", "hurtbox", "hitbox")]
 collision_layer = 64
 collision_mask = 15
 floor_constant_speed = true
@@ -33,6 +34,7 @@ script = ExtResource("1_njlpd")
 sprite = NodePath("Polygon2D")
 shadow = NodePath("ShadowComponent")
 hurtbox = NodePath("HurtboxComponent")
+hitbox = NodePath("HitboxComponent")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_sjuiy")]
 radius = 16.0
@@ -54,9 +56,20 @@ shape = SubResource("CircleShape2D_kmeu4")
 [node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("3_ueeow")]
 collision_layer = 64
 collision_mask = 32
-attack = SubResource("Resource_14enh")
+attack = SubResource("Resource_sjuiy")
 update_time = 0.1
 multihit = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1092665477]
 shape = SubResource("CircleShape2D_am8n8")
+
+[node name="HitboxComponent" parent="." unique_id=112265376 instance=ExtResource("5_ueeow")]
+collision_layer = 64
+collision_mask = 16
+size = 16.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=94455373]
+shape = SubResource("CircleShape2D_am8n8")
+
+[connection signal="hit" from="HurtboxComponent" to="." method="_on_hurtbox_hit"]
+[connection signal="hit" from="HitboxComponent" to="." method="_on_hitbox_hit"]

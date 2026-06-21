@@ -11,6 +11,7 @@ signal death(attack: Attack)
 @export var max_health: int
 @export var invincibility_time := 0.0
 @export var max_damage := 9999
+@export var is_player := false
 @export var knockback_factor := 1.0
 @export var knockup_factor := 1.0
 @export var target: Node2D
@@ -37,8 +38,9 @@ func damage(attack: Attack):
 		if is_instance_valid(plat_comp):
 			plat_comp.velocity_z += attack.knockup_force * knockup_factor
 	damage_taken.emit(attack)
-	if attack.attack_damage <= 0: return
-	var total_attack := mini(attack.attack_damage, max_damage)
+	var current_damage := attack.attack_damage if not is_player else attack.player_damage
+	if current_damage <= 0: return
+	var total_attack := mini(current_damage, max_damage)
 
 	health -= total_attack
 	health_changed.emit(health)

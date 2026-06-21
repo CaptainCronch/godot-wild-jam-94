@@ -14,6 +14,7 @@ const AI_UPDATE := 1.0
 @export var health_comp: HealthComponent
 @export var enemy_check: Area2D
 @export var sprite: Polygon2D
+@export var shadow: ShadowComponent
 
 var _player_follow_factor := 1.0
 var _separation_factor := 1.0
@@ -23,12 +24,12 @@ var separate_dir := Vector2()
 var desired := Vector2()
 var disable_player_dir := false
 var ai_timer := 0.0
-var giant_chance := 1.0
 
 
 func _ready() -> void:
 	health_comp.death.connect(_on_death)
 	current_speed = SEPARATION_SPEED
+	reset_physics_interpolation()
 	#if randf_range(0.0, 1.0) <= giant_chance:
 		#sprite.scale *= 3.0
 
@@ -43,14 +44,15 @@ func _physics_process(_delta: float) -> void:
 
 func separate() -> void:
 	ai_timer = 0.0
-	player_dir = global_position.direction_to(Global.player.global_position)
+	player_dir = global_position.direction_to(Global.player.global_position) if is_instance_valid(Global.player) else Vector2.ZERO
 	separate_dir = Vector2()
 	var i := 0
 	for enemy in enemy_check.get_overlapping_areas():
 		if enemy is HitboxComponent:
-			if global_position.distance_squared_to(enemy.global_position) == 0.0: continue
+			if is_zero_approx(global_position.distance_squared_to(enemy.global_position)): continue
 			if i > MAX_SEPARATION: break
 			separate_dir += enemy.global_position.direction_to(global_position) / global_position.distance_to(enemy.global_position) * _separation_factor
+			i += 1
 	separate_dir = separate_dir.normalized()
 	desired = ((player_dir * _player_follow_factor * (0.0 if disable_player_dir else 1.0)) + separate_dir).normalized()
 	plat_comp.dir = desired

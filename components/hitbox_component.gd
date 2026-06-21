@@ -1,6 +1,8 @@
 extends Area2D
 class_name HitboxComponent
 
+signal hit(attack: Attack)
+
 @export var height := 0.0
 @export var size := 0.0
 @export var health_comp : HealthComponent
@@ -12,4 +14,5 @@ func _ready() -> void:
 
 
 func damage(attack: Attack) -> void:
+	hit.emit(attack)
 	if is_instance_valid(health_comp): health_comp.damage(attack)

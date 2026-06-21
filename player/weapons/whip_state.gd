@@ -1,7 +1,7 @@
 extends State
 
 const FIRE_DELAY := 0.5
-const SELF_KNOCKBACK := 50.0
+const SELF_KNOCKBACK := 25.0
 
 @export var player: Player
 @export var weapon: Weapon
@@ -11,6 +11,7 @@ const SELF_KNOCKBACK := 50.0
 
 var fire_timer := 0.0
 var ui_info := fire_timer
+var double_upgrade := false
 
 
 func enter() -> void:
@@ -19,12 +20,16 @@ func enter() -> void:
 
 
 func update(delta: float) -> void:
-	if fire_timer < FIRE_DELAY: fire_timer += delta
+	if fire_timer < FIRE_DELAY * (0.5 if double_upgrade else 1.0): fire_timer += delta
 	ui_info = fire_timer
 
 
 func fire() -> void:
-	if fire_timer < FIRE_DELAY: return
+	pass
+
+
+func fire_hold() -> void:
+	if fire_timer < FIRE_DELAY * (0.5 if double_upgrade else 1.0): return
 	fire_timer = 0.0
 	
 	sourspot.attack.height = player.plat_comp.position_z
@@ -42,9 +47,6 @@ func fire() -> void:
 	whip.hide()
 
 
-func fire_hold() -> void: pass
-
-
 func fire_release() -> void: pass
 
 
@@ -53,4 +55,4 @@ func _on_sourspot_hit(_hitbox: HitboxComponent) -> void:
 
 
 func _on_sweetspot_hit(_hitbox: HitboxComponent) -> void:
-	if fire_timer < FIRE_DELAY / 2.0: fire_timer += FIRE_DELAY / 2.0
+	if fire_timer < (FIRE_DELAY * (0.5 if double_upgrade else 1.0)) / 2.0: fire_timer += (FIRE_DELAY * (0.5 if double_upgrade else 1.0)) / 2.0

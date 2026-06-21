@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name RevolverBullet
 
 const BASE_SPEED := 1000.0
-const MAX_PIERCE := 2
+const MAX_PIERCE := 1
 
 @export var sprite: Polygon2D
 @export var shadow: ShadowComponent
@@ -11,6 +11,7 @@ const MAX_PIERCE := 2
 var height := 0.0
 var angle := 0.0
 var pierced := 0
+var pierce_bonus := 0
 
 
 func _ready() -> void:
@@ -31,5 +32,5 @@ func _physics_process(delta: float) -> void:
 
 func _on_hurtbox_component_hit(_hitbox: HitboxComponent) -> void:
 	pierced += 1
-	if pierced >= MAX_PIERCE:
+	if pierced >= MAX_PIERCE + pierce_bonus:
 		queue_free()

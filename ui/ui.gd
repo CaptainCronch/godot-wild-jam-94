@@ -1,6 +1,8 @@
 extends CanvasLayer
 class_name UI
 
+signal start
+
 const EYE_TEXTURE_SIZE := 23.0
 const HEALTH_BAR_TIME := 0.1
 
@@ -19,6 +21,7 @@ var health_tween: Tween
 
 
 func _ready() -> void:
+	tutorial_screen.show()
 	await get_tree().process_frame
 	Global.player.health_comp.health_changed.connect(_on_health_changed)
 
@@ -42,10 +45,13 @@ func _on_health_changed(health: int) -> void:
 	health_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	health_tween.tween_property(health_bar, "value", health, HEALTH_BAR_TIME)
 
+
 func show_mutation_screen() -> void:
 	mutation_control.select_new_mutation()
+
 
 func _input(event: InputEvent) -> void:
 	if event is not InputEventMouseMotion and tutorial_screen.visible:
 		tutorial_screen.hide()
 		get_tree().paused = false
+		start.emit()

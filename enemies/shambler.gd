@@ -14,6 +14,7 @@ var pass_duration := 0.7
 
 func _ready() -> void:
 	super()
+	current_speed = 0.0
 	await get_tree().current_scene.step_tick.timeout
 	if is_instance_valid(step_tween): step_tween.kill()
 	step_tween = create_tween().set_loops(0)

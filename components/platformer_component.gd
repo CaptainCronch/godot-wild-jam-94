@@ -13,7 +13,7 @@ signal bounced
 @export var base_gravity := 12.5
 @export var base_fall_boost := 1.8
 @export var bouncy := false
-@export var bounce_factor := 0.9
+@export var bounce_factor := 0.8
 @export var override_functions := false
 
 @export_category("Nodes")
@@ -79,6 +79,15 @@ func _physics_process(delta: float) -> void:
 
 func movement_z(delta: float) -> void:
 	if override_functions: return
+	
+	var found := false
+	for body in world_area.get_overlapping_bodies():
+		if body is WorldLayer:
+			if body.height * Global.TILE_HEIGHT <= floor_height:
+				floor_height = body.height * Global.TILE_HEIGHT
+				found = true
+	if not found: floor_height = 0.0
+	
 	gravity = base_gravity * (1.0 if velocity_z < 0.0 or not jumping else base_fall_boost) 
 	velocity_z += gravity * delta
 	position_z += velocity_z
@@ -100,16 +109,7 @@ func movement_z(delta: float) -> void:
 	target.set_collision_mask_value(2, position_z > Global.TILE_HEIGHT * 2)
 	target.set_collision_mask_value(3, position_z > Global.TILE_HEIGHT * 3)
 	
-	var found := false
-	for body in world_area.get_overlapping_bodies():
-		if body is WorldLayer:
-			if body.height * Global.TILE_HEIGHT <= floor_height:
-				floor_height = body.height * Global.TILE_HEIGHT
-				found = true
-	if not found: floor_height = 0.0
-	
 	puppet.position.y = position_z
-	#occlusion.height = position_z
 
 
 func jump() -> void:

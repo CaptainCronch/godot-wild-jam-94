@@ -2,13 +2,15 @@ extends State
 
 const DISC := preload("uid://csu51ow423c4m")
 const HEIGHT_OFFSET := -10.0
-const SELF_KNOCKBACK := -150.0
+const SELF_KNOCKBACK := -100.0
 #const MAX_AMMO := 6
 const RELOAD_TIME := 1.0
 
 #var ammo := MAX_AMMO
 var ui_info := reload_timer
 var reload_timer := 0.0
+var girth_upgrade := false
+var double_upgrade := false
 
 @export var player: Player
 @export var weapon: Weapon
@@ -50,17 +52,22 @@ func fire() -> void:
 	
 	disc.hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon.rotation)
 	disc.hurtbox.attack.height = player.plat_comp.position_z
+	
+	disc.self_damaging = not double_upgrade
+	disc.girth = girth_upgrade
+	if girth_upgrade: disc.hurtbox.attack.size *= 2
 	get_tree().current_scene.add_child(disc)
 	
 	player.velocity += Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK
 	#player.camera_holder.shake(0.2)
 	player.camera_holder.kick(Vector2.from_angle(weapon.rotation) * SELF_KNOCKBACK)
 	
-	reload_timer = RELOAD_TIME
+	reload_timer = RELOAD_TIME * (0.5 if double_upgrade else 1.0)
 	player.reloading = true
 
 
-func fire_hold() -> void: pass
+func fire_hold() -> void:
+	fire()
 
 
 func fire_release() -> void: pass

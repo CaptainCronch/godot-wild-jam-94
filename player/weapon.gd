@@ -26,3 +26,19 @@ func switch() -> void:
 	states_left.remove_at(new_state)
 	if states_left.is_empty():
 		states_left = states.duplicate()
+
+
+func upgrade(which: String) -> void:
+	match which:
+		"revolver_uzi": states[0].uzi_upgrade = true
+		"revolver_pierce": states[0].pierce_upgrade = true
+		"explosion_damage": states[1].damage_upgrade = true
+		"explosion_self_damage": states[1].self_damage_upgrade = true
+		"disc_girth": states[2].girth_upgrade = true
+		"disc_double": states[2].double_upgrade = true
+		"whip_double": states[3].double_upgrade = true
+		"disc_double":
+			states[3].sourspot.collider.shape.size.y *= 2
+			states[3].sweetspot.collider.shape.size.y *= 2
+			states[3].sourspot.collider.attack.size *= 2
+			states[3].sweetspot.collider.attack.size *= 2

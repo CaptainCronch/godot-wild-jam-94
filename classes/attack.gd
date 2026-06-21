@@ -2,6 +2,7 @@ extends Resource
 class_name Attack
 
 @export var attack_damage := 0
+@export var player_damage := 1
 @export var knockback_force := 0.0
 @export var knockup_force := 0.0
 @export var stun_time := 0.0
@@ -20,6 +21,7 @@ var attack_direction := Vector2.ZERO
 
 func _init(
 		_dam := attack_damage,
+		_pdam := player_damage,
 		_knock := knockback_force,
 		_up := knockup_force,
 		_dir := attack_direction,
@@ -28,9 +30,12 @@ func _init(
 		_size := size,
 		):
 	attack_damage = _dam
+	player_damage = _pdam
 	knockback_force = _knock
 	knockup_force = _up
 	attack_direction = _dir
 	stun_time = _stun
 	height = _height
 	size = _size
+	
+	resource_local_to_scene = true

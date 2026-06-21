@@ -14,6 +14,8 @@ var height := 0.0
 var angle := 0.0
 var fuse := 1.0
 var exploded := false
+var damage_upgrade := false
+var self_damage_upgrade := false
 
 
 func _ready() -> void:
@@ -22,8 +24,6 @@ func _ready() -> void:
 	set_collision_mask_value(1, height > Global.TILE_HEIGHT)
 	set_collision_mask_value(2, height > Global.TILE_HEIGHT * 2)
 	set_collision_mask_value(3, height > Global.TILE_HEIGHT * 3)
-	
-	#occlusion.height = height
 
 
 func _physics_process(delta: float) -> void:
@@ -46,6 +46,13 @@ func explode() -> void:
 	explosion.global_position = global_position
 	explosion.height = height
 	explosion.sprite.position.y = height
+	
+	if damage_upgrade:
+		explosion.hurtbox.attack.attack_damage *= 2
+	if self_damage_upgrade:
+		explosion.hurtbox.attack.player_damage = 0
+		#explosion.hurtbox.set_collision_mask_value(5, false)
+	
 	get_tree().current_scene.add_child(explosion)
 	queue_free()
 
