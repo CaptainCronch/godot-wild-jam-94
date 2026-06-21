@@ -58,7 +58,7 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ncxm4"]
 radius = 12.0
 
-[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label", "shadow", "screen_notifier")]
+[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label", "shadow", "screen_notifier", "pointer")]
 collision_layer = 512
 collision_mask = 15
 script = ExtResource("1_ayjrt")
@@ -68,6 +68,7 @@ plat_comp = NodePath("PlatformerComponent")
 health_label = NodePath("Puppet/AnimatedSprite2D/Label")
 shadow = NodePath("ShadowComponent")
 screen_notifier = NodePath("VisibleOnScreenNotifier2D")
+pointer = NodePath("Pointer")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") instance=ExtResource("2_u7tmi")]
 base_gravity = 15.0
@@ -132,8 +133,15 @@ collision_mask = 15
 shape = SubResource("CircleShape2D_ncxm4")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1982336112]
-rect = Rect2(-24, -24, 48, 48)
+position = Vector2(-1, -12)
+rect = Rect2(-8, -8, 16, 16)
+
+[node name="Pointer" type="Polygon2D" parent="." unique_id=1504712650]
+top_level = true
+polygon = PackedVector2Array(0, 6, 7, 0, 0, -6, -5, -1)
 
 [connection signal="bounced" from="PlatformerComponent" to="." method="_on_bounced"]
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]
 [connection signal="death" from="HealthComponent" to="." method="_on_death"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]

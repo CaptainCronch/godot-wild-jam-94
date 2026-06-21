@@ -17,6 +17,7 @@ const HEALTH_BAR_TIME := 0.1
 @export var revolver_chamber_background: TextureRect
 @export var fuse_bar: TextureProgressBar
 @export var disc_bar: TextureProgressBar
+@export var heart_pointer: TextureRect
 
 var health_tween: Tween
 
@@ -31,6 +32,9 @@ func _ready() -> void:
 
 
 #func _process(_delta: float) -> void:
+	#if is_instance_valid(world.current_demon_heart):
+		#heart_pointer.offset_transform_position = world.current_demon_heart.global_position - Global.player.camera.global_position #+ Global.player.camera_holder.global_position
+		#heart_pointer.offset_transform_position = heart_pointer.offset_transform_position.clamp(get_viewport().get_visible_rect().position, get_viewport().get_visible_rect().position + get_viewport().get_visible_rect().size)
 	#ammo_label.text = str(Global.player.weapon.state_machine.current_state.ui_info)
 	#progress_bar.value = Global.player.weapon.state_machine.current_state.ui_info
 

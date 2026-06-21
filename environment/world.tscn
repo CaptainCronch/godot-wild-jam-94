@@ -56,6 +56,8 @@ shader_parameter/vignette_intensity = 0.14
 shader_parameter/vignette_opacity = 1.0
 shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wagxh"]
+
 [sub_resource type="Animation" id="Animation_m5jkx"]
 length = 0.001
 tracks/0/type = "value"
@@ -391,7 +393,7 @@ self_modulate = Color(1, 1, 1, 0.5)
 z_index = -1
 script = SubResource("GDScript_eqq5c")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "eye", "eye_animation_player", "total_score", "mutation_control", "revolver_chamber", "revolver_chamber_background", "fuse_bar", "disc_bar")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1311475177 node_paths=PackedStringArray("world", "health_bar", "health_animation_player", "eye", "eye_animation_player", "total_score", "mutation_control", "revolver_chamber", "revolver_chamber_background", "fuse_bar", "disc_bar", "heart_pointer")]
 process_mode = 3
 script = ExtResource("3_wpdqf")
 world = NodePath("..")
@@ -405,6 +407,7 @@ revolver_chamber = NodePath("WeaponContainer/RevolverChamber")
 revolver_chamber_background = NodePath("WeaponContainer/RevolverChamberBackground")
 fuse_bar = NodePath("WeaponContainer/FuseBar")
 disc_bar = NodePath("WeaponContainer/DiscBar")
+heart_pointer = NodePath("HeartPointer")
 
 [node name="Vignette" type="ColorRect" parent="UI" unique_id=496928846]
 material = SubResource("ShaderMaterial_wagxh")
@@ -414,6 +417,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="HeartPointer" type="TextureRect" parent="UI" unique_id=1803476932]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
+texture = SubResource("PlaceholderTexture2D_wagxh")
 
 [node name="HealthContainer" type="MarginContainer" parent="UI" unique_id=1037872742]
 anchors_preset = 2

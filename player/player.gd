@@ -48,6 +48,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if health_comp.dead: return
+	
 	plat_comp.dir = Input.get_vector("left", "right", "up", "down").normalized()
 	#debug_text.text = str(plat_comp.dir)
 	
@@ -256,7 +258,8 @@ func _on_damage_taken(_attack: Attack) -> void:
 
 
 func _on_death(_attack: Attack) -> void:
-	queue_free()
+	plat_comp.dir = Vector2()
+	#queue_free()
 
 
 func _on_collected_demon_heart() -> void: weapon.switch()

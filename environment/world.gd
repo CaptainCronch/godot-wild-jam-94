@@ -35,6 +35,7 @@ var current_demon_heart: DemonHeart
 var total_spawn_area: Rect2
 var spawners: Array[Rect2]
 var spawn_queue: Array[CharacterBody2D] = []
+var game_over := false
 
 @onready var enemy_delay := (STARTER_ENEMY_DELAY if Global.difficulty == Global.DIFFICULTIES.STARTER else DIFFICULT_ENEMY_DELAY)
 @onready var tutorial_screen: ColorRect = %TutorialScreen
@@ -65,9 +66,18 @@ func _ready() -> void:
 	await ui.start
 	spawn_enemies()
 	spawn_demon_heart()
+	Global.player.health_comp.death.connect(func(_attack: Attack):
+		game_over = true
+		# SEND SCORES TO GLOBAL
+		await get_tree().create_timer(2.0).timeout
+		get_tree().paused = true
+		await get_tree().create_timer(1.0).timeout
+		# SHOW END SCREEN
+	)
 
 
 func _process(delta: float) -> void:
+	if game_over: return
 	game_timer += delta
 	total_timer += delta
 	if game_timer >= enemy_delay:
@@ -78,7 +88,8 @@ func _process(delta: float) -> void:
 	if spawn_timer >= SPAWN_DELAY:
 		pop_spawn_queue()
 	
-	#if Input.is_action_just_pressed("debug_key"):
+	if Input.is_action_just_pressed("debug_key"):
+		Global.player.health_comp.damage(Attack.new(0, 10))
 		#for _i in 100:
 			#var current_enemy := SHAMBLER.instantiate()
 			#current_enemy.hide()
@@ -92,12 +103,13 @@ func _process(delta: float) -> void:
 			#current_enemy.shadow.blob.position.y = current_enemy.plat_comp.floor_height
 			#get_tree().current_scene.add_child(current_enemy)
 			#await get_tree().create_timer(0.05).timeout
-	if Input.is_action_just_pressed("debug_key_2"):
-		for _i in 10:
-			collected_heart()
+	#if Input.is_action_just_pressed("debug_key_2"):
+		#for _i in 10:
+			#collected_heart()
 
 
 func collected_heart() -> void:
+	if game_over: return
 	demon_hearts_collected += 1
 	collected_demon_heart.emit()
 	spawn_demon_heart()
@@ -177,4 +189,5 @@ func get_spawn_point() -> Vector2: # random point in spawn area
 
 
 func select_mutation() -> void:
+	if game_over: return
 	ui.show_mutation_screen()

@@ -1,12 +1,15 @@
 extends CharacterBody2D
 class_name DemonHeart
 
+const MARGIN := Vector2(64.0, 64.0)
+
 @export var sprite: AnimatedSprite2D
 @export var health_comp: HealthComponent
 @export var plat_comp: PlatformerComponent
 @export var health_label: Label
 @export var shadow: ShadowComponent
 @export var screen_notifier: VisibleOnScreenNotifier2D
+@export var pointer: Node2D
 
 var flash_tween: Tween
 
@@ -19,8 +22,10 @@ func _ready() -> void:
 	reset_physics_interpolation()
 
 
-func _physics_process(_delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	var cam_pos := Global.player.camera.global_position
+	var cam_rect := Global.player.camera.get_viewport_rect()
+	pointer.global_position = (global_position + Vector2(0.0, plat_comp.floor_height)).clamp(cam_pos - ((cam_rect.size/2) - MARGIN), cam_pos + ((cam_rect.size/2) - MARGIN))
 
 
 func flash() -> void:
@@ -51,3 +56,11 @@ func _on_bounced() -> void:
 func _on_death(_attack: Attack) -> void:
 	Global.world.collected_heart()
 	queue_free()
+
+
+func _on_screen_entered() -> void:
+	pointer.hide()
+
+
+func _on_screen_exited() -> void:
+	pointer.show()
