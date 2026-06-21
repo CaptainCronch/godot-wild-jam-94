@@ -2,6 +2,7 @@ extends Node2D
 class_name PlatformerComponent
 
 signal bounced
+signal landed
 
 @export_category("Values")
 @export var base_speed := 7500.0
@@ -95,8 +96,11 @@ func movement_z(delta: float) -> void:
 	if bouncy and position_z > floor_height:
 		velocity_z *= -bounce_factor
 		if airborne and absf(velocity_z) > absf(base_jump_force/2.0): bounced.emit()
+	elif position_z > floor_height:
+		landed.emit()
 	
 	position_z = minf(position_z, floor_height)
+	
 	if is_equal_approx(position_z, floor_height):
 		airborne = false
 		jumping = false

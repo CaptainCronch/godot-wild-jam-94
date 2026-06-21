@@ -49,19 +49,9 @@ func _ready() -> void:
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wagxh"]
 shader = ExtResource("9_gqmtt")
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_intensity = 0.14
+shader_parameter/vignette_opacity = 1.0
 shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_na063"]
-font_size = 128
-
-[sub_resource type="Gradient" id="Gradient_na063"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ktyio"]
-gradient = SubResource("Gradient_na063")
 
 [sub_resource type="Animation" id="Animation_m5jkx"]
 length = 0.001
@@ -392,8 +382,8 @@ script = ExtResource("3_wpdqf")
 world = NodePath("..")
 health_bar = NodePath("HealthContainer/AspectRatioContainer/HealthBar")
 health_animation_player = NodePath("HealthContainer/AspectRatioContainer/HealthBar/AnimationPlayer")
-ammo_label = NodePath("AmmoLabel")
-progress_bar = NodePath("ProgressBar")
+ammo_label = NodePath("")
+progress_bar = NodePath("")
 eye = NodePath("EyeContainer/VBoxContainer/Eye")
 eye_animation_player = NodePath("EyeContainer/VBoxContainer/Eye/AnimationPlayer")
 total_score = NodePath("EyeContainer/VBoxContainer/TotalScore")
@@ -407,40 +397,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="AmmoLabel" type="Label" parent="UI" unique_id=1240045592]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -255.0
-offset_top = -175.0
-grow_horizontal = 0
-grow_vertical = 0
-pivot_offset_ratio = Vector2(1, 0)
-text = "20.0"
-label_settings = SubResource("LabelSettings_na063")
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="TextureProgressBar" parent="UI" unique_id=974731322]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -256.0
-offset_top = -40.0
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(1, 40)
-max_value = 1.0
-step = 0.01
-value = 1.0
-fill_mode = 1
-texture_progress = SubResource("GradientTexture1D_ktyio")
 
 [node name="HealthContainer" type="MarginContainer" parent="UI" unique_id=1037872742]
 anchors_preset = 2

@@ -3,6 +3,7 @@ class_name Weapon
 
 @export var state_machine: StateMachine
 @export var states: Array[State] = []
+@export var weapon_animator: AnimationPlayer
 
 @onready var states_left := states.duplicate()
 

@@ -17,6 +17,9 @@
 [ext_resource type="Script" uid="uid://dg16vbyhrqgn3" path="res://player/weapons/launcher_state.gd" id="16_32hag"]
 [ext_resource type="Script" uid="uid://k3okxricppl0" path="res://player/weapons/disc_state.gd" id="16_tqiix"]
 [ext_resource type="Script" uid="uid://6pc2e3gtnm2b" path="res://player/weapons/whip_state.gd" id="17_tqiix"]
+[ext_resource type="Texture2D" uid="uid://c1oxgo00bfai" path="res://player/player-jump-sheet.png" id="18_65viv"]
+[ext_resource type="Texture2D" uid="uid://dhc3lrnjn50sk" path="res://player/player-move-sheet.png" id="18_e7oew"]
+[ext_resource type="Texture2D" uid="uid://cqhj8xu8p1rm8" path="res://player/player-speed-sheet.png" id="19_x7c3f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hg6s5"]
 size = Vector2(12, 4)
@@ -66,7 +69,895 @@ radius = 6.0
 [sub_resource type="LabelSettings" id="LabelSettings_ry6om"]
 font_size = 8
 
-[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "hitbox", "sprite", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text") groups=["Player"]]
+[sub_resource type="Animation" id="Animation_tqiix"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("8_yllr7")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Puppet/Sprite2D:region_enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_s7qer"]
+resource_name = "air_back"
+length = 0.3750125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(125, 50, 25, 25), Rect2(0, 75, 25, 25), Rect2(25, 75, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_g4c7l"]
+resource_name = "air_front"
+length = 0.3750125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(75, 0, 25, 25), Rect2(100, 0, 25, 25), Rect2(125, 0, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_knn7v"]
+resource_name = "air_left"
+length = 0.3750125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 100, 25, 25), Rect2(25, 100, 25, 25), Rect2(50, 100, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_7pqkx"]
+resource_name = "air_right"
+length = 0.3750125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(100, 25, 25, 25), Rect2(125, 25, 25, 25), Rect2(0, 50, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_e7oew"]
+resource_name = "idle_back"
+length = 0.6250125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 50, 25, 25), Rect2(25, 50, 25, 25), Rect2(50, 50, 25, 25), Rect2(75, 50, 25, 25), Rect2(100, 50, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("8_yllr7")]
+}
+
+[sub_resource type="Animation" id="Animation_c35mf"]
+resource_name = "idle_front"
+length = 0.6250125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 25, 25), Rect2(25, 0, 25, 25), Rect2(50, 0, 25, 25), Rect2(75, 0, 25, 25), Rect2(100, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("8_yllr7")]
+}
+
+[sub_resource type="Animation" id="Animation_65viv"]
+resource_name = "idle_left"
+length = 0.6250125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 75, 25, 25), Rect2(25, 75, 25, 25), Rect2(50, 75, 25, 25), Rect2(75, 75, 25, 25), Rect2(100, 75, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("8_yllr7")]
+}
+
+[sub_resource type="Animation" id="Animation_x7c3f"]
+resource_name = "idle_right"
+length = 0.6250125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 25, 25, 25), Rect2(25, 25, 25, 25), Rect2(50, 25, 25, 25), Rect2(75, 25, 25, 25), Rect2(100, 25, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("8_yllr7")]
+}
+
+[sub_resource type="Animation" id="Animation_uw77l"]
+resource_name = "jump_back"
+length = 0.2500083407841623
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(50, 50, 25, 25), Rect2(75, 50, 25, 25), Rect2(100, 50, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_rptt4"]
+resource_name = "jump_front"
+length = 0.2500083407841623
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 25, 25), Rect2(25, 0, 25, 25), Rect2(50, 0, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_r7pn3"]
+resource_name = "jump_left"
+length = 0.2500083407841623
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(75, 75, 25, 25), Rect2(100, 75, 25, 25), Rect2(125, 75, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_b8hi5"]
+resource_name = "jump_right"
+length = 0.2500083407841623
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(25, 25, 25, 25), Rect2(50, 25, 25, 25), Rect2(75, 25, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_2uvqg"]
+resource_name = "land_back"
+length = 0.1250125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(50, 75, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_1s1yo"]
+resource_name = "land_front"
+length = 0.1250125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(0, 25, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_5ejfk"]
+resource_name = "land_left"
+length = 0.1250125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(75, 100, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_jd2rm"]
+resource_name = "land_right"
+length = 0.1250125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_65viv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(25, 50, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_q28gw"]
+resource_name = "roll_left"
+length = 0.16667500496730212
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("19_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 25, 25), Rect2(25, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ge24q"]
+resource_name = "roll_right"
+length = 0.16667500496730212
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("19_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 25, 25), Rect2(25, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pnw6m"]
+resource_name = "spin_left"
+length = 0.16667500496730212
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("19_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(50, 0, 25, 25), Rect2(75, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_1so5t"]
+resource_name = "spin_right"
+length = 0.16667500496730212
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("19_x7c3f")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(50, 0, 25, 25), Rect2(75, 0, 25, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Puppet/Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_55jnj"]
+resource_name = "walk_back"
+length = 0.6666750198684632
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5, 0.5833334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 50, 25, 25), Rect2(25, 50, 25, 25), Rect2(50, 50, 25, 25), Rect2(75, 50, 25, 25), Rect2(100, 50, 25, 25), Rect2(125, 50, 25, 25), Rect2(150, 50, 25, 25), Rect2(175, 50, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_e7oew")]
+}
+
+[sub_resource type="Animation" id="Animation_bjvpn"]
+resource_name = "walk_front"
+length = 0.6666750198684632
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 25, 25), Rect2(25, 0, 25, 25), Rect2(50, 0, 25, 25), Rect2(75, 0, 25, 25), Rect2(100, 0, 25, 25), Rect2(125, 0, 25, 25), Rect2(150, 0, 25, 25), Rect2(175, 0, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_e7oew")]
+}
+
+[sub_resource type="Animation" id="Animation_dx5ib"]
+resource_name = "walk_left"
+length = 0.3333416766010225
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(100, 25, 25, 25), Rect2(125, 25, 25, 25), Rect2(150, 25, 25, 25), Rect2(175, 25, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_e7oew")]
+}
+
+[sub_resource type="Animation" id="Animation_a2xo5"]
+resource_name = "walk_right"
+length = 0.3333416766010225
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 25, 25, 25), Rect2(25, 25, 25, 25), Rect2(50, 25, 25, 25), Rect2(75, 25, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("18_e7oew")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bjvpn"]
+_data = {
+&"RESET": SubResource("Animation_tqiix"),
+&"air_back": SubResource("Animation_s7qer"),
+&"air_front": SubResource("Animation_g4c7l"),
+&"air_left": SubResource("Animation_knn7v"),
+&"air_right": SubResource("Animation_7pqkx"),
+&"idle_back": SubResource("Animation_e7oew"),
+&"idle_front": SubResource("Animation_c35mf"),
+&"idle_left": SubResource("Animation_65viv"),
+&"idle_right": SubResource("Animation_x7c3f"),
+&"jump_back": SubResource("Animation_uw77l"),
+&"jump_front": SubResource("Animation_rptt4"),
+&"jump_left": SubResource("Animation_r7pn3"),
+&"jump_right": SubResource("Animation_b8hi5"),
+&"land_back": SubResource("Animation_2uvqg"),
+&"land_front": SubResource("Animation_1s1yo"),
+&"land_left": SubResource("Animation_5ejfk"),
+&"land_right": SubResource("Animation_jd2rm"),
+&"roll_left": SubResource("Animation_q28gw"),
+&"roll_right": SubResource("Animation_ge24q"),
+&"spin_left": SubResource("Animation_pnw6m"),
+&"spin_right": SubResource("Animation_1so5t"),
+&"walk_back": SubResource("Animation_55jnj"),
+&"walk_front": SubResource("Animation_bjvpn"),
+&"walk_left": SubResource("Animation_dx5ib"),
+&"walk_right": SubResource("Animation_a2xo5")
+}
+
+[node name="Player" type="CharacterBody2D" unique_id=903901623 node_paths=PackedStringArray("plat_comp", "health_comp", "hurtbox", "hitbox", "sprite", "player_animator", "leg", "weapon", "weapon_holder", "weapon_sprite", "camera_holder", "debug_text") groups=["Player"]]
 collision_layer = 16
 collision_mask = 15
 script = ExtResource("1_oul6g")
@@ -75,6 +966,7 @@ health_comp = NodePath("HealthComponent")
 hurtbox = NodePath("HurtboxComponent")
 hitbox = NodePath("HitboxComponent")
 sprite = NodePath("Puppet/Sprite2D")
+player_animator = NodePath("PlayerAnimationPlayer")
 leg = NodePath("Puppet/WeaponHolder/Leg")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
@@ -174,10 +1066,11 @@ remote_path = NodePath("../../../Weapon")
 update_position = false
 update_scale = false
 
-[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("state_machine", "states") groups=["Player"]]
+[node name="Weapon" type="Node2D" parent="." unique_id=1873061966 node_paths=PackedStringArray("state_machine", "states", "weapon_animator") groups=["Player"]]
 script = ExtResource("5_g6k8r")
 state_machine = NodePath("WeaponStateMachine")
 states = [NodePath("WeaponStateMachine/RevolverState"), NodePath("WeaponStateMachine/LauncherState"), NodePath("WeaponStateMachine/DiscState"), NodePath("WeaponStateMachine/WhipState")]
+weapon_animator = NodePath("WeaponAnimationPlayer")
 
 [node name="Muzzle" type="Marker2D" parent="Weapon" unique_id=1833827159]
 position = Vector2(20, 0)
@@ -214,6 +1107,7 @@ sweetspot = NodePath("../../Sweetspot")
 whip = NodePath("../../../Puppet/WeaponSprite/Whip")
 
 [node name="Sourspot" parent="Weapon" unique_id=854077962 groups=["Player"] instance=ExtResource("5_ebec5")]
+visible = false
 collision_layer = 16
 collision_mask = 32
 attack = SubResource("Resource_tqiix")
@@ -225,6 +1119,7 @@ position = Vector2(112, 0)
 shape = SubResource("RectangleShape2D_wagxh")
 
 [node name="Sweetspot" parent="Weapon" unique_id=249336522 groups=["Player"] instance=ExtResource("5_ebec5")]
+visible = false
 collision_layer = 16
 collision_mask = 32
 attack = SubResource("Resource_tqiix")
@@ -234,6 +1129,8 @@ multihit = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Sweetspot" unique_id=1531130396]
 position = Vector2(204, 0)
 shape = SubResource("RectangleShape2D_32hag")
+
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="Weapon" unique_id=2028765469]
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1915895890]
 shape = SubResource("CircleShape2D_hvfyp")
@@ -252,8 +1149,11 @@ offset_bottom = 23.0
 text = "hey"
 label_settings = SubResource("LabelSettings_ry6om")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1012533958]
+[node name="PlayerAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1012533958]
+libraries/ = SubResource("AnimationLibrary_bjvpn")
+autoplay = &"idle_front"
 
+[connection signal="landed" from="PlatformerComponent" to="." method="_on_landed"]
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]
 [connection signal="hit" from="Weapon/Sourspot" to="Weapon/WeaponStateMachine/WhipState" method="_on_sourspot_hit"]
 [connection signal="hit" from="Weapon/Sweetspot" to="Weapon/WeaponStateMachine/WhipState" method="_on_sweetspot_hit"]
