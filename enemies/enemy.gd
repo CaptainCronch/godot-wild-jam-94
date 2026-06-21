@@ -92,4 +92,6 @@ func _on_death(attack: Attack) -> void:
 	corpse.modulate = color
 	Global.corpse_group.add_child(corpse)
 	
+	Global.demons_killed += 1
+	
 	queue_free()

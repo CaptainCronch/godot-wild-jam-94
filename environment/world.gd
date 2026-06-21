@@ -49,6 +49,9 @@ func _ready() -> void:
 	Global.navigation_layers.append($Height1)
 	Global.navigation_layers.append($Height2)
 	Global.navigation_layers.append($Height3)
+	Global.points_collected = 0
+	Global.demons_killed = 0
+	Global.rounds_survived = 0
 	
 	for i in spawner_nodes.size():
 		spawners.append(Rect2(spawner_nodes[i].position - Vector2(spawner_nodes[i].shape.size.x/2, spawner_nodes[i].shape.size.y/2), spawner_nodes[i].shape.size))
@@ -68,11 +71,11 @@ func _ready() -> void:
 	spawn_demon_heart()
 	Global.player.health_comp.death.connect(func(_attack: Attack):
 		game_over = true
-		# SEND SCORES TO GLOBAL
+		Global.rounds_survived = current_wave
 		await get_tree().create_timer(2.0).timeout
 		get_tree().paused = true
 		await get_tree().create_timer(1.0).timeout
-		# SHOW END SCREEN
+		ui.show_end_screen()
 	)
 
 
@@ -111,6 +114,7 @@ func _process(delta: float) -> void:
 func collected_heart() -> void:
 	if game_over: return
 	demon_hearts_collected += 1
+	Global.points_collected += 1
 	collected_demon_heart.emit()
 	spawn_demon_heart()
 	ui.animate_eye(demon_hearts_collected)

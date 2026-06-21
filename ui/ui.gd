@@ -18,6 +18,11 @@ const HEALTH_BAR_TIME := 0.1
 @export var fuse_bar: TextureProgressBar
 @export var disc_bar: TextureProgressBar
 @export var heart_pointer: TextureRect
+@export var round_label: Label
+@export var demon_label: Label
+@export var heart_label: Label
+@export var tutorial_delay: Timer
+@export var end_screen: Control
 
 var health_tween: Tween
 
@@ -57,9 +62,18 @@ func _on_health_changed(health: int) -> void:
 func show_mutation_screen() -> void:
 	mutation_control.select_new_mutation()
 
+func show_end_screen() -> void:
+	round_label.text = str(Global.rounds_survived)
+	demon_label.text = str(Global.demons_killed)
+	heart_label.text = str(Global.points_collected)
+	end_screen.show()
 
 func _input(event: InputEvent) -> void:
-	if event is not InputEventMouseMotion and tutorial_screen.visible:
+	if event.is_action_pressed("space") and tutorial_screen.visible and tutorial_delay.is_stopped():
 		tutorial_screen.hide()
 		get_tree().paused = false
 		start.emit()
+
+
+func _on_retry_button_pressed() -> void:
+	get_tree().reload_current_scene()

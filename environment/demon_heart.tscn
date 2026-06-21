@@ -8,6 +8,8 @@
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="6_ep08v"]
 [ext_resource type="Texture2D" uid="uid://kqdy4q468leq" path="res://environment/demonheartanim.png" id="7_ncxm4"]
 [ext_resource type="FontFile" uid="uid://d1m17sfi3oxsd" path="res://ui/Cairopixel.ttf" id="7_wa3uv"]
+[ext_resource type="Texture2D" uid="uid://bax66hfp3rdg6" path="res://ui/heartpointer.png" id="9_m08ue"]
+[ext_resource type="Texture2D" uid="uid://b464vd4vdxdqb" path="res://ui/heartarrow.png" id="10_5qc28"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wagxh"]
 radius = 20.0
@@ -58,7 +60,7 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ncxm4"]
 radius = 12.0
 
-[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label", "shadow", "screen_notifier", "pointer")]
+[node name="DemonHeart" type="CharacterBody2D" unique_id=1434188511 node_paths=PackedStringArray("sprite", "health_comp", "plat_comp", "health_label", "shadow", "screen_notifier", "pointer", "pointer_arrow")]
 collision_layer = 512
 collision_mask = 15
 script = ExtResource("1_ayjrt")
@@ -69,6 +71,7 @@ health_label = NodePath("Puppet/AnimatedSprite2D/Label")
 shadow = NodePath("ShadowComponent")
 screen_notifier = NodePath("VisibleOnScreenNotifier2D")
 pointer = NodePath("Pointer")
+pointer_arrow = NodePath("Pointer/PointerArrow")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox") instance=ExtResource("2_u7tmi")]
 base_gravity = 15.0
@@ -136,9 +139,12 @@ shape = SubResource("CircleShape2D_ncxm4")
 position = Vector2(-1, -12)
 rect = Rect2(-8, -8, 16, 16)
 
-[node name="Pointer" type="Polygon2D" parent="." unique_id=1504712650]
+[node name="Pointer" type="Sprite2D" parent="." unique_id=98332218]
 top_level = true
-polygon = PackedVector2Array(0, 6, 7, 0, 0, -6, -5, -1)
+texture = ExtResource("9_m08ue")
+
+[node name="PointerArrow" type="Sprite2D" parent="Pointer" unique_id=668397063]
+texture = ExtResource("10_5qc28")
 
 [connection signal="bounced" from="PlatformerComponent" to="." method="_on_bounced"]
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

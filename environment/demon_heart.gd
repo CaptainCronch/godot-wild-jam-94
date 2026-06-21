@@ -10,6 +10,7 @@ const MARGIN := Vector2(64.0, 64.0)
 @export var shadow: ShadowComponent
 @export var screen_notifier: VisibleOnScreenNotifier2D
 @export var pointer: Node2D
+@export var pointer_arrow: Sprite2D
 
 var flash_tween: Tween
 
@@ -26,7 +27,7 @@ func _process(_delta: float) -> void:
 	var cam_pos := Global.player.camera.global_position
 	var cam_rect := Global.player.camera.get_viewport_rect()
 	pointer.global_position = (global_position + Vector2(0.0, plat_comp.floor_height)).clamp(cam_pos - ((cam_rect.size/2) - MARGIN), cam_pos + ((cam_rect.size/2) - MARGIN))
-
+	pointer_arrow.look_at(global_position)
 
 func flash() -> void:
 	health_comp.damage(Attack.new(1))

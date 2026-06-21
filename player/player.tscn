@@ -1019,6 +1019,7 @@ camera = NodePath("Camera2D")
 noise = SubResource("FastNoiseLite_yllr7")
 
 [node name="Camera2D" type="Camera2D" parent="CameraHolder" unique_id=2024447866]
+process_mode = 3
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_left_margin = 0.05

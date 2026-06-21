@@ -13,6 +13,13 @@ var corpse_group: CanvasGroup
 var world: World
 var ui: UI
 
+var demons_killed: int
+var most_demons_killed: int
+var points_collected: int
+var most_points_collected: int
+var rounds_survived: int
+var most_rounds_survived: int
+
 
 func _process(_delta: float) -> void:
 	#if Input.is_action_just_pressed("debug_key"):
