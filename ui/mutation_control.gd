@@ -19,6 +19,7 @@ var heals_left := 10
 func _process(_delta: float) -> void:
 	countdown_label.text = str(int(selection_timer.time_left))
 
+
 func select_new_mutation() -> void:
 	for child in card_container.get_children():
 		child.queue_free()

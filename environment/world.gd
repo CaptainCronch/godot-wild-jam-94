@@ -12,25 +12,28 @@ const FLAPPER := preload("uid://djl73oxr2mfig")
 
 const MAX_PLAYER_DISTANCE_SQUARED := 147456.0
 const SPAWN_DELAY := 0.1
-const STARTER_ENEMY_DELAY := 30.0
-const DIFFICULT_ENEMY_DELAY := 25.0
-const STARTER_WAVES := [
-	20,  25,  30,  35,  40,  45,  50,  55,  60,  70,
-	100, 110, 120, 130, 140, 150, 160, 170, 180, 190,
-	200, 220, 240, 260, 280, 300, 320, 340, 360, 380,
-	400, 450, 500, 550, 600, 650, 700, 750, 800, 850,
-	900,1000,1100,1200,1300,1400,1500,1600,1700,1800,
-]
+const STARTER_ENEMY_DELAY := 35.0
+const DIFFICULT_ENEMY_DELAY := 30.0
+#const STARTER_WAVES := [
+	#20,  25,  30,  35,  40,  45,  50,  55,  60,  70,
+	#100, 110, 120, 130, 140, 150, 160, 170, 180, 190,
+	#200, 220, 240, 260, 280, 300, 320, 340, 360, 380,
+	#400, 450, 500, 550, 600, 650, 700, 750, 800, 850,
+	#900,1000,1100,1200,1300,1400,1500,1600,1700,1800,
+#]
 
 @export var ui: UI
 @export var step_tick: Timer
-@export var spawner_nodes: Array[CollisionShape2D]
+@export var spawner_nodes_starter: Array[CollisionShape2D]
+@export var spawner_nodes_difficult: Array[CollisionShape2D]
 
 var demon_hearts_collected := 0
 var game_timer := 0.0
 var total_timer := 0.0
 var spawn_timer := 0.0
 var current_wave := 0
+var enemies_to_spawn := 10
+var enemy_addition := 5
 var current_demon_heart: DemonHeart
 var total_spawn_area: Rect2
 var spawners: Array[Rect2]
@@ -42,13 +45,13 @@ var game_over := false
 
 
 func _ready() -> void:
+	var spawner_nodes := spawner_nodes_starter
+	if Global.difficulty == Global.DIFFICULTIES.DIFFICULT:
+		enemies_to_spawn = 50
+		spawner_nodes = spawner_nodes_difficult
 	get_tree().paused = true
 	
 	Global.world = self
-	Global.navigation_layers.append($Base)
-	Global.navigation_layers.append($Height1)
-	Global.navigation_layers.append($Height2)
-	Global.navigation_layers.append($Height3)
 	Global.points_collected = 0
 	Global.demons_killed = 0
 	Global.rounds_survived = 0
@@ -57,22 +60,17 @@ func _ready() -> void:
 		spawners.append(Rect2(spawner_nodes[i].position - Vector2(spawner_nodes[i].shape.size.x/2, spawner_nodes[i].shape.size.y/2), spawner_nodes[i].shape.size))
 	
 	for spawner in spawners:
-		#if spawner == spawners[0]:
-			#total_spawn_area = spawner
-			#continue
 		total_spawn_area = total_spawn_area.expand(spawner.position)
 		total_spawn_area = total_spawn_area.expand(spawner.position + Vector2(spawner.size.x, 0.0))
 		total_spawn_area = total_spawn_area.expand(spawner.position + Vector2(0.0, spawner.size.y))
 		total_spawn_area = total_spawn_area.expand(spawner.position + Vector2(spawner.size.x, spawner.size.y))
 	
-	#print(total_spawn_area)
 	await ui.start
 	spawn_enemies()
 	spawn_demon_heart()
 	Global.player.health_comp.death.connect(func(_attack: Attack):
 		game_over = true
 		Global.rounds_survived = current_wave
-		
 		Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
 		Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
 		Global.most_rounds_survived = max(Global.most_rounds_survived, Global.rounds_survived)
@@ -131,7 +129,7 @@ func collected_heart() -> void:
 
 
 func spawn_enemies() -> void:
-	for _i in STARTER_WAVES[current_wave]:
+	for _i in enemies_to_spawn:
 		var current_enemy: Enemy
 		match randi_range(0, 3):
 			0: current_enemy = SHAMBLER.instantiate()
@@ -143,6 +141,12 @@ func spawn_enemies() -> void:
 		#get_tree().current_scene.add_child(current_enemy)
 	
 	current_wave += 1
+	if current_wave % 50 == 0: enemy_addition += 50
+	elif current_wave % 40 == 0: enemy_addition += 20
+	elif current_wave % 30 == 0: enemy_addition += 20
+	elif current_wave % 20 == 0: enemy_addition += 10
+	elif current_wave % 10 == 0: enemy_addition += 5
+	enemies_to_spawn += enemy_addition
 
 
 func spawn_demon_heart() -> void:

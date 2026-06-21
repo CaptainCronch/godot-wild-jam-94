@@ -1,8 +1,11 @@
 extends CharacterBody2D
 class_name DemonHeart
 
+const BLOOD = preload("uid://dn5dtcu0dbhp6")
+
 const MARGIN := Vector2(64.0, 64.0)
 
+@export var color: Color
 @export var sprite: AnimatedSprite2D
 @export var health_comp: HealthComponent
 @export var plat_comp: PlatformerComponent
@@ -27,7 +30,8 @@ func _process(_delta: float) -> void:
 	var cam_pos := Global.player.camera.global_position
 	var cam_rect := Global.player.camera.get_viewport_rect()
 	pointer.global_position = (global_position + Vector2(0.0, plat_comp.floor_height)).clamp(cam_pos - ((cam_rect.size/2) - MARGIN), cam_pos + ((cam_rect.size/2) - MARGIN))
-	pointer_arrow.look_at(global_position)
+	pointer_arrow.look_at(global_position + Vector2(0.0, plat_comp.floor_height))
+
 
 func flash() -> void:
 	health_comp.damage(Attack.new(1))
@@ -56,6 +60,13 @@ func _on_bounced() -> void:
 
 func _on_death(_attack: Attack) -> void:
 	Global.world.collected_heart()
+	
+	var blood: CPUParticles2D = BLOOD.instantiate()
+	blood.global_position = global_position
+	blood.position.y += plat_comp.position_z + -20.0
+	blood.direction = velocity.normalized()
+	blood.modulate = color
+	get_tree().current_scene.add_child(blood)
 	queue_free()
 
 

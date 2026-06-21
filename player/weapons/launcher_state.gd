@@ -2,7 +2,7 @@ extends State
 
 const GRENADE := preload("uid://bdvwmcxr5eox6")
 const HEIGHT_OFFSET := -10.0
-const SELF_KNOCKBACK := -150.0
+const SELF_KNOCKBACK := -100.0
 #const MAX_AMMO := 6
 #const FIRE_DELAY := 1.5
 const FUSE_MAX := 1.0

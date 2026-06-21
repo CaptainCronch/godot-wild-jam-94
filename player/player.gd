@@ -215,7 +215,7 @@ func play_animation(player: AnimationPlayer, animation: String) -> void:
 
 func add_direction(input: String, mouse := false) -> String:
 	var direction := plat_comp.dir
-	if mouse: direction = global_position.direction_to(get_global_mouse_position())
+	if mouse: direction = weapon_holder.global_position.direction_to(get_global_mouse_position())
 	
 	if direction == Vector2.ZERO: return input + last_direction
 	

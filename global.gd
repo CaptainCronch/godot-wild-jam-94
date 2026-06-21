@@ -5,8 +5,6 @@ const TILE_HEIGHT := -64.0
 enum DIFFICULTIES {STARTER, DIFFICULT}
 
 var difficulty: DIFFICULTIES = DIFFICULTIES.STARTER
-var tilemaps: Array[TileMapLayer]
-var navigation_layers: Array[TileMapLayer]
 var player: Player
 var shadow_group: CanvasGroup
 var corpse_group: CanvasGroup
@@ -30,8 +28,8 @@ func _process(_delta: float) -> void:
 			#DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 			#Engine.max_fps = 60
 
-	if Input.is_action_just_pressed("esc"):
-		get_tree().quit() # temporary for testing
+	#if Input.is_action_just_pressed("esc"):
+		#get_tree().quit() # temporary for testing
 
 	if Input.is_action_just_pressed("f"):
 		if get_window().mode != Window.MODE_FULLSCREEN:

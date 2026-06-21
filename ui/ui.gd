@@ -17,7 +17,6 @@ const HEALTH_BAR_TIME := 0.1
 @export var revolver_chamber_background: TextureRect
 @export var fuse_bar: TextureProgressBar
 @export var disc_bar: TextureProgressBar
-@export var heart_pointer: TextureRect
 @export var round_label: Label
 @export var demon_label: Label
 @export var heart_label: Label
@@ -33,9 +32,11 @@ var health_tween: Tween
 
 
 func _ready() -> void:
+	if OS.get_name() == "Web": $EndScreen/ResultsContainer/MarginContainer/HBoxContainer/QuitButton.hide()
 	tutorial_screen.show()
 	Global.ui = self
 	await get_tree().process_frame
+	#start.emit()
 	Global.player.health_comp.health_changed.connect(_on_health_changed)
 
 
@@ -65,6 +66,7 @@ func _on_health_changed(health: int) -> void:
 func show_mutation_screen() -> void:
 	mutation_control.select_new_mutation()
 
+
 func show_end_screen() -> void:
 	round_label.text = str(Global.rounds_survived)
 	demon_label.text = str(Global.demons_killed)
@@ -74,12 +76,30 @@ func show_end_screen() -> void:
 	max_heart_label.text = str(Global.most_points_collected)
 	end_screen.show()
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("space") and tutorial_screen.visible and tutorial_delay.is_stopped():
 		tutorial_screen.hide()
 		get_tree().paused = false
 		start.emit()
+	if event.is_action_pressed("esc"):
+		Global.rounds_survived = world.current_wave
+		Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
+		Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
+		Global.most_rounds_survived = max(Global.most_rounds_survived, Global.rounds_survived)
+		end_screen.visible = !end_screen.visible
+		get_tree().paused = !get_tree().paused
 
 
-func _on_retry_button_pressed() -> void:
+func _on_starter_button_pressed() -> void:
+	Global.difficulty = Global.DIFFICULTIES.STARTER
 	get_tree().reload_current_scene()
+
+
+func _on_difficult_button_pressed() -> void:
+	Global.difficulty = Global.DIFFICULTIES.DIFFICULT
+	get_tree().reload_current_scene()
+
+
+func _on_quit_button_pressed() -> void:
+	get_tree().quit()
