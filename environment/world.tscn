@@ -821,7 +821,6 @@ text = "Quit"
 [node name="TutorialScreen" type="ColorRect" parent="." unique_id=1970304529]
 unique_name_in_owner = true
 process_mode = 3
-visible = false
 offset_left = -842.901
 offset_top = -517.0
 offset_right = 871.901
@@ -1035,7 +1034,7 @@ offset_right = -57.75006
 offset_bottom = 73.087036
 grow_horizontal = 2
 grow_vertical = 2
-text = "To JUMP"
+text = "To JUMP/DIVE"
 label_settings = SubResource("LabelSettings_g4v7s")
 horizontal_alignment = 1
 
