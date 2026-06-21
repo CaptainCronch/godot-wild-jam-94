@@ -9,12 +9,14 @@ const MAX_SEPARATION := 2
 const AI_UPDATE := 1.0
 
 @export var color: Color
+@export var flip_offset: float
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
 @export var enemy_check: Area2D
-@export var sprite: Polygon2D
+@export var sprite: Sprite2D
 @export var shadow: ShadowComponent
+@export var animation_player: AnimationPlayer
 
 var _player_follow_factor := 1.0
 var _separation_factor := 1.0
@@ -36,6 +38,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	ai_timer += delta
+	sprite.flip_h = velocity.x > 0.0
+	sprite.position.x = flip_offset if sprite.flip_h else -flip_offset
 
 
 func _physics_process(_delta: float) -> void:
@@ -56,6 +60,14 @@ func separate() -> void:
 	separate_dir = separate_dir.normalized()
 	desired = ((player_dir * _player_follow_factor * (0.0 if disable_player_dir else 1.0)) + separate_dir).normalized()
 	plat_comp.dir = desired
+
+
+func play_animation(animation: String, interrupt := true) -> void:
+	if not animation_player.current_animation == animation:
+		if not interrupt and animation_player.is_playing(): return
+		animation_player.play("RESET")
+		animation_player.advance(0)
+		animation_player.play(animation)
 
 
 func _on_damage_taken(_attack: Attack) -> void:

@@ -23,12 +23,14 @@ func _ready() -> void:
 			separate()
 			plat_comp.velocity_z += plat_comp.base_jump_force
 			plat_comp.target.velocity = desired * HOP_BOOST
+			play_animation("jump")
 	)
 	hop_tween.tween_interval(wait_duration + randf_range(-0.1, 0.1))
 
 
 func _process(delta: float) -> void:
-	ai_timer += delta
+	super(delta)
+	if not plat_comp.airborne: play_animation("idle", false)
 
 
 func _physics_process(delta: float) -> void:

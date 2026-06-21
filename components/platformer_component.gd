@@ -3,6 +3,7 @@ class_name PlatformerComponent
 
 signal bounced
 signal landed
+signal jumped
 
 @export_category("Values")
 @export var base_speed := 7500.0
@@ -121,6 +122,7 @@ func jump() -> void:
 	if airborne and enabled and not health_comp.is_stunned:
 		velocity_z = jump_force
 		jumping = true
+		jumped.emit()
 
 
 func is_colliding() -> bool: return target.is_on_ceiling() or target.is_on_floor() or target.is_on_wall()

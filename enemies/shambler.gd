@@ -21,6 +21,7 @@ func _ready() -> void:
 	step_tween.tween_callback(func():
 		current_speed = plat_comp.base_speed
 		disable_player_dir = false
+		if not wall_check.is_colliding(): play_animation("step", false)
 	)
 	step_tween.tween_interval(step_duration)
 	step_tween.tween_callback(func():
@@ -30,7 +31,13 @@ func _ready() -> void:
 	step_tween.tween_interval(pass_duration)
 
 
-func _process(delta: float) -> void: super(delta)
+func _process(delta: float) -> void:
+	ai_timer += delta
+	sprite.flip_h = velocity.x > 0.0
+	if animation_player.current_animation == "climb":
+		sprite.position.x = 0.0
+	else:
+		sprite.position.x = flip_offset if sprite.flip_h else -flip_offset
 
 
 func _physics_process(delta: float) -> void:
@@ -47,6 +54,12 @@ func _physics_process(delta: float) -> void:
 		velocity += player_dir * CLIMB_BOOST * delta
 		plat_comp.air_acceleration = CLIMB_ACCELERATION
 		plat_comp.speed = 0.0
+		play_animation("climb", false)
 	else:
 		plat_comp.air_acceleration = plat_comp.base_air_acceleration
 		plat_comp.speed = current_speed
+
+
+func _on_damage_taken(attack: Attack) -> void:
+	play_animation("hurt")
+	super(attack)

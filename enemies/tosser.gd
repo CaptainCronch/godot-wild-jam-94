@@ -28,20 +28,24 @@ func _ready() -> void:
 	step_tween.tween_callback(func():
 		current_speed = plat_comp.base_speed
 		disable_player_dir = false
+		play_animation("float")
 	)
 	step_tween.tween_interval(walk_duration)
 	step_tween.tween_callback(func():
 		current_speed = SEPARATION_SPEED
 		disable_player_dir = true
+		play_animation("idle")
 	)
 	step_tween.tween_interval(shoot_duration / 2.0)
 	step_tween.tween_callback(func():
-		shoot()
+		play_animation("toss")
+		#shoot()
 	)
 	step_tween.tween_interval(shoot_duration / 2.0)
 
 
-func _process(delta: float) -> void: if not disable_player_dir: ai_timer += delta
+func _process(delta: float) -> void:
+	if not disable_player_dir: ai_timer += delta
 
 
 func _physics_process(delta: float) -> void:

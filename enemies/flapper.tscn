@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://crg4f1ccw336i" path="res://classes/attack.gd" id="6_87in6"]
 [ext_resource type="PackedScene" uid="uid://bn3d61ma72o75" path="res://components/shadow_component.tscn" id="7_jw4om"]
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="8_aby4i"]
+[ext_resource type="Texture2D" uid="uid://fkbamwabjru" path="res://enemies/flapper-sheet.png" id="9_yn4mp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hxai"]
 radius = 12.0
@@ -29,14 +30,6 @@ shader = ExtResource("8_aby4i")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/active = false
 
-[sub_resource type="Gradient" id="Gradient_6423d"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 0.29372358, 0.7694305, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ysxep"]
-gradient = SubResource("Gradient_6423d")
-width = 1
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_s3b2c"]
 radius = 6.0
 
@@ -46,7 +39,69 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfo6o"]
 radius = 7.0
 
-[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite", "shadow") groups=["Enemy"]]
+[sub_resource type="Animation" id="Animation_wb8pw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_yn4mp")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lothe"]
+resource_name = "flap"
+length = 0.3333416766010225
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_yn4mp")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k6mqd"]
+_data = {
+&"RESET": SubResource("Animation_wb8pw"),
+&"flap": SubResource("Animation_lothe")
+}
+
+[node name="Flapper" type="CharacterBody2D" unique_id=1956631853 node_paths=PackedStringArray("plat_comp", "health_comp", "enemy_check", "sprite", "shadow", "animation_player") groups=["Enemy"]]
 collision_layer = 32
 collision_mask = 15
 floor_constant_speed = true
@@ -56,8 +111,9 @@ color = Color(1, 0.29411766, 0.76862746, 1)
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 enemy_check = NodePath("EnemyCheck")
-sprite = NodePath("Puppet/Polygon2D")
+sprite = NodePath("Puppet/Sprite2D")
 shadow = NodePath("ShadowComponent")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="PlatformerComponent" parent="." unique_id=1750379246 node_paths=PackedStringArray("target", "world_area", "puppet", "health_comp", "hitbox", "hurtbox") groups=["Enemy"] instance=ExtResource("2_yn4mp")]
 base_speed = 6000.0
@@ -99,11 +155,11 @@ shape = SubResource("RectangleShape2D_6p5g5")
 
 [node name="Puppet" type="Node2D" parent="." unique_id=6801831 groups=["Enemy"]]
 
-[node name="Polygon2D" type="Polygon2D" parent="Puppet" unique_id=336839294]
+[node name="Sprite2D" type="Sprite2D" parent="Puppet" unique_id=489551740]
 material = SubResource("ShaderMaterial_ysxep")
-position = Vector2(0, -12.5)
-texture = SubResource("GradientTexture1D_ysxep")
-polygon = PackedVector2Array(-8, 12.5, 8, 12.5, 2.5, 0, 8, -12.5, -8, -12.5, -2.5, 0)
+position = Vector2(0, -6.5)
+texture = ExtResource("9_yn4mp")
+hframes = 6
 
 [node name="WorldArea" type="Area2D" parent="." unique_id=1716572767 groups=["Enemy"]]
 collision_layer = 0
@@ -122,5 +178,8 @@ shape = SubResource("CircleShape2D_6423d")
 
 [node name="WorldCollider" type="CollisionShape2D" parent="." unique_id=1301316648]
 shape = SubResource("CircleShape2D_pfo6o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2067757828]
+libraries/ = SubResource("AnimationLibrary_k6mqd")
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_damage_taken"]

@@ -10,3 +10,4 @@ func _physics_process(delta: float) -> void:
 	
 	if plat_comp.position_z > plat_comp.floor_height + FLAP_HEIGHT + randf_range(-HEIGHT_RANGE, HEIGHT_RANGE):
 		plat_comp.velocity_z = plat_comp.jump_force
+		play_animation("flap")
