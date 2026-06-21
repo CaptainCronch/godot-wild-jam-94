@@ -178,6 +178,7 @@ floor_block_on_wall = false
 script = ExtResource("1_5sp27")
 wall_check = NodePath("WallCheck")
 color = Color(0.6745098, 0.08235294, 0.2509804, 1)
+corpse_frame = 3
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 enemy_check = NodePath("EnemyCheck")

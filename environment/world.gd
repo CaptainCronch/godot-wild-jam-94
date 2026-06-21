@@ -25,7 +25,8 @@ const DIFFICULT_ENEMY_DELAY := 30.0
 @export var ui: UI
 @export var step_tick: Timer
 @export var music: AudioStreamPlayer
-@export var song: AudioStream
+@export var hard_song: AudioStream
+@export var easy_song: AudioStream
 @export var spawner_nodes_starter: Array[CollisionShape2D]
 @export var spawner_nodes_difficult: Array[CollisionShape2D]
 @export var tilemaps_starter: Array[TileMapLayer]
@@ -214,5 +215,5 @@ func select_mutation() -> void:
 
 
 func _on_music_finished() -> void:
-	music.stream = song
+	music.stream = easy_song if Global.difficulty == Global.DIFFICULTIES.STARTER else hard_song
 	music.play()

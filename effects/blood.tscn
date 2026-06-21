@@ -1,19 +1,18 @@
 [gd_scene format=3 uid="uid://dn5dtcu0dbhp6"]
 
 [ext_resource type="Script" uid="uid://cwvhq7g7mqkq2" path="res://effects/self_destruct_particles.gd" id="1_44s4y"]
+[ext_resource type="Texture2D" uid="uid://cxu2rlv8denn8" path="res://effects/blood-sheet.png" id="1_4337f"]
 
-[sub_resource type="Gradient" id="Gradient_l1sk6"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wagxh"]
-gradient = SubResource("Gradient_l1sk6")
-width = 8
-height = 8
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vo3ge"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 3
+particles_anim_loop = false
 
 [node name="Blood" type="CPUParticles2D" unique_id=406917420]
+material = SubResource("CanvasItemMaterial_vo3ge")
 emitting = false
-texture = SubResource("GradientTexture2D_wagxh")
+texture = ExtResource("1_4337f")
 lifetime = 0.3
 one_shot = true
 explosiveness = 0.9
@@ -23,6 +22,7 @@ gravity = Vector2(0, 490)
 initial_velocity_min = 346.18
 initial_velocity_max = 559.77
 scale_amount_min = 0.5
+anim_offset_max = 1.0
 script = ExtResource("1_44s4y")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

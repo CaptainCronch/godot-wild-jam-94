@@ -178,6 +178,7 @@ script = ExtResource("1_0q4ty")
 wall_check = NodePath("WallCheck")
 color = Color(0.8980392, 0.49411765, 0.9843137, 1)
 flip_offset = 4.0
+corpse_frame = 1
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 enemy_check = NodePath("EnemyCheck")

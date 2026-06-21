@@ -11,6 +11,7 @@ const AI_UPDATE := 1.0
 
 @export var color: Color
 @export var flip_offset: float
+@export var corpse_frame: int
 
 @export var plat_comp: PlatformerComponent
 @export var health_comp: HealthComponent
@@ -92,11 +93,12 @@ func _on_death(attack: Attack) -> void:
 	blood.modulate = color
 	get_tree().current_scene.add_child(blood)
 	
-	var corpse: Node2D = CORPSE.instantiate()
+	var corpse: Sprite2D = CORPSE.instantiate()
 	corpse.global_position = global_position
 	corpse.position.y += plat_comp.floor_height
-	corpse.rotation = velocity.angle()
-	corpse.modulate = color
+	corpse.frame = corpse_frame
+	#corpse.rotation = velocity.angle()
+	#corpse.modulate = color
 	Global.corpse_group.add_child(corpse)
 	
 	Global.demons_killed += 1

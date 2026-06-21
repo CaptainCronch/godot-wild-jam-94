@@ -14,6 +14,7 @@
 [ext_resource type="Shader" uid="uid://dj0apj62krj0s" path="res://shaders/full_color.gdshader" id="9_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://d3eeytt0pktes" path="res://player/weapons/revolver-sheet.png" id="10_32hag"]
 [ext_resource type="Texture2D" uid="uid://df4rlqfvr7iha" path="res://player/weapons/whip-attack-sheet.png" id="12_g4c7l"]
+[ext_resource type="Texture2D" uid="uid://bkd7lvscgmahe" path="res://player/kick-sheet.png" id="13_2uvqg"]
 [ext_resource type="AudioStream" uid="uid://c6elpb4g37mhl" path="res://sounds/sharp_impact.ogg" id="14_uw77l"]
 [ext_resource type="AudioStream" uid="uid://coexrnapoyudk" path="res://sounds/projectile.ogg" id="15_rptt4"]
 [ext_resource type="Script" uid="uid://00a0mouqq4cw" path="res://player/weapons/revolver_state.gd" id="15_wodsf"]
@@ -26,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://br81hn72qpsk0" path="res://player/weapons/launcher-sheet.png" id="18_x7c3f"]
 [ext_resource type="Texture2D" uid="uid://cqhj8xu8p1rm8" path="res://player/player-speed-sheet.png" id="19_x7c3f"]
 [ext_resource type="Texture2D" uid="uid://bl08nh3qusciq" path="res://player/weapons/whip-sheet.png" id="20_s7qer"]
+[ext_resource type="Texture2D" uid="uid://c33rld4mjo7ay" path="res://player/player-corpse.png" id="25_b8hi5"]
 [ext_resource type="AudioStream" uid="uid://b7d3wbibdvsq2" path="res://sounds/death.ogg" id="25_knn7v"]
 [ext_resource type="AudioStream" uid="uid://dixfg70rmnfad" path="res://sounds/hurt.ogg" id="26_7pqkx"]
 [ext_resource type="AudioStream" uid="uid://bx6hjsn57oiwi" path="res://sounds/enemy_hurt.ogg" id="29_r7pn3"]
@@ -91,6 +93,56 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r7pn3")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s1yo"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(0, 0, 99, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ejfk"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(99, 0, 99, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jd2rm"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(198, 0, 99, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q28gw"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(297, 0, 99, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge24q"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(396, 0, 99, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnw6m"]
+atlas = ExtResource("13_2uvqg")
+region = Rect2(495, 0, 99, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7qk3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1s1yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ejfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jd2rm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q28gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ge24q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnw6m")
 }],
 "loop": 0,
 "name": &"default",
@@ -909,6 +961,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Puppet/Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5.63)]
+}
 
 [sub_resource type="Animation" id="Animation_s7qer"]
 resource_name = "air_back"
@@ -1028,6 +1092,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Rect2(100, 25, 25, 25), Rect2(125, 25, 25, 25), Rect2(0, 50, 25, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_jbx34"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Puppet/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("25_b8hi5")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Puppet/Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5.63)]
 }
 
 [sub_resource type="Animation" id="Animation_e7oew"]
@@ -1725,6 +1816,7 @@ _data = {
 &"air_front": SubResource("Animation_g4c7l"),
 &"air_left": SubResource("Animation_knn7v"),
 &"air_right": SubResource("Animation_7pqkx"),
+&"death": SubResource("Animation_jbx34"),
 &"idle_back": SubResource("Animation_e7oew"),
 &"idle_front": SubResource("Animation_c35mf"),
 &"idle_left": SubResource("Animation_65viv"),
@@ -1769,7 +1861,7 @@ hurtbox = NodePath("HurtboxComponent")
 hitbox = NodePath("HitboxComponent")
 sprite = NodePath("Puppet/Sprite2D")
 player_animator = NodePath("PlayerAnimationPlayer")
-leg = NodePath("Puppet/WeaponHolder/Leg")
+leg = NodePath("")
 weapon = NodePath("Weapon")
 weapon_holder = NodePath("Puppet/WeaponHolder")
 weapon_sprite = NodePath("Puppet/WeaponSpriteHolder/WeaponSprite")
@@ -1837,6 +1929,7 @@ editor_draw_drag_margin = true
 material = SubResource("ShaderMaterial_32hag")
 position = Vector2(0.5, -12.5)
 texture = ExtResource("8_yllr7")
+offset = Vector2(0, 5.63)
 region_enabled = true
 region_rect = Rect2(0, 0, 25, 25)
 
@@ -1865,10 +1958,11 @@ frame_progress = 1.0
 [node name="WeaponHolder" type="Node2D" parent="Puppet" unique_id=650286921]
 position = Vector2(0, -10.215)
 
-[node name="Leg" type="Polygon2D" parent="Puppet/WeaponHolder" unique_id=1481174697]
-visible = false
-position = Vector2(9, 11.215)
-polygon = PackedVector2Array(-8, -4, 60, -5, 87, -3, 85, -14, 87, -17, 92, -18, 97, -16, 100, -10, 102, 5, 97, 7, 29, 5, -10, -1)
+[node name="Leg" type="AnimatedSprite2D" parent="Puppet/WeaponHolder" unique_id=1567794081]
+position = Vector2(52.075, 4.905)
+sprite_frames = SubResource("SpriteFrames_7qk3k")
+frame = 5
+frame_progress = 1.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Puppet/WeaponHolder" unique_id=1000360415]
 remote_path = NodePath("../../../Weapon")

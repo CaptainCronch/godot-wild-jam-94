@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://d0qauj3amib7m"]
 
-[node name="Corpse" type="Polygon2D" unique_id=376777266]
-color = Color(0.32, 0.32, 0.32, 1)
-polygon = PackedVector2Array(5, 0, 0, 5, -5, 0, 0, -5)
+[ext_resource type="Texture2D" uid="uid://dcpt266grs51h" path="res://effects/corpses-sheet.png" id="1_yguyf"]
+
+[node name="Corpse" type="Sprite2D" unique_id=1485354587]
+modulate = Color(0.5, 0.5, 0.5, 1)
+texture = ExtResource("1_yguyf")
+hframes = 2
+vframes = 2

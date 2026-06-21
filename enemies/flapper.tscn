@@ -115,6 +115,7 @@ floor_constant_speed = true
 floor_block_on_wall = false
 script = ExtResource("1_f4vip")
 color = Color(0.22352941, 0.02745098, 0.08235294, 1)
+corpse_frame = 2
 plat_comp = NodePath("PlatformerComponent")
 health_comp = NodePath("HealthComponent")
 enemy_check = NodePath("EnemyCheck")

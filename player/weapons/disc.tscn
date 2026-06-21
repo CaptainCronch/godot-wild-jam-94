@@ -35,7 +35,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmeu4"]
 radius = 3.0
 
-[sub_resource type="Resource" id="Resource_sjuiy"]
+[sub_resource type="Resource" id="Resource_ueeow"]
 resource_local_to_scene = true
 script = ExtResource("4_efuvy")
 attack_damage = 2
@@ -60,7 +60,7 @@ hurtbox = NodePath("HurtboxComponent")
 hitbox = NodePath("HitboxComponent")
 
 [node name="ShadowComponent" parent="." unique_id=390992070 instance=ExtResource("2_sjuiy")]
-radius = 16.0
+radius = 32.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=907987152]
 scale = Vector2(1.975, 1.975)
@@ -81,7 +81,7 @@ shape = SubResource("CircleShape2D_kmeu4")
 [node name="HurtboxComponent" parent="." unique_id=1464447820 instance=ExtResource("3_ueeow")]
 collision_layer = 64
 collision_mask = 32
-attack = SubResource("Resource_sjuiy")
+attack = SubResource("Resource_ueeow")
 update_time = 0.1
 multihit = true
 

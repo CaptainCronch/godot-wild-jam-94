@@ -190,6 +190,7 @@ func jump() -> void:
 func kick() -> void:
 	if diving and plat_comp.airborne: return
 	if kick_timer > 0.0: return
+	$Jump.play()
 	kick_timer = BASE_KICK_TIME
 	hurtbox.attack.attack_direction = Vector2.RIGHT.rotated(weapon_holder.rotation)
 	if hurtbox.check_collision():
@@ -201,9 +202,10 @@ func kick() -> void:
 	if plat_comp.airborne: # and plat_comp.velocity_z > 0.0:
 		plat_comp.velocity_z = KICK_AIR_JUMP_BOOST
 
-	leg.show()
-	await get_tree().create_timer(0.1).timeout
-	leg.hide()
+	$Puppet/WeaponHolder/Leg.play("default")
+	#leg.show()
+	#await get_tree().create_timer(0.1).timeout
+	#leg.hide()
 	#hurtbox.collider.disabled = false
 	#await get_tree().create_timer(0.1).timeout
 	#hurtbox.collider.disabled = true
@@ -264,6 +266,8 @@ func _on_damage_taken(_attack: Attack) -> void:
 func _on_death(_attack: Attack) -> void:
 	plat_comp.dir = Vector2()
 	weapon_sprite.hide()
+	play_animation(player_animator, "death")
+	#player_animator.play("death")
 	camera_holder.shake(1.0)
 	$Death.play()
 	#queue_free()

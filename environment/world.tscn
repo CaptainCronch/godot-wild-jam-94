@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://df8qos6hdsdmg" path="res://music/CuteGun_Main_Song_intro_v1.mp3" id="2_di2q3"]
 [ext_resource type="Script" uid="uid://deroeufafhe7a" path="res://environment/spawner_shape.gd" id="2_ie4ph"]
 [ext_resource type="Script" uid="uid://dhy4iqkwgl0af" path="res://environment/tiles/tile_layer.gd" id="2_sf4n2"]
+[ext_resource type="AudioStream" uid="uid://c2nkt5l62ksoj" path="res://music/CuteGun_Main_Song_previousversion_v1.mp3" id="3_vo3ge"]
 [ext_resource type="Script" uid="uid://l3gkn072nhu5" path="res://ui/ui.gd" id="3_wpdqf"]
 [ext_resource type="Texture2D" uid="uid://b8gvi8xqf41ou" path="res://ui/healthbar.png" id="5_na063"]
 [ext_resource type="FontFile" uid="uid://kund0gjtq0ga" path="res://ui/Noble_Blabber.ttf" id="6_50k4n"]
@@ -338,7 +339,8 @@ script = ExtResource("1_ktyio")
 ui = NodePath("UI")
 step_tick = NodePath("StepTick")
 music = NodePath("Music")
-song = ExtResource("2_2qgsw")
+hard_song = ExtResource("2_2qgsw")
+easy_song = ExtResource("3_vo3ge")
 spawner_nodes_starter = [NodePath("StarterMap/Spawners/CollisionShape2D"), NodePath("StarterMap/Spawners/CollisionShape2D2"), NodePath("StarterMap/Spawners/CollisionShape2D3")]
 spawner_nodes_difficult = [NodePath("DifficultMap/Spawners/CollisionShape2D"), NodePath("DifficultMap/Spawners/CollisionShape2D2"), NodePath("DifficultMap/Spawners/CollisionShape2D3"), NodePath("DifficultMap/Spawners/CollisionShape2D4")]
 tilemaps_starter = [NodePath("StarterMap/Base"), NodePath("StarterMap/Height1"), NodePath("StarterMap/Height2"), NodePath("StarterMap/Height3"), NodePath("StarterMap/Facade"), NodePath("StarterMap/Decor")]
@@ -719,7 +721,7 @@ horizontal_alignment = 2
 
 [node name="MaxRoundLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=1785615907]
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 horizontal_alignment = 2
 
@@ -731,7 +733,7 @@ horizontal_alignment = 2
 
 [node name="MaxDemonLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=1906914815]
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 horizontal_alignment = 2
 
@@ -743,7 +745,7 @@ horizontal_alignment = 2
 
 [node name="MaxHeartLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer3" unique_id=653199798]
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 horizontal_alignment = 2
 
@@ -759,7 +761,7 @@ label_settings = SubResource("LabelSettings_57qmd")
 [node name="RoundLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=771413489]
 unique_name_in_owner = true
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 
 [node name="Label2" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=358905514]
@@ -770,7 +772,7 @@ label_settings = SubResource("LabelSettings_57qmd")
 [node name="DemonLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=281841138]
 unique_name_in_owner = true
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 
 [node name="Label3" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=1112579835]
@@ -781,7 +783,7 @@ label_settings = SubResource("LabelSettings_57qmd")
 [node name="HeartLabel" type="Label" parent="UI/EndScreen/ResultsContainer/MarginContainer/VBoxContainer2" unique_id=1314805646]
 unique_name_in_owner = true
 layout_mode = 2
-text = "999"
+text = "0"
 label_settings = SubResource("LabelSettings_57qmd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/EndScreen/ResultsContainer/MarginContainer" unique_id=1992800907]

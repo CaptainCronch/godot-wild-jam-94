@@ -83,4 +83,5 @@ func _on_card_selected(card: Card) -> void:
 
 func close_mutation_screen() -> void:
 	hide()
+	selection_timer.stop()
 	get_tree().paused = false

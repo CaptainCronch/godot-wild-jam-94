@@ -88,13 +88,18 @@ func _input(event: InputEvent) -> void:
 		get_tree().paused = false
 		start.emit()
 	if event.is_action_pressed("esc"):
-		tutorial.play()
-		Global.rounds_survived = world.current_wave
-		Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
-		Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
-		Global.most_rounds_survived = max(Global.most_rounds_survived, Global.rounds_survived)
-		end_screen.visible = !end_screen.visible
-		get_tree().paused = !get_tree().paused
+		#tutorial.play()
+		if end_screen.visible == false:
+			Global.rounds_survived = world.current_wave
+			Global.most_demons_killed = max(Global.most_demons_killed, Global.demons_killed)
+			Global.most_points_collected = max(Global.most_points_collected, Global.points_collected)
+			Global.most_rounds_survived = max(Global.most_rounds_survived, Global.rounds_survived)
+			#end_screen.visible = !end_screen.visible
+			get_tree().paused = true
+			show_end_screen()
+		else:
+			get_tree().paused = false
+			end_screen.hide()
 
 
 func _on_starter_button_pressed() -> void:
